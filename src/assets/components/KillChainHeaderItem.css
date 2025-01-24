@@ -1,0 +1,44 @@
+.table-id-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .table-id {
+    width: 100%;
+    border-top: 1px solid rgb(192, 192, 192);
+    background-color: #8ca7c0;
+    border-radius: 0 0 5px 5px;
+  }
+  .table-number {
+    align-items: center;
+    /* text-align: center; */
+    justify-content: center;
+    display: flex;
+    position: absolute;
+    top: -24px;
+    left: 38%;
+    right: 38%;
+    background-color: #8ca7c0;
+  
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  .table-name {
+    overflow: hidden;
+    font-weight: 500;
+  }
+  .table-tactic-wrapper {
+    background-color: rgb(199 220 239);
+    width: 100%;
+    height: 100%;
+    /* text-align: center; */
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border-radius: 5px 5px 0 0;
+  }
+  .all-techniques-list {
+    width: 115px;
+  }
+  

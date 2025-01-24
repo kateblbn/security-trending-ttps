@@ -1,0 +1,37 @@
+.subtechniques-list-wrapper {
+  margin-right: auto;
+  margin-left: auto;
+  width: 95%;
+  height: 80px;
+  background-color: rgb(244, 250, 255);
+  font-size: 14px;
+  margin-bottom: 2px;
+  border-radius: 5px;
+}
+.subtechniques-list-wrapper:nth-child(odd) {
+  background-color: #dde9f5;
+}
+.subtechniques-list-wrapper:hover {
+  background-color: #e9d1bd;
+  transition: 0.7s;
+}
+.subtechniques-id {
+  font-weight: 700;
+}
+.subtechniques-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 5px;
+}
+.subtechniques-event {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+
+  background-color: #efdac7;
+}
