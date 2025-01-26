@@ -53,7 +53,7 @@ export class XrmRepository implements IRepository {
     return resTechniques.entities.map((x) => ({
       id: x["technique.esa_mitreid"] as string,
       name: x["technique.esa_name"] as string,
-      threatActorKey: x["technique.esa_tactics"] as string,
+      tacticKeys: x["technique.esa_tactics"] as string,
     }));
   }
 }

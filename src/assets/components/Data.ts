@@ -6,6 +6,7 @@ export type MitreTactic = {
 };
 
 export type MitreTechnique = {
+  [x: string]: any;
   name: string;
   id: string;
   tacticKeys: string;

@@ -4,9 +4,10 @@ import "./HeaderItem.css";
 type TechniqueColumnProps = {
   id: string;
   name: string;
+  count: number
 };
 
-export const TechniqueColumn = ({ id, name }: TechniqueColumnProps) => {
+export const TechniqueColumn = ({ id, name, count}: TechniqueColumnProps) => {  
   return (
     <div className="tecnique-wrapper">
       <div className="subtechniques-list">
@@ -14,7 +15,7 @@ export const TechniqueColumn = ({ id, name }: TechniqueColumnProps) => {
           <div className="subtechniques-list-box">
             <div className="subtechniques-id">{id}</div>
             <div className="subtechniques-name">{name}</div>
-            <span className="subtechniques-event">{}</span>
+            <span className="subtechniques-event">{count}</span>
           </div>
         </div>
       </div>
