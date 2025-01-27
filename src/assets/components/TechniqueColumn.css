@@ -2,6 +2,9 @@
   display: flex;
   flex-direction: column;
 }
+.subtechniques-name {
+  /* font-size: 0.5vw; */
+}
 .subtechniques-list-box {
   box-sizing: border-box;
   padding: 8px;
@@ -10,10 +13,10 @@
 }
 .subtechniques-list::-webkit-scrollbar-track {
   background: #f1f1f1;
-  /* width: 2px; */
+  width: 2px;
 }
 .subtechniques-list::-webkit-scrollbar {
-  width: 5px;
+  width: 2px !important;
 }
 .subtechniques-list::-webkit-scrollbar-thumb {
   background: rgb(218, 217, 217);
@@ -37,3 +40,6 @@
 .red {
   background-color: #e10000 !important;
 }
+
+
+
