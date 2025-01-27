@@ -14,7 +14,7 @@ function App() {
 // console.log(repo);
 
   useEffect(() => {
-     repo.getTactics().then((x) => setTactics(x));
+    repo.getTactics().then((x) => setTactics(x));
     repo.getTechniques().then((x) => setTechniques(x));
   }, []);
 

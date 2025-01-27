@@ -1,25 +1,39 @@
-  .tecnique-wrapper {
-    display: flex;
-    flex-direction: column;
-  }
-  .subtechniques-list-box {
-    box-sizing: border-box;
-    padding: 8px;
-    height: 95%;
-    width: 95%;
-  }
-  .subtechniques-list::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    /* width: 2px; */
-  }
-  .subtechniques-list::-webkit-scrollbar {
-    width: 5px;
-  }
-  .subtechniques-list::-webkit-scrollbar-thumb {
-    background: rgb(218, 217, 217);
-    border-radius: 20px;
-  }
-  .subtechniques-list {
-    height: 85px;
-    /* overflow: auto; */
-  }
+.tecnique-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.subtechniques-list-box {
+  box-sizing: border-box;
+  padding: 8px;
+  height: 95%;
+  width: 95%;
+}
+.subtechniques-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  /* width: 2px; */
+}
+.subtechniques-list::-webkit-scrollbar {
+  width: 5px;
+}
+.subtechniques-list::-webkit-scrollbar-thumb {
+  background: rgb(218, 217, 217);
+  border-radius: 20px;
+}
+.subtechniques-list {
+  height: 85px;
+  /* overflow: auto; */
+}
+.subtechniques-event {
+  color: white;
+}
+
+.yellow {
+  background-color: #ffd903 !important;
+
+}
+.orange {
+  background-color: #e9692c !important;
+}
+.red {
+  background-color: #e10000 !important;
+}

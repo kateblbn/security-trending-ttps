@@ -4,10 +4,19 @@ import "./HeaderItem.css";
 type TechniqueColumnProps = {
   id: string;
   name: string;
-  count: number
+  count: number;
 };
 
-export const TechniqueColumn = ({ id, name, count}: TechniqueColumnProps) => {  
+export const TechniqueColumn = ({ id, name, count }: TechniqueColumnProps) => {
+  const colors =
+    count <= 2
+      ? "subtechniques-event yellow"
+      : count > 2 && count <= 14
+      ? "subtechniques-event orange"
+      : count >= 15
+      ? "subtechniques-event red"
+      : "subtechniques-event";
+
   return (
     <div className="tecnique-wrapper">
       <div className="subtechniques-list">
@@ -15,7 +24,7 @@ export const TechniqueColumn = ({ id, name, count}: TechniqueColumnProps) => {
           <div className="subtechniques-list-box">
             <div className="subtechniques-id">{id}</div>
             <div className="subtechniques-name">{name}</div>
-            <span className="subtechniques-event">{count}</span>
+            <span className={colors}>{count}</span>
           </div>
         </div>
       </div>

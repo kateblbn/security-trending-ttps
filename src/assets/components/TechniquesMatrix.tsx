@@ -11,7 +11,6 @@ export function TechniquesMatrix({
   tactics: MitreTactic[];
   techniques: MitreTechnique[];
 }) {
-
   tactics.sort((a, b) => a.number - b.number);
 
   return (
@@ -21,11 +20,10 @@ export function TechniquesMatrix({
           // console.log(techniques);
 
           const relatedTechniques = techniques.filter((technique) => {
-            const tacticList = technique["tacticKeys"];
-            if (tacticList) {
-              return tacticList.split(", ").includes(tactic["tacticsKey"]);
+            const techniqueList = technique["tacticKeys"];
+            if (techniqueList) {
+              return techniqueList.split(", ").includes(tactic["tacticsKey"]);
             }
-
             return false;
           });
           // console.log(relatedTechniques);
@@ -37,20 +35,26 @@ export function TechniquesMatrix({
             acc[item.id].push(item);
             return acc;
           }, {});
+          // console.log(techReduce);
 
           const ReducedTechniques = () => {
-            const entries = Object.entries(techReduce).map(
+            const sortedTechniques =  Object.entries(techReduce).sort(
+              (a, b) =>  (b[1] as unknown[]).length - (a[1] as unknown[]).length 
+            );
+            // console.log(sortedTechniques);
+            
+            console.log(Object.entries(techReduce));
+            const entries = sortedTechniques.map(
               ([key, techniques]) => {
                 if (techniques && Array.isArray(techniques)) {
                   // console.log(techniques);
-                  
+
+                  // console.log(techniques.length);
                   const uniqueTechniques = techniques.filter(
                     (technique, index, self) => {
                       // console.log(technique);
-                      
                       return (
-                        index ===
-                        self.findIndex((t) => t.name === technique.name)
+                        index === self.findIndex((t) => t.id === technique.id)
                       );
                     }
                   );
