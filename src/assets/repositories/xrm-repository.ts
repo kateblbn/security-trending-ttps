@@ -32,14 +32,14 @@ export class XrmRepository implements IRepository {
     }));
   }
 
-  async getTechniques(): Promise<MitreTechnique[]> {
+  async getBaselineTechniques(): Promise<MitreTechnique[]> {
     const fetchXml: string = `
     <fetch>
 	    <entity name='esa_threatactorttps'>
         <link-entity name='esa_mitreenterprise' from='esa_mitreenterpriseid' to='esa_mitreid' alias='technique'>
-        <attribute name='esa_mitreid' />
-        <attribute name='esa_name' />
-  			<attribute name='esa_tactics' />
+          <attribute name='esa_mitreid' />
+          <attribute name='esa_name' />
+          <attribute name='esa_tactics' />
 	  	</link-entity>
   	</entity>
   </fetch>`;
@@ -54,6 +54,30 @@ export class XrmRepository implements IRepository {
       id: x["technique.esa_mitreid"] as string,
       name: x["technique.esa_name"] as string,
       tacticKeys: x["technique.esa_tactics"] as string,
+    }));
+  }
+  async getTechniquesMatrixTrending(): Promise<MitreTechnique[]> {
+    const fetchXml: string = `
+    <fetch>
+      <entity name="esa_dynamicthreatactorttps">
+        <link-entity name="esa_mitreenterprise" from="esa_mitreenterpriseid" to="esa_ttp">
+            <attribute name="esa_mitreid" />
+            <attribute name="esa_name" />
+            <attribute name="esa_tactics" />
+        </link-entity>
+      </entity>
+    </fetch>
+    `;
+
+    const res: Xrm.RetrieveMultipleResult =
+      await this.webApi.retrieveMultipleRecords(
+        "esa_dynamicthreatactorttps",
+        `?fetchXml=${encodeURIComponent(fetchXml)}`
+      );
+    return res.entities.map((x) => ({
+      name: x["esa_mitreenterprise1.esa_name"] as string,
+      id: x["esa_mitreenterprise1.esa_mitreid"] as string,
+      tacticKeys: x["esa_mitreenterprise1.esa_tactics"] as string,
     }));
   }
 }

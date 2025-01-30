@@ -4,7 +4,7 @@ import { KillChainHeaderItem } from "./KillChainHeaderItem";
 import "./TechniquesMatrix.css";
 import { useState } from "react";
 
-export function TechniquesMatrixBaseline({
+export function TechniquesMatrix({
   tactics,
   techniques,
 }: {

@@ -2,13 +2,21 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { MitreTactic, MitreTechnique } from "./assets/components/Data";
 import { XrmRepository } from "./assets/repositories/xrm-repository";
-import { TechniquesMatrixBaseline } from "./assets/components/TechniquesMatrixBaseline";
+import { TechniquesMatrix } from "./assets/components/TechniquesMatrix";
 import { TestRepository } from "./assets/repositories/test-repository";
-import { Button, Tooltip } from "antd";
+import { Button, Switch, Tooltip } from "antd";
+import Header from './assets/components/Header/Header';
 
 function App() {
   const [tactics, setTactics] = useState<MitreTactic[]>([]);
-  const [techniques, setTechniques] = useState<MitreTechnique[]>([]);
+  const [techniquesBaseline, setTechniquesBaseline] = useState<
+    MitreTechnique[]
+  >([]);
+  const [techniquesTrending, setTechniquesTrending] = useState<
+    MitreTechnique[]
+  >([]);
+  const [toggle, setToggle] = useState(false);
+  console.log(toggle);
 
   let repo = import.meta.env.DEV
     ? new TestRepository()
@@ -18,18 +26,24 @@ function App() {
 
   useEffect(() => {
     repo.getTactics().then((x) => setTactics(x));
-    repo.getTechniques().then((x) => setTechniques(x));
+    repo.getBaselineTechniques().then((x) => setTechniquesBaseline(x));
+    repo.getTechniquesMatrixTrending().then((x) => setTechniquesTrending(x));
   }, []);
+
+  const onChange = (x: boolean) => {
+    setToggle(x);
+  };
 
   return (
     <>
-      <TechniquesMatrixBaseline tactics={tactics} techniques={techniques} />
+    <Header/>
+      <Switch onChange={onChange} />
+      <TechniquesMatrix
+        tactics={tactics}
+        techniques={toggle ? techniquesBaseline : techniquesTrending}
+      />
     </>
   );
 }
-
-let a = "2";
-let b = "2";
-console.log(a + b);
 
 export default App;

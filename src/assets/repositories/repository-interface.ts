@@ -4,5 +4,8 @@ export interface IRepository {
   getTactics(): Promise<MitreTactic[]>;
 }
 export interface IRepository {
-  getTechniques(): Promise<MitreTechnique[]>;
+  getBaselineTechniques(): Promise<MitreTechnique[]>;
+}
+export interface IRepository {
+  getTechniquesMatrixTrending(): Promise<MitreTechnique[]>;
 }
