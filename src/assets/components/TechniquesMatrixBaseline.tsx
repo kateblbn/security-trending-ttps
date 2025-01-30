@@ -4,7 +4,7 @@ import { KillChainHeaderItem } from "./KillChainHeaderItem";
 import "./TechniquesMatrix.css";
 import { useState } from "react";
 
-export function TechniquesMatrix({
+export function TechniquesMatrixBaseline({
   tactics,
   techniques,
 }: {
@@ -38,40 +38,38 @@ export function TechniquesMatrix({
           // console.log(techReduce);
 
           const ReducedTechniques = () => {
-            const sortedTechniques =  Object.entries(techReduce).sort(
-              (a, b) =>  (b[1] as unknown[]).length - (a[1] as unknown[]).length 
+            const sortedTechniques = Object.entries(techReduce).sort(
+              (a, b) => (b[1] as unknown[]).length - (a[1] as unknown[]).length
             );
             // console.log(sortedTechniques);
-            
-            console.log(Object.entries(techReduce));
-            const entries = sortedTechniques.map(
-              ([key, techniques]) => {
-                if (techniques && Array.isArray(techniques)) {
-                  // console.log(techniques);
 
-                  // console.log(techniques.length);
-                  const uniqueTechniques = techniques.filter(
-                    (technique, index, self) => {
-                      // console.log(technique);
-                      return (
-                        index === self.findIndex((t) => t.id === technique.id)
-                      );
-                    }
-                  );
-                  return uniqueTechniques.map((technique) => (
-                    <TechniqueColumn
-                      key={technique.id}
-                      id={technique.id}
-                      name={technique.name}
-                      count={techniques.length}
-                    />
-                  ));
-                } else {
-                  console.log("No techniques found for key:", key);
-                  return null;
-                }
+            console.log(Object.entries(techReduce));
+            const entries = sortedTechniques.map(([key, techniques]) => {
+              if (techniques && Array.isArray(techniques)) {
+                // console.log(techniques);
+
+                // console.log(techniques.length);
+                const uniqueTechniques = techniques.filter(
+                  (technique, index, self) => {
+                    // console.log(technique);
+                    return (
+                      index === self.findIndex((t) => t.id === technique.id)
+                    );
+                  }
+                );
+                return uniqueTechniques.map((technique) => (
+                  <TechniqueColumn
+                    key={technique.id}
+                    id={technique.id}
+                    name={technique.name}
+                    count={techniques.length}
+                  />
+                ));
+              } else {
+                console.log("No techniques found for key:", key);
+                return null;
               }
-            );
+            });
             return <div>{entries}</div>;
           };
 

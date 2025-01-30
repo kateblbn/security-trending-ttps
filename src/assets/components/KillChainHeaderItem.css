@@ -40,5 +40,19 @@
   border-radius: 5px 5px 0 0;
 }
 .all-techniques-list {
-  width: 100%;
+  /* width: 100%; */
+}
+
+
+@media (max-width: 1450px) {
+  .table-number {
+    left: 38%;
+    width: 20px;
+    height: 20px;
+    top: -12px;
+  }
+  
+}
+
+@media (min-width: 2300px) {
 }

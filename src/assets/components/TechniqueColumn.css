@@ -1,7 +1,18 @@
 .tecnique-wrapper {
   display: flex;
+  background-color: rgb(188, 212, 231);
+  border-radius: 5px;
+  margin-bottom: 2px;
   flex-direction: column;
 }
+.tecnique-wrapper:nth-child(odd) {
+  background-color: #eeeeee;
+}
+.tecnique-wrapper:hover {
+  background-color: #e9d1bd;
+  transition: 0.7s;
+}
+
 .subtechniques-name {
   /* font-size: 0.5vw; */
 }
@@ -11,16 +22,9 @@
   height: 95%;
   width: 95%;
 }
-.subtechniques-list::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  width: 2px;
-}
-.subtechniques-list::-webkit-scrollbar {
-  width: 2px !important;
-}
-.subtechniques-list::-webkit-scrollbar-thumb {
-  background: rgb(218, 217, 217);
-  border-radius: 20px;
+.subtechniques-id {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .subtechniques-list {
   height: 85px;
@@ -32,7 +36,6 @@
 
 .yellow {
   background-color: #ffd903 !important;
-
 }
 .orange {
   background-color: #e9692c !important;
@@ -41,5 +44,31 @@
   background-color: #e10000 !important;
 }
 
+.tooltip-fs {
+  font-size: 10px;
+  color: black;
+  transition: 1s;
+}
 
+/* SCROLL BAR*/
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  width: 3px;
+}
+::-webkit-scrollbar {
+  width: 3px !important;
+  margin-right: 50px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(218, 217, 217);
+  border-radius: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
 
+@media (max-width: 1270px) {
+  .subtechniques-list {
+    height: 65px;
+    /* overflow: auto; */
+  }
+}

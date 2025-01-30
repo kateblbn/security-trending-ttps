@@ -12,10 +12,10 @@
 .technique-column {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 105%;
   /* height: 600px; */
   overflow-y: auto;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 .header-techniques-wrapper {
   display: flex;
@@ -45,7 +45,7 @@ table {
   justify-content: space-between;
   align-items: center;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   border-style: none !important;
   border-radius: 10px;
   border: 1px solid rgb(192, 192, 192);
@@ -66,8 +66,16 @@ table:last-child {
 }
 .line {
   margin: 0 auto;
-  width: 99%;
+  width: 99.5%;
   border: 1px solid #989494;
 }
 
-
+@media (max-width: 1200px) {
+  .mapping-list {
+    height: 65px;
+    /* width: 65px; */
+  }
+  .header-techniques-wrapper {
+    width: 80px;
+  }
+}

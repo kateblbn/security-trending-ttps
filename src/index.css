@@ -26,9 +26,9 @@ body {
 
 
 
-@media (max-width: 1200px) {
+@media (max-width: 1450px) {
   #root {
-    font-size: 16px;
+    font-size: 11px;
   }
 }
 
