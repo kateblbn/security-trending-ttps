@@ -1,4 +1,4 @@
-import { MitreTechnique, MitreTactic } from "../components/Data";
+import { MitreTechnique, MitreTactic, GroupCategoriesFilter } from "../components/Data";
 import { IRepository } from "./repository-interface";
 
 export class XrmRepository implements IRepository {
@@ -79,5 +79,39 @@ export class XrmRepository implements IRepository {
       id: x["esa_mitreenterprise1.esa_mitreid"] as string,
       tacticKeys: x["esa_mitreenterprise1.esa_tactics"] as string,
     }));
+  } 
+   async getFilteredCategoryGroup(): Promise<GroupCategoriesFilter[]> {
+    const fetchXml: string = `
+    	<fetch>
+      <entity name="esa_dynamicthreatactorttps">
+      <link-entity name="esa_mitreenterprise" from="esa_mitreenterpriseid" to="esa_ttp" alias="technique">
+        <attribute name="esa_mitreid" />
+        <attribute name="esa_name" />
+        <attribute name="esa_tactics" />
+      </link-entity>
+       <link-entity name="esa_threatactorgroup" from="esa_threatactorgroupid" to="esa_tagroup" alias="taGroup">
+          <attribute name="esa_name" />
+					<attribute name="esa_othernames" />
+          <link-entity name="esa_threatactorcategory" from="esa_threatactorcategoryid" to="esa_threatactorcategory" alias="category">
+          <attribute name="esa_name" />
+          </link-entity>
+        </link-entity>
+      </entity>
+    </fetch>
+    `;
+
+    const res: Xrm.RetrieveMultipleResult = 
+    await this.webApi.retrieveMultipleRecords(
+      'esa_dynamicthreatactorttps', 
+      `fetchXml=${encodeURIComponent(fetchXml)}`
+    );
+    return res.entities.map( x => ({
+      categoryName: x["category.esa_name"],
+      taGroup: x["taGroup.esa_name"],
+      techniqueName: x["technique.esa_name"],
+      techniqueTactic: x["technique.esa_tactics"],
+      otherNames: x["taGroup.esa_othernames"]
+    }))
   }
+
 }

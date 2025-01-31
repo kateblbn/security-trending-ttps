@@ -43,7 +43,7 @@ export function TechniquesMatrix({
             );
             // console.log(sortedTechniques);
 
-            console.log(Object.entries(techReduce));
+            // console.log(Object.entries(techReduce));
             const entries = sortedTechniques.map(([key, techniques]) => {
               if (techniques && Array.isArray(techniques)) {
                 // console.log(techniques);

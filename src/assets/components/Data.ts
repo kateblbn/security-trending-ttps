@@ -11,3 +11,12 @@ export type MitreTechnique = {
   id: string;
   tacticKeys: string;
 };
+export type GroupCategoriesFilter = {
+  [x: string]: any,
+  categoryName: string,
+  taGroup: string,
+  techniqueName: string,
+  techniqueTactic: string,
+  otherNames: String
+
+}

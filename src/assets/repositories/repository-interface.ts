@@ -1,4 +1,4 @@
-import { MitreTechnique, MitreTactic } from "../components/Data";
+import { MitreTechnique, MitreTactic, GroupCategoriesFilter } from "../components/Data";
 
 export interface IRepository {
   getTactics(): Promise<MitreTactic[]>;
@@ -8,4 +8,7 @@ export interface IRepository {
 }
 export interface IRepository {
   getTechniquesMatrixTrending(): Promise<MitreTechnique[]>;
+}
+export interface IRepository {
+  getFilteredCategoryGroup(): Promise<GroupCategoriesFilter[]>;
 }

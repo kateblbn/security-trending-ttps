@@ -1,14 +1,18 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { MitreTactic, MitreTechnique } from "./assets/components/Data";
+import { GroupCategoriesFilter, MitreTactic, MitreTechnique } from "./assets/components/Data";
 import { XrmRepository } from "./assets/repositories/xrm-repository";
 import { TechniquesMatrix } from "./assets/components/TechniquesMatrix";
 import { TestRepository } from "./assets/repositories/test-repository";
 import { Button, Switch, Tooltip } from "antd";
-import Header from './assets/components/Header/Header';
+import FilterBar from "./assets/components/Header/FilterBar";
 
 function App() {
   const [tactics, setTactics] = useState<MitreTactic[]>([]);
+  const [taCategory, settaCategory] = useState<GroupCategoriesFilter[]>([]);
+  console.log(taCategory);
+  
+
   const [techniquesBaseline, setTechniquesBaseline] = useState<
     MitreTechnique[]
   >([]);
@@ -16,7 +20,6 @@ function App() {
     MitreTechnique[]
   >([]);
   const [toggle, setToggle] = useState(false);
-  console.log(toggle);
 
   let repo = import.meta.env.DEV
     ? new TestRepository()
@@ -28,6 +31,7 @@ function App() {
     repo.getTactics().then((x) => setTactics(x));
     repo.getBaselineTechniques().then((x) => setTechniquesBaseline(x));
     repo.getTechniquesMatrixTrending().then((x) => setTechniquesTrending(x));
+    repo.getFilteredCategoryGroup().then( x => settaCategory(x))
   }, []);
 
   const onChange = (x: boolean) => {
@@ -36,7 +40,7 @@ function App() {
 
   return (
     <>
-    <Header/>
+      <FilterBar categoryName={taCategory}/>
       <Switch onChange={onChange} />
       <TechniquesMatrix
         tactics={tactics}
