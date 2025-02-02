@@ -1,4 +1,10 @@
 #root {
+  position: relative;
   margin: 50px auto auto auto;
 }
 
+.ant-switch {
+  position: absolute;
+  top: 130px;
+  right: 20px;
+}

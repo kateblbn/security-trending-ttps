@@ -1,16 +1,29 @@
-import { MitreTactic, MitreTechnique } from "./Data";
+import { GroupCategoriesFilter, MitreTactic, MitreTechnique } from "./Data";
 import { TechniqueColumn } from "./TechniqueColumn";
 import { KillChainHeaderItem } from "./KillChainHeaderItem";
 import "./TechniquesMatrix.css";
 import { useState } from "react";
 
 export function TechniquesMatrix({
+  categoryName,
   tactics,
   techniques,
+  taCategoryValue,
+  taNameValue,
+  taOtherNameValue
 }: {
+  categoryName: GroupCategoriesFilter[];
   tactics: MitreTactic[];
   techniques: MitreTechnique[];
+  taCategoryValue:any
+  taNameValue:any /* CHANGE TYPE! */
+  taOtherNameValue:any
 }) {
+  console.log(taCategoryValue); /*persistence, privilege-escalation */
+
+  // *********************************************
+  // categoryName.techniqueTactic === tactics.tacticsKey
+  
   tactics.sort((a, b) => a.number - b.number);
 
   return (
@@ -26,7 +39,17 @@ export function TechniquesMatrix({
             }
             return false;
           });
-          // console.log(relatedTechniques);
+          // console.log(taCategoryValue);
+          const filteredTechniques = relatedTechniques.filter( technique => {            
+            const matchedCategory = taCategoryValue ? technique.tacticKeys === taCategoryValue : true
+            const matchedName = taNameValue ? technique.tacticKeys === taNameValue : true
+            const matchedOtherName = taOtherNameValue ? technique.tacticKeys === taOtherNameValue : true
+
+            // console.log(matchedCategory);
+            return matchedCategory && matchedName && matchedOtherName
+          } );
+          console.log(relatedTechniques);
+          
           let techReduce = relatedTechniques.reduce((acc, item) => {
             if (!acc[item.id]) {
               // console.log(acc[item.id]);
@@ -57,6 +80,8 @@ export function TechniquesMatrix({
                     );
                   }
                 );
+                // console.log(uniqueTechniques);
+                
                 return uniqueTechniques.map((technique) => (
                   <TechniqueColumn
                     key={technique.id}
@@ -72,6 +97,8 @@ export function TechniquesMatrix({
             });
             return <div>{entries}</div>;
           };
+          // console.log(tactic.tactic);
+          
 
           return (
             <div className="header-techniques-wrapper" key={tactic.id}>

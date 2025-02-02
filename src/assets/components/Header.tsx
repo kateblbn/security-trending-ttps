@@ -1,16 +1,26 @@
-import logo from "./images/Telenor.png";
+import { ReactNode } from "react";
+import "./Header.css";
+import logo from "../images/Telenor.png"
 
-export default function HeaderLogo() {
+type HeaderProps = {
+  title: string;
+  subTitle?: ReactNode;
+  lowerRightCorner?: ReactNode;
+  //consider making optional
+  children?: ReactNode;
+};
+
+export default function Header(props: HeaderProps) {
   return (
-    <div className=" container">
-      <div className="">
-        <div className="logo">
-          <img className="logo_img" src={logo} alt="telenor" />
-        </div>
-        <div className="logo_title">
-          <h1 className="">Telenor</h1>
-        </div>
+    <div className="header-wrapper">
+      <div className="Header">
+        <img src={logo} id="telenorLogo" />
+        <h1 className="title">{props.title}</h1>
+        <div className="subTitle">{props.subTitle}</div>
+
+        {props.children}
       </div>
+      <div className="lowerRightCorner">{props.lowerRightCorner}</div>
     </div>
   );
 }

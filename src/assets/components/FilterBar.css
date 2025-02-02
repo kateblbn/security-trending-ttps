@@ -1,0 +1,10 @@
+.filter-container {
+  height: 80px;
+  background-color: rgb(223, 223, 223);
+}
+.dropdown-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 25px 0 0 70px;
+}

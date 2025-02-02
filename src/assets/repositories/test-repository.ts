@@ -11109,13 +11109,6 @@ const dataOfTechniquesTrending: MitreTechnique[] = [
   },
 ];
 
-
-
-
-
-
-
-
 const dataOfFilteredGroup: GroupCategoriesFilter[] = [
   {
     "@odata.etag": 'W/"16473250"',

@@ -1,0 +1,69 @@
+.header-wrapper{
+    width: 100%;
+    position: relative;
+  
+    .Header {
+      align-items: center;
+      width: 100%;
+      display: flex;
+      /* justify-content: space-between; */
+      color: #fff;
+      background-color: #000F3C;
+      box-sizing: border-box;
+      padding: 2% 5%;
+      clip-path: polygon(30% 0%, 70% 0%, 100% 0, 100% 50%, 95% 100%, 5% 100%, 0 50%, 0 0);
+      
+      select {
+        color: #000F3C ;
+        height: 2.2rem;
+        margin-top: 8px;
+        font-size: 1.2rem;
+        border-radius: 4px;
+        padding: 4px;
+        border: none;
+      }
+  
+      #telenorLogo {
+        width: 4rem;
+        height: 4rem;
+        background: url("../images/Telenor.png");
+        margin-right: 25px;
+      }
+    .subTitle {
+        font-size: 22px;
+        font-weight: 700;
+        display: block;
+    margin-left: auto;
+    margin-right: auto
+    }
+      .title {
+        display: flex;
+        align-items: center;
+        color: #fff;
+    
+        h1 {
+          display: inline;
+          margin: 0px 20px 0 0;
+          font-family: 'Segoe UI', sans-serif;
+          color: #fff;
+        }
+      
+        h2 {
+          display: inline;
+          font-family: 'DIN', sans-serif;
+          text-align: left;
+      
+        }
+    
+      
+      }
+    
+  }
+  
+    .lowerRightCorner{
+      position: absolute;
+      right: 0.5rem;
+      bottom: 0.5rem;
+    }
+  
+  }
