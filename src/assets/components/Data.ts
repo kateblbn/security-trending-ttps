@@ -17,6 +17,6 @@ export type GroupCategoriesFilter = {
   taGroup: string,
   techniqueName: string,
   techniqueTactic: string,
-  otherNames: String
+  otherNames: string
 
 }

@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  padding-top: 20px;
+  padding-top: 40px;
 }
 .header-technique {
   display: flex;
@@ -13,7 +13,7 @@
 .technique-column {
   display: flex;
   flex-direction: column;
-  width: 105%;
+  width: 102%;
   /* height: 600px; */
   overflow-y: auto;
   margin-top: 5px;

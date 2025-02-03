@@ -8,61 +8,110 @@ import {
 import { XrmRepository } from "./assets/repositories/xrm-repository";
 import { TechniquesMatrix } from "./assets/components/TechniquesMatrix";
 import { TestRepository } from "./assets/repositories/test-repository";
-import { Button, Switch, Tooltip } from "antd";
+import { Button, Switch } from "antd";
 import FilterBar from "./assets/components/FilterBar";
 import Header from "./assets/components/Header";
 
 function App() {
+  const SELECT_ALL_VALUE = "all";
   const [tactics, setTactics] = useState<MitreTactic[]>([]);
+  const [techniques, setTechniques] = useState<MitreTechnique[]>([]);
   const [taCategory, setTaCategory] = useState<GroupCategoriesFilter[]>([]);
 
-  const [taCategoryValue, setTaCategoryValue] = useState("");
-  const [taNameValue, setTaNameValue] = useState("");
-  const [taOtherNameValue, setTaOtherName] = useState("");
-  // console.log(taCategory);
+  const [taCategoryValue, setTaCategoryValue] = useState(SELECT_ALL_VALUE); //value from NS = tacticKeys. fe command-and-control
+  // console.log(taCategoryValue);
 
-  const [techniquesBaseline, setTechniquesBaseline] = useState<
-    MitreTechnique[]
-  >([]);
-  const [techniquesTrending, setTechniquesTrending] = useState<
-    MitreTechnique[]
-  >([]);
+  const [taNameValue, setTaNameValue] = useState(SELECT_ALL_VALUE);
+  const [taOtherNameValue, setTaOtherName] = useState(SELECT_ALL_VALUE);
   const [toggle, setToggle] = useState(false);
 
   let repo = import.meta.env.DEV
     ? new TestRepository()
     : new XrmRepository(window.parent.Xrm);
-  // repo = new XrmRepository(window.parent.Xrm);
-  // console.log(repo);
 
   useEffect(() => {
     repo.getTactics().then((x) => setTactics(x));
-    repo.getBaselineTechniques().then((x) => setTechniquesBaseline(x));
-    repo.getTechniquesMatrixTrending().then((x) => setTechniquesTrending(x));
+    repo.getBaselineTechniques().then((x) => setTechniques(x));
+    repo.getTechniquesMatrixTrending().then((x) => setTechniques(x));
     repo.getFilteredCategoryGroup().then((x) => setTaCategory(x));
   }, []);
 
   const onChange = (x: boolean) => {
     setToggle(x);
   };
+  console.log(taCategory);
 
+  /// 1. filter techniques by threat category if selected
+  let filteredByCategory;
+
+  if (taCategoryValue == SELECT_ALL_VALUE) filteredByCategory = taCategory;
+  else
+    filteredByCategory = taCategory.filter(
+      (tech) => tech.categoryName === taCategoryValue
+    );
+
+  console.log(filteredByCategory);
+
+  /// 2. filter techniques by threat actor if selected
+  let filteredByActor;
+
+  if (taNameValue === SELECT_ALL_VALUE) filteredByActor = filteredByCategory;
+  else
+    filteredByActor = filteredByCategory.filter(
+      (tech) => tech.taGroup === taNameValue
+    );
+  console.log(filteredByActor);
+
+  /// 3. group filtered techniques by tactic
+  const tacticsWithTechniques = filteredByActor.reduce(
+    (acc: Map<string, GroupCategoriesFilter[]>, currentTechnique) => {
+      console.log(acc);
+
+      const tactics = currentTechnique.techniqueTactic.split(", ");
+      for (let tactic of tactics) {
+        if (acc.has(tactic)) acc.get(tactic).push(currentTechnique);
+        else acc.set(tactic, [currentTechnique]);
+      }
+      return acc;
+    },
+    new Map<string, GroupCategoriesFilter[]>()
+  );
+
+  console.log(taCategoryValue);
+
+  const filteredTechniques = techniques.filter((technique) => {
+    if (taCategoryValue) {
+      if (Array.isArray(technique.tacticKeys)) {
+        return technique.tacticKeys.includes(taCategoryValue);
+      } else if (typeof technique.tacticKeys === "string") {
+        return technique.tacticKeys.split(", ").includes(taCategoryValue);
+      }
+    }
+    return true;
+  });
   return (
     <>
-    <Header title="Telenor" subTitle="Baseline"/>
-      <FilterBar
-        categoryName={taCategory}
-        setTaCategoryValue={setTaCategoryValue}
-        setTaNameValue={setTaNameValue}
-        setTaOtherName={setTaOtherName}
+      <Header
+        title="Telenor"
+        subTitle={toggle ? "Baseline TTPs" : "Trending TTPs"}
       />
-      <Switch onChange={onChange} />
+      <div className="switch-flex">
+        <FilterBar
+          categoryName={taCategory}
+          setTaCategoryValue={setTaCategoryValue}
+          setTaNameValue={setTaNameValue}
+          setTaOtherName={setTaOtherName}
+        />
+        <Switch onChange={onChange} />
+      </div>
+
       <TechniquesMatrix
         tactics={tactics}
-        techniques={toggle ? techniquesBaseline : techniquesTrending}
+        techniques={filteredTechniques}
         taCategoryValue={taCategoryValue}
         taNameValue={taNameValue}
         taOtherNameValue={taOtherNameValue}
-        categoryName={taCategory}
+        tacticsWithTechniques={tacticsWithTechniques}
       />
     </>
   );

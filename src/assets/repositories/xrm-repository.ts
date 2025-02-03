@@ -103,7 +103,7 @@ export class XrmRepository implements IRepository {
     const res: Xrm.RetrieveMultipleResult = 
     await this.webApi.retrieveMultipleRecords(
       'esa_dynamicthreatactorttps', 
-      `fetchXml=${encodeURIComponent(fetchXml)}`
+      `?fetchXml=${encodeURIComponent(fetchXml)}`
     );
     return res.entities.map( x => ({
       categoryName: x["category.esa_name"],

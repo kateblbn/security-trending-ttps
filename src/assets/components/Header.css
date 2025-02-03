@@ -1,6 +1,6 @@
 .header-wrapper{
     width: 100%;
-    position: relative;
+    /* position: relative; */
   
     .Header {
       align-items: center;
@@ -26,15 +26,15 @@
       #telenorLogo {
         width: 4rem;
         height: 4rem;
-        background: url("../images/Telenor.png");
+        background: url("./images/telenorLogo.png");
         margin-right: 25px;
       }
     .subTitle {
-        font-size: 22px;
+        font-size: 2.2rem;
         font-weight: 700;
-        display: block;
-    margin-left: auto;
-    margin-right: auto
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
     }
       .title {
         display: flex;
