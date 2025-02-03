@@ -17,12 +17,16 @@ function App() {
   const [tactics, setTactics] = useState<MitreTactic[]>([]);
   const [techniques, setTechniques] = useState<MitreTechnique[]>([]);
   const [taCategory, setTaCategory] = useState<GroupCategoriesFilter[]>([]);
-
+  
+  
   const [taCategoryValue, setTaCategoryValue] = useState(SELECT_ALL_VALUE); //value from NS = tacticKeys. fe command-and-control
   // console.log(taCategoryValue);
-
+  
   const [taNameValue, setTaNameValue] = useState(SELECT_ALL_VALUE);
-  const [taOtherNameValue, setTaOtherName] = useState(SELECT_ALL_VALUE);
+  const [taOtherNameValue, setTaOtherName] = useState(SELECT_ALL_VALUE); //selected UNC94 (Mandiant) from filterBar
+  // console.log(taOtherNameValue, taNameValue);
+  console.log(taCategoryValue);
+  
   const [toggle, setToggle] = useState(false);
 
   let repo = import.meta.env.DEV
@@ -39,7 +43,7 @@ function App() {
   const onChange = (x: boolean) => {
     setToggle(x);
   };
-  console.log(taCategory);
+  // console.log(taCategory);
 
   /// 1. filter techniques by threat category if selected
   let filteredByCategory;
@@ -47,10 +51,12 @@ function App() {
   if (taCategoryValue == SELECT_ALL_VALUE) filteredByCategory = taCategory;
   else
     filteredByCategory = taCategory.filter(
-      (tech) => tech.categoryName === taCategoryValue
+      (tech) => {
+        tech.categoryName === taCategoryValue 
+      }
     );
 
-  console.log(filteredByCategory);
+  // console.log(filteredByCategory);
 
   /// 2. filter techniques by threat actor if selected
   let filteredByActor;
@@ -62,10 +68,21 @@ function App() {
     );
   console.log(filteredByActor);
 
+  let filteredByOther 
+
+  if ( taOtherNameValue == SELECT_ALL_VALUE) filteredByOther = filteredByActor
+  else 
+  filteredByOther = filteredByActor.filter( tech => tech.otherNames === taOtherNameValue)
+console.log(filteredByOther);
+
+
+
+  // tech.otherNames === taOtherNameValue
   /// 3. group filtered techniques by tactic
-  const tacticsWithTechniques = filteredByActor.reduce(
+  const tacticsWithTechniques = filteredByOther.reduce(
     (acc: Map<string, GroupCategoriesFilter[]>, currentTechnique) => {
-      console.log(acc);
+      // console.log(acc);
+// console.log(currentTechnique);
 
       const tactics = currentTechnique.techniqueTactic.split(", ");
       for (let tactic of tactics) {
@@ -77,7 +94,7 @@ function App() {
     new Map<string, GroupCategoriesFilter[]>()
   );
 
-  console.log(taCategoryValue);
+  // console.log(taCategoryValue);
 
   const filteredTechniques = techniques.filter((technique) => {
     if (taCategoryValue) {

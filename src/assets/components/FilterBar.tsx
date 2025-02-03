@@ -20,7 +20,7 @@ export default function FilterBar({
   const taCategory = categoryName.map((e) => e.categoryName);
   const taName = categoryName.map((e) => e.taGroup);
   const taOtherName = categoryName.map((e) => e.otherNames);
-  console.log(categoryName);
+  // console.log(taOtherName);
 
   taName.sort();
   taCategory.sort();
@@ -38,7 +38,7 @@ export default function FilterBar({
     if (!acc.includes(current)) acc.push(current);
     return acc;
   }, []);
-  console.log(uniqueOtherCategories);
+  // console.log(uniqueOtherCategories);
 
   const onChangeActor = (value: string) => {
     setTaCategoryValue(value);
