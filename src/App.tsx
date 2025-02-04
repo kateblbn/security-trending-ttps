@@ -15,18 +15,16 @@ import Header from "./assets/components/Header";
 function App() {
   const SELECT_ALL_VALUE = "all";
   const [tactics, setTactics] = useState<MitreTactic[]>([]);
-  const [techniques, setTechniques] = useState<MitreTechnique[]>([]);
-  const [taCategory, setTaCategory] = useState<GroupCategoriesFilter[]>([]);
-  
-  
+  const [techniques, setTechniques] = useState<GroupCategoriesFilter[]>([]);
+
   const [taCategoryValue, setTaCategoryValue] = useState(SELECT_ALL_VALUE); //value from NS = tacticKeys. fe command-and-control
-  // console.log(taCategoryValue);
-  
+  console.log(taCategoryValue);
+
   const [taNameValue, setTaNameValue] = useState(SELECT_ALL_VALUE);
   const [taOtherNameValue, setTaOtherName] = useState(SELECT_ALL_VALUE); //selected UNC94 (Mandiant) from filterBar
   // console.log(taOtherNameValue, taNameValue);
   console.log(taCategoryValue);
-  
+
   const [toggle, setToggle] = useState(false);
 
   let repo = import.meta.env.DEV
@@ -35,31 +33,26 @@ function App() {
 
   useEffect(() => {
     repo.getTactics().then((x) => setTactics(x));
-    repo.getBaselineTechniques().then((x) => setTechniques(x));
-    repo.getTechniquesMatrixTrending().then((x) => setTechniques(x));
-    repo.getFilteredCategoryGroup().then((x) => setTaCategory(x));
+    repo.getFilteredCategoryGroup().then((x) => setTechniques(x));
   }, []);
 
   const onChange = (x: boolean) => {
     setToggle(x);
   };
   // console.log(taCategory);
-
   /// 1. filter techniques by threat category if selected
-  let filteredByCategory;
+  let filteredByCategory: GroupCategoriesFilter[];
 
-  if (taCategoryValue == SELECT_ALL_VALUE) filteredByCategory = taCategory;
+  if (taCategoryValue == SELECT_ALL_VALUE) filteredByCategory = techniques;
   else
-    filteredByCategory = taCategory.filter(
-      (tech) => {
-        tech.categoryName === taCategoryValue 
-      }
-    );
+    filteredByCategory = techniques.filter((tech) => {
+      tech.categoryName === taCategoryValue;
+    });
 
-  // console.log(filteredByCategory);
+  console.log(filteredByCategory);
 
   /// 2. filter techniques by threat actor if selected
-  let filteredByActor;
+  let filteredByActor: GroupCategoriesFilter[];
 
   if (taNameValue === SELECT_ALL_VALUE) filteredByActor = filteredByCategory;
   else
@@ -68,21 +61,21 @@ function App() {
     );
   console.log(filteredByActor);
 
-  let filteredByOther 
+  let filteredByOther: GroupCategoriesFilter[];
 
-  if ( taOtherNameValue == SELECT_ALL_VALUE) filteredByOther = filteredByActor
-  else 
-  filteredByOther = filteredByActor.filter( tech => tech.otherNames === taOtherNameValue)
-console.log(filteredByOther);
-
-
+  if (taOtherNameValue == SELECT_ALL_VALUE) filteredByOther = filteredByActor;
+  else
+    filteredByOther = filteredByActor.filter(
+      (tech) => tech.otherNames === taOtherNameValue
+    );
+  console.log(filteredByOther);
 
   // tech.otherNames === taOtherNameValue
   /// 3. group filtered techniques by tactic
   const tacticsWithTechniques = filteredByOther.reduce(
     (acc: Map<string, GroupCategoriesFilter[]>, currentTechnique) => {
       // console.log(acc);
-// console.log(currentTechnique);
+      // console.log(currentTechnique);
 
       const tactics = currentTechnique.techniqueTactic.split(", ");
       for (let tactic of tactics) {
@@ -96,16 +89,25 @@ console.log(filteredByOther);
 
   // console.log(taCategoryValue);
 
-  const filteredTechniques = techniques.filter((technique) => {
-    if (taCategoryValue) {
-      if (Array.isArray(technique.tacticKeys)) {
-        return technique.tacticKeys.includes(taCategoryValue);
-      } else if (typeof technique.tacticKeys === "string") {
-        return technique.tacticKeys.split(", ").includes(taCategoryValue);
-      }
-    }
-    return true;
-  });
+  const uniqueCategories = filteredByOther.reduce((acc: string[], current) => {
+    if (!acc.includes(current.categoryName)) acc.push(current.categoryName);
+    return acc;
+  }, []);
+  const uniqueActorMainNames = filteredByOther.reduce(
+    (acc: string[], current) => {
+      if (!acc.includes(current.taGroup)) acc.push(current.taGroup);
+      return acc;
+    },
+    []
+  );
+  const uniqueActorOtherNames = filteredByOther.reduce(
+    (acc: string[], current) => {
+      if (!acc.includes(current.otherNames)) acc.push(current.otherNames);
+      return acc;
+    },
+    []
+  );
+
   return (
     <>
       <Header
@@ -114,20 +116,18 @@ console.log(filteredByOther);
       />
       <div className="switch-flex">
         <FilterBar
-          categoryName={taCategory}
-          setTaCategoryValue={setTaCategoryValue}
-          setTaNameValue={setTaNameValue}
-          setTaOtherName={setTaOtherName}
+          categoryValues={uniqueCategories}
+          actorMainNames={uniqueActorMainNames}
+          actorOtherNames={uniqueActorOtherNames}
+          onCategoryChange={setTechniques}
+          onActorMainNameChange={setTaNameValue}
+          onActorOtherNameChange={setTaOtherName}
         />
         <Switch onChange={onChange} />
       </div>
 
       <TechniquesMatrix
         tactics={tactics}
-        techniques={filteredTechniques}
-        taCategoryValue={taCategoryValue}
-        taNameValue={taNameValue}
-        taOtherNameValue={taOtherNameValue}
         tacticsWithTechniques={tacticsWithTechniques}
       />
     </>

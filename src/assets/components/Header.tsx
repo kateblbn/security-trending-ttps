@@ -13,10 +13,13 @@ type HeaderProps = {
 export default function Header(props: HeaderProps) {
   return (
     <div className="header-wrapper">
+       <div className="subTitle">{props.subTitle}</div>
+
       <div className="Header">
-        <img src="./images/telenorLogo.png" id="telenorLogo" />
+        {/* <img src="./images/telenorLogo.png" id="telenorLogo" /> */}
+        <img src={logo} id="telenorLogo" />
+        
         <h1 className="title">{props.title}</h1>
-        <div className="subTitle">{props.subTitle}</div>
 
         {props.children}
       </div>

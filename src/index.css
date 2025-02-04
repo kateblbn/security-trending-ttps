@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  width: 100%;
 }
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -25,7 +26,11 @@ body {
 }
 
 
-
+@media (max-width: 1200px) {
+  #root, body {
+    width: 1200px;
+  }
+}
 @media (max-width: 1450px) {
   #root {
     font-size: 11px;

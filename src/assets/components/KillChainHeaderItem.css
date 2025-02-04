@@ -2,12 +2,20 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  border-radius: 0 0 2px 2px;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  background-color: #118DFF;
+
+
 }
 .table-id {
   width: 100%;
-  border-top: 1px solid rgb(192, 192, 192);
-  background-color: #8ca7c0;
-  border-radius: 0 0 5px 5px;
+  /* border-top: 1px solid rgb(192, 192, 192); */
+  color: white;
+
+
 }
 .table-number {
   align-items: center;
@@ -18,7 +26,9 @@
   top: -24px;
   left: 38%;
   right: 38%;
-  background-color: #8ca7c0;
+  background-color: #118DFF ;
+  border: 1px solid black;
+  color: white;
 
   width: 30px;
   height: 30px;
@@ -30,14 +40,15 @@
   font-weight: 500;
 }
 .table-tactic-wrapper {
-  background-color: rgb(199 220 239);
+  background-color: #118DFF ;
+  border: 1px solid black;
   width: 100%;
   height: 100%;
   /* text-align: center; */
   align-items: center;
   justify-content: center;
   display: flex;
-  border-radius: 5px 5px 0 0;
+  border-radius: 2px 2px 0 0;
 }
 .all-techniques-list {
   /* width: 100%; */
@@ -50,6 +61,9 @@
     width: 20px;
     height: 20px;
     top: -12px;
+  }
+  .all-techniques-list {
+    width: auto;
   }
   
 }
