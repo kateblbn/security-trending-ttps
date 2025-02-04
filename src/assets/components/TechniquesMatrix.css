@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  padding-top: 20px;
+  padding-top: 27px;
 }
 .header-technique {
   display: flex;
@@ -80,8 +80,7 @@ table:last-child {
 }
 
 @media (min-width: 1200px) {
-
-.header-techniques-wrapper {
-  flex-grow: 1;
-}
+  .header-techniques-wrapper {
+    flex-grow: 1;
+  }
 }

@@ -1,9 +1,9 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import {
-  GroupCategoriesFilter,
+  BaselineTechnique,
   MitreTactic,
-  MitreTechnique,
+  TrendingTechnique,
 } from "./assets/components/Data";
 import { XrmRepository } from "./assets/repositories/xrm-repository";
 import { TechniquesMatrix } from "./assets/components/TechniquesMatrix";
@@ -14,8 +14,10 @@ import Header from "./assets/components/Header";
 
 function App() {
   const SELECT_ALL_VALUE = "all";
-  const [tactics, setTactics] = useState<MitreTactic[]>([]);
-  const [techniques, setTechniques] = useState<GroupCategoriesFilter[]>([]);
+  const [tactics, setTactics] = useState<MitreTactic[]>();
+  const [techniques, setTechniques] = useState<TrendingTechnique[]>();
+  const [baselineTechniques, setBaselineTechniques] = useState<TrendingTechnique[]>();
+
 
   const [taCategoryValue, setTaCategoryValue] = useState(SELECT_ALL_VALUE); //value from NS = tacticKeys. fe command-and-control
   console.log(taCategoryValue);
@@ -33,58 +35,69 @@ function App() {
 
   useEffect(() => {
     repo.getTactics().then((x) => setTactics(x));
-    repo.getFilteredCategoryGroup().then((x) => setTechniques(x));
+    repo.getTrendingTechniques().then((x) => setTechniques(x));
+    repo.getBaselineTechniques().then((x) => setBaselineTechniques(x));
+  ;
   }, []);
 
   const onChange = (x: boolean) => {
     setToggle(x);
   };
+if (!tactics || !techniques || !baselineTechniques) {
+  return "Loading.."
+} 
+
   // console.log(taCategory);
   /// 1. filter techniques by threat category if selected
-  let filteredByCategory: GroupCategoriesFilter[];
+  let filteredByCategory;
 
   if (taCategoryValue == SELECT_ALL_VALUE) filteredByCategory = techniques;
   else
     filteredByCategory = techniques.filter((tech) => {
-      tech.categoryName === taCategoryValue;
+      console.log(tech.categoryName);
+
+     return tech.categoryName == taCategoryValue;
     });
 
   console.log(filteredByCategory);
+  
+  console.log(taCategoryValue);
+
 
   /// 2. filter techniques by threat actor if selected
-  let filteredByActor: GroupCategoriesFilter[];
+  let filteredByActor: TrendingTechnique[];
 
-  if (taNameValue === SELECT_ALL_VALUE) filteredByActor = filteredByCategory;
+  if (taNameValue == SELECT_ALL_VALUE) filteredByActor = filteredByCategory;
   else
     filteredByActor = filteredByCategory.filter(
-      (tech) => tech.taGroup === taNameValue
+      (tech) => tech.taGroup == taNameValue
     );
   console.log(filteredByActor);
 
-  let filteredByOther: GroupCategoriesFilter[];
+  let filteredByOther: TrendingTechnique[]; 
 
   if (taOtherNameValue == SELECT_ALL_VALUE) filteredByOther = filteredByActor;
   else
     filteredByOther = filteredByActor.filter(
       (tech) => tech.otherNames === taOtherNameValue
     );
-  console.log(filteredByOther);
+  console.log(typeof filteredByOther);
 
   // tech.otherNames === taOtherNameValue
   /// 3. group filtered techniques by tactic
   const tacticsWithTechniques = filteredByOther.reduce(
-    (acc: Map<string, GroupCategoriesFilter[]>, currentTechnique) => {
+    (acc: Map<string, TrendingTechnique[]>, currentTechnique) => {
       // console.log(acc);
       // console.log(currentTechnique);
 
-      const tactics = currentTechnique.techniqueTactic.split(", ");
+      const tactics = currentTechnique.techniqueTactics.split(", ");
       for (let tactic of tactics) {
         if (acc.has(tactic)) acc.get(tactic).push(currentTechnique);
         else acc.set(tactic, [currentTechnique]);
       }
       return acc;
     },
-    new Map<string, GroupCategoriesFilter[]>()
+    new Map<string, TrendingTechnique[]>()
   );
 
   // console.log(taCategoryValue);
@@ -119,7 +132,7 @@ function App() {
           categoryValues={uniqueCategories}
           actorMainNames={uniqueActorMainNames}
           actorOtherNames={uniqueActorOtherNames}
-          onCategoryChange={setTechniques}
+          onCategoryChange={setTaCategoryValue}
           onActorMainNameChange={setTaNameValue}
           onActorOtherNameChange={setTaOtherName}
         />

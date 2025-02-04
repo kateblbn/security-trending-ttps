@@ -1,4 +1,4 @@
-import { GroupCategoriesFilter, MitreTactic, MitreTechnique } from "./Data";
+import {  MitreTactic, TrendingTechnique } from "./Data";
 import { TechniqueColumn } from "./TechniqueColumn";
 import { KillChainHeaderItem } from "./KillChainHeaderItem";
 import "./TechniquesMatrix.css";
@@ -7,7 +7,7 @@ export function TechniquesMatrix({
   tacticsWithTechniques,
   tactics,
 }: {
-  tacticsWithTechniques: Map<string, GroupCategoriesFilter[]>;
+  tacticsWithTechniques: Map<string, TrendingTechnique[]>;
   tactics: MitreTactic[];
 }) {
   tactics.sort((a, b) => a.number - b.number);
@@ -32,7 +32,7 @@ export function TechniquesMatrix({
                 {techniques.map((technique) => (
                   <TechniqueColumn
                     name={technique.techniqueName}
-                    key={technique.categoryName}
+                    key={technique.techniqueTactics}
                     count={tactic.number}
                     id={tactic.id}
                   />

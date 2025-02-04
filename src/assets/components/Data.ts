@@ -5,18 +5,20 @@ export type MitreTactic = {
   tacticsKey: string;
 };
 
-export type MitreTechnique = {
+export type TrendingTechnique = {
+  // [x: string]: any;
+  techniqueId: string;
+  categoryName: string,
+  taGroup: string,
+  techniqueName: string,
+  techniqueTactics: string,
+  otherNames: string
+
+
+};
+export type BaselineTechnique = {
   [x: string]: any;
   name: string;
   id: string;
   tacticKeys: string;
 };
-export type GroupCategoriesFilter = {
-  [x: string]: any,
-  categoryName: string,
-  taGroup: string,
-  techniqueName: string,
-  techniqueTactic: string,
-  otherNames: string
-
-}

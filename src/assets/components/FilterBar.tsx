@@ -2,7 +2,6 @@ import React, { createContext, useState } from "react";
 import { DownOutlined, SmileOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Dropdown, Select, Space } from "antd";
-import { GroupCategoriesFilter } from "./Data";
 import "./FilterBar.css";
 type FilterBar = {};
 

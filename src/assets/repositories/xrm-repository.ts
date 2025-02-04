@@ -1,8 +1,4 @@
-import {
-  MitreTechnique,
-  MitreTactic,
-  GroupCategoriesFilter,
-} from "../components/Data";
+import { BaselineTechnique as DisplayingTechniques, MitreTactic, TrendingTechnique } from "../components/Data";
 import { IRepository } from "./repository-interface";
 
 export class XrmRepository implements IRepository {
@@ -11,6 +7,14 @@ export class XrmRepository implements IRepository {
   constructor(xrm: Xrm.XrmStatic) {
     this.webApi = xrm.WebApi;
   }
+  // {
+  //   "@odata.etag": "W/\"16051313\"",
+  //   "esa_id": "TA0006",
+  //   "esa_number": 8,
+  //   "esa_keyname": "credential-access",
+  //   "esa_mitretacticsid": "3f8f912d-6286-46dd-bc16-1c5a0882d5b2",
+  //   "esa_name": "Credential Access"
+  // }
   async getTactics(): Promise<MitreTactic[]> {
     const fetchXml: string = `
       <fetch>
@@ -36,15 +40,30 @@ export class XrmRepository implements IRepository {
     }));
   }
 
-  async getBaselineTechniques(): Promise<MitreTechnique[]> {
+
+	// {
+  //   "@odata.etag": "W/\"15087017\"",
+  //   "esa_threatactorttpsid": "66359458-7fa6-ef11-b8e9-000d3a6685a9",
+  //   "technique.esa_mitreid": "T1027",
+  //   "technique.esa_name": "Obfuscated Files or Information",
+  //   "technique.esa_tactics": "defense-evasion"
+  // }, 
+  async getBaselineTechniques(): Promise<TrendingTechnique[]> {
     const fetchXml: string = `
     <fetch>
 	    <entity name='esa_threatactorttps'>
-        <link-entity name='esa_mitreenterprise' from='esa_mitreenterpriseid' to='esa_mitreid' alias='technique'>
-          <attribute name='esa_mitreid' />
-          <attribute name='esa_name' />
-          <attribute name='esa_tactics' />
-	  	</link-entity>
+        <link-entity name="esa_mitreenterprise" from="esa_mitreenterpriseid" to="esa_ttp" alias="technique">
+          <attribute name="esa_mitreid" />
+          <attribute name="esa_name" />
+          <attribute name="esa_tactics" />
+        </link-entity>
+        <link-entity name="esa_threatactorgroup" from="esa_threatactorgroupid" to="esa_tagroup" alias="taGroup">
+            <attribute name="esa_name" />
+            <attribute name="esa_othernames" />
+            <link-entity name="esa_threatactorcategory" from="esa_threatactorcategoryid" to="esa_threatactorcategory" alias="category">
+            <attribute name="esa_name" />
+            </link-entity>
+          </link-entity>
   	</entity>
   </fetch>`;
 
@@ -54,54 +73,44 @@ export class XrmRepository implements IRepository {
         `?fetchXml=${encodeURIComponent(fetchXml)}`
       );
 
-    return resTechniques.entities.map((x) => ({
-      id: x["technique.esa_mitreid"] as string,
-      name: x["technique.esa_name"] as string,
-      tacticKeys: x["technique.esa_tactics"] as string,
-    }));
-  }
-  async getTechniquesMatrixTrending(): Promise<MitreTechnique[]> {
+      return resTechniques.entities.map((x) => ({
+        techniqueId: x["technique.esa_mitreid"] as string,
+        categoryName: x["category.esa_name"],
+        taGroup: x["taGroup.esa_name"],
+        techniqueName: x["technique.esa_name"],
+        techniqueTactics: x["technique.esa_tactics"],
+        otherNames: x["taGroup.esa_othernames"],
+      }));
+    }
+  // {
+  //   "@odata.etag": "W/\"16473250\"",
+  //   "esa_dynamicthreatactorttpsid": "7cf0f591-ed70-ef11-a670-000d3a664cf5",
+  //   "technique.esa_mitreid": "T1204",
+  //   "technique.esa_name": "User Execution",
+  //   "technique.esa_tactics": "execution",
+  //   "taGroup.esa_name": "Kimsuky (NK)",
+  //   "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
+  //   "category.esa_name": "Nation-State (Others)"
+  // },
+  
+  async getTrendingTechniques(): Promise<TrendingTechnique[]> {
     const fetchXml: string = `
-    <fetch>
-      <entity name="esa_dynamicthreatactorttps">
-        <link-entity name="esa_mitreenterprise" from="esa_mitreenterpriseid" to="esa_ttp">
-            <attribute name="esa_mitreid" />
+      <fetch>
+        <entity name="esa_dynamicthreatactorttps">
+        <link-entity name="esa_mitreenterprise" from="esa_mitreenterpriseid" to="esa_ttp" alias="technique">
+          <attribute name="esa_mitreid" />
+          <attribute name="esa_name" />
+          <attribute name="esa_tactics" />
+        </link-entity>
+        <link-entity name="esa_threatactorgroup" from="esa_threatactorgroupid" to="esa_tagroup" alias="taGroup">
             <attribute name="esa_name" />
-            <attribute name="esa_tactics" />
-        </link-entity>
-      </entity>
-    </fetch>
-    `;
-
-    const res: Xrm.RetrieveMultipleResult =
-      await this.webApi.retrieveMultipleRecords(
-        "esa_dynamicthreatactorttps",
-        `?fetchXml=${encodeURIComponent(fetchXml)}`
-      );
-    return res.entities.map((x) => ({
-      name: x["esa_mitreenterprise1.esa_name"] as string,
-      id: x["esa_mitreenterprise1.esa_mitreid"] as string,
-      tacticKeys: x["esa_mitreenterprise1.esa_tactics"] as string,
-    }));
-  }
-  async getFilteredCategoryGroup(): Promise<GroupCategoriesFilter[]> {
-    const fetchXml: string = `
-    	<fetch>
-      <entity name="esa_dynamicthreatactorttps">
-      <link-entity name="esa_mitreenterprise" from="esa_mitreenterpriseid" to="esa_ttp" alias="technique">
-        <attribute name="esa_mitreid" />
-        <attribute name="esa_name" />
-        <attribute name="esa_tactics" />
-      </link-entity>
-       <link-entity name="esa_threatactorgroup" from="esa_threatactorgroupid" to="esa_tagroup" alias="taGroup">
-          <attribute name="esa_name" />
-					<attribute name="esa_othernames" />
-          <link-entity name="esa_threatactorcategory" from="esa_threatactorcategoryid" to="esa_threatactorcategory" alias="category">
-          <attribute name="esa_name" />
+            <attribute name="esa_othernames" />
+            <link-entity name="esa_threatactorcategory" from="esa_threatactorcategoryid" to="esa_threatactorcategory" alias="category">
+            <attribute name="esa_name" />
+            </link-entity>
           </link-entity>
-        </link-entity>
-      </entity>
-    </fetch>
+        </entity>
+      </fetch>
     `;
 
     const res: Xrm.RetrieveMultipleResult =
@@ -110,10 +119,11 @@ export class XrmRepository implements IRepository {
         `?fetchXml=${encodeURIComponent(fetchXml)}`
       );
     return res.entities.map((x) => ({
+      techniqueId: x["technique.esa_mitreid"] as string,
       categoryName: x["category.esa_name"],
       taGroup: x["taGroup.esa_name"],
       techniqueName: x["technique.esa_name"],
-      techniqueTactic: x["technique.esa_tactics"],
+      techniqueTactics: x["technique.esa_tactics"],
       otherNames: x["taGroup.esa_othernames"],
     }));
   }
