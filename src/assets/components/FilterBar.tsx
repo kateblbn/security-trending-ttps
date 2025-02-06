@@ -1,9 +1,7 @@
-import React, { createContext, useState } from "react";
-import { DownOutlined, SmileOutlined } from "@ant-design/icons";
-import type { MenuProps } from "antd";
 import { Dropdown, Select, Space } from "antd";
 import "./FilterBar.css";
-type FilterBar = {};
+import { TrendingTechnique } from "./Data";
+import clear from "./images/clear.png";
 
 export default function FilterBar({
   categoryValues,
@@ -16,34 +14,45 @@ export default function FilterBar({
   categoryValues: string[];
   actorMainNames: string[];
   actorOtherNames: string[] /* CHANGE TYPE */;
-  onCategoryChange: (string) => void;
+  onCategoryChange: (value: string[]) => void;
   onActorMainNameChange: (string) => void;
   onActorOtherNameChange: (string) => void;
 }) {
-  // console.log(uniqueOtherCategories);
+  // console.log(categoryValues); //['Nation-State (Russia)']
 
   const onSearch = (value: string) => {
-    // setTaCategoryValue(value);
-
     console.log("search:", value);
   };
-
+  const taCategoryValues = categoryValues
+    .sort()
+    .map((x) => {
+      console.log(x);
+      return ({ label: x, value: x })
+    } );
+  console.log(taCategoryValues);
   return (
     <div className="filter-container">
       <div className="dropdown-container">
         <div className="dropdown">
+          {/* <button onClick={categoryValues}>          <img src={clear} alt="clear" className="clear-icon" />
+          </button> */}
           <Select
-            showSearch
+            mode="tags"
+            // showSearch
+            allowClear
+            tokenSeparators={[","]}
             placeholder="Threat Actor Category"
-            optionFilterProp="label"
+            // optionFilterProp="label"
             onChange={onCategoryChange}
             onSearch={onSearch}
-            options={categoryValues.sort().map((x) => ({ label: x, value: x }))}
+            options={taCategoryValues}
           />
         </div>
         <div className="dropdown">
           <Select
+            mode="tags"
             showSearch
+            allowClear
             placeholder="Threat Actor Name"
             optionFilterProp="label"
             onChange={onActorMainNameChange}
@@ -53,7 +62,9 @@ export default function FilterBar({
         </div>
         <div className="dropdown">
           <Select
+            mode="tags"
             showSearch
+            allowClear
             placeholder="Threat Actor Other Names"
             optionFilterProp="label"
             onChange={onActorOtherNameChange}
