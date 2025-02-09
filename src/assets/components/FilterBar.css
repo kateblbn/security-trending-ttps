@@ -1,5 +1,5 @@
 .filter-container {
-  height: 80px;
+  height: 100px;
   background-color: rgb(223, 223, 223);
   /* position: relative; */
 }
@@ -15,6 +15,13 @@
 .ant-select-selection-placeholder {
   color: black !important;
 }
+/* :where(.css-dev-only-do-not-override-cdzvx5) {
+height: 70px;
+} */
+ .rc-virtual-list-holder {
+max-height: 150px;
+
+ }
 .ant-switch {
   position: absolute;
   top: 30px;

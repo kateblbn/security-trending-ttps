@@ -11,6 +11,7 @@ import { TestRepository } from "./assets/repositories/test-repository";
 import { Button, Switch } from "antd";
 import FilterBar from "./assets/components/FilterBar";
 import Header from "./assets/components/Header";
+import { ActorNames } from "./assets/components/FilterBar";
 
 function App() {
   const SELECT_ALL_VALUE = "all";
@@ -19,11 +20,12 @@ function App() {
   const [baselineTechniques, setBaselineTechniques] =
     useState<TrendingTechnique[]>();
   const [taCategoryValue, setTaCategoryValue] = useState<string[]>([]); //value from NS = tacticKeys. fe command-and-control
-  // console.log(taCategoryValue); // [{label: 'Nation-State (Others)', value: 'Nation-State (Others)'}, ... ]
-  const [taNameValue, setTaNameValue] = useState([SELECT_ALL_VALUE]);
-  const [taOtherNameValue, setTaOtherName] = useState([SELECT_ALL_VALUE]); //selected UNC94 (Mandiant) from filterBar
-  // console.log(taOtherNameValue, taNameValue);
-  // console.log(taCategoryValue);
+  console.log(taCategoryValue); // [{label: 'Nation-State (Others)', value: 'Nation-State (Others)'}, ... ]
+  const [taNameValue, setTaNameValue] = useState([]);
+  const [taOtherNameValue, setTaOtherName] = useState([]); //selected UNC94 (Mandiant) from filterBar
+  const [allNames, setAllNames] = useState<string[]>([]); //selected UNC94 (Mandiant) from filterBar
+
+  console.log(allNames);
 
   const [toggle, setToggle] = useState(false);
 
@@ -51,39 +53,38 @@ function App() {
   if (taCategoryValue.length == 0 || taCategoryValue.includes(SELECT_ALL_VALUE))
     filteredByCategory = techniques;
   else
-    filteredByCategory = techniques.filter((tech) => {
-  // console.log(tech);
-  
-      return taCategoryValue.some((x) => tech.categoryName == x)
-       
-    });
+    filteredByCategory = techniques.filter((tech) =>
+      // console.log(tech);
+
+      taCategoryValue.some((x) => tech.categoryName == x)
+    );
 
   /// 2. filter techniques by threat actor if selected
   let filteredByActor: TrendingTechnique[];
 
-  if (taNameValue.length == 0 || taNameValue.includes(SELECT_ALL_VALUE) ) filteredByActor = filteredByCategory;
+  if (taNameValue.length == 0 || taNameValue.includes(SELECT_ALL_VALUE))
+    filteredByActor = filteredByCategory;
   else
-    filteredByActor = filteredByCategory.filter(
-      (tech) => taNameValue.some( x => tech.taGroup == x )
+    filteredByActor = filteredByCategory.filter((tech) =>
+      taNameValue.some((x) => tech.taGroup == x)
     );
   // console.log(filteredByActor);
 
   let filteredByOther: TrendingTechnique[];
 
-  if (taOtherNameValue.length == 0 || taOtherNameValue.includes(SELECT_ALL_VALUE) ) filteredByOther = filteredByActor;
+  if (
+    taOtherNameValue.length == 0 ||
+    taOtherNameValue.includes(SELECT_ALL_VALUE)
+  )
+    filteredByOther = filteredByActor;
   else
-    filteredByOther = filteredByActor.filter(
-      (tech) => taOtherNameValue.some( x => tech.otherNames === x )
+    filteredByOther = filteredByActor.filter((tech) =>
+      taOtherNameValue.some((x) => tech.otherNames === x)
     );
-  // console.log( filteredByOther);
 
-  // tech.otherNames === taOtherNameValue
   /// 3. group filtered techniques by tactic
   const tacticsWithTechniques = filteredByOther.reduce(
     (acc: Map<string, TrendingTechnique[]>, currentTechnique) => {
-      // console.log(acc);
-      // console.log(currentTechnique);
-
       const tactics = currentTechnique.techniqueTactics.split(", ");
       // console.log(tactics); //['initial-access']
 
@@ -96,27 +97,35 @@ function App() {
     new Map<string, TrendingTechnique[]>() //new array with techniques inside tatics
   );
 
-  // console.log(tacticsWithTechniques);
+  // console.log(filteredByOther);
 
   const uniqueCategories = techniques.reduce((acc: string[], current) => {
     if (!acc.includes(current.categoryName)) acc.push(current.categoryName);
 
-    return acc ;
+    return acc;
   }, []);
-  const uniqueActorMainNames = techniques.reduce(
-    (acc: string[], current) => {
-      if (!acc.includes(current.taGroup)) acc.push(current.taGroup);
-      return acc;
+
+  // let newArray = [];
+
+  const uniqueActorMainNames = filteredByOther.reduce<ActorNames[]>(
+    (acc, current) => {
+      const existingActor = acc.find( item => item.mainName === current.taGroup)
+  if(existingActor) {
+    if(!existingActor.otherNames.includes(current.otherNames)) {
+      existingActor.otherNames.push(current.otherNames)
+    } 
+  } else {
+    acc.push( {
+      mainName: current.taGroup,
+      otherNames: [current.otherNames]
+    })
+  }
+        return acc;
     },
     []
   );
-  const uniqueActorOtherNames = techniques.reduce(
-    (acc: string[], current) => {
-      if (!acc.includes(current.otherNames)) acc.push(current.otherNames);
-      return acc;
-    },
-    []
-  );
+  console.log(uniqueActorMainNames);
+
 
   return (
     <>
@@ -127,11 +136,9 @@ function App() {
       <div className="switch-flex">
         <FilterBar
           categoryValues={uniqueCategories}
-          actorMainNames={uniqueActorMainNames}
-          actorOtherNames={uniqueActorOtherNames}
+          actorNames={uniqueActorMainNames}
           onCategoryChange={setTaCategoryValue}
           onActorMainNameChange={setTaNameValue}
-          onActorOtherNameChange={setTaOtherName}
         />
         <Switch onChange={onChange} />
       </div>

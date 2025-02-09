@@ -6,7 +6,8 @@ export type MitreTactic = {
 };
 
 export type TrendingTechnique = {
-  // [x: string]: any;
+  [x: string]: any;
+  ActorNames: string[]
   techniqueId: string;
   categoryName: string,
   taGroup: string,

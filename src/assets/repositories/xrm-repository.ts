@@ -52,7 +52,7 @@ export class XrmRepository implements IRepository {
     const fetchXml: string = `
     <fetch>
 	    <entity name='esa_threatactorttps'>
-        <link-entity name="esa_mitreenterprise" from="esa_mitreenterpriseid" to="esa_ttp" alias="technique">
+        <link-entity name="esa_mitreenterprise" from="esa_mitreenterpriseid" to="esa_mitreid" alias="technique">
           <attribute name="esa_mitreid" />
           <attribute name="esa_name" />
           <attribute name="esa_tactics" />
