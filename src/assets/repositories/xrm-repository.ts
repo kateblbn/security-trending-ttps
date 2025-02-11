@@ -1,4 +1,4 @@
-import {  MitreTactic, TrendingTechnique } from "../components/Data";
+import {  BaselineTechnique, mapNestedKeys, MitreTactic, TrendingTechnique } from "../components/Data";
 import { IRepository } from "./repository-interface";
 
 export class XrmRepository implements IRepository {
@@ -32,7 +32,7 @@ export class XrmRepository implements IRepository {
     }));
   }
 
-  async getBaselineTechniques(): Promise<TrendingTechnique[]> {
+  async getBaselineTechniques(): Promise<BaselineTechnique[]> {
     const fetchXml: string = `
     <fetch>
 	    <entity name='esa_threatactorttps'>
@@ -44,7 +44,7 @@ export class XrmRepository implements IRepository {
         <link-entity name="esa_threatactorgroup" from="esa_threatactorgroupid" to="esa_tagroup" alias="taGroup">
             <attribute name="esa_name" />
             <attribute name="esa_othernames" />
-            <link-entity name="esa_threatactorcategory" from="esa_threatactorcategoryid" to="esa_threatactorcategory" alias="category">
+            <link-entity name="esa_threatactorcategory" from="esa_threatactorcategoryid" to="esa_threatactorcategory" alias="taGroup.category">
             <attribute name="esa_name" />
             </link-entity>
           </link-entity>
@@ -57,14 +57,7 @@ export class XrmRepository implements IRepository {
         `?fetchXml=${encodeURIComponent(fetchXml)}`
       );
 
-      return resTechniques.entities.map((x) => ({
-        techniqueId: x["technique.esa_mitreid"] as string,
-        categoryName: x["category.esa_name"],
-        taGroup: x["taGroup.esa_name"],
-        techniqueName: x["technique.esa_name"],
-        techniqueTactics: x["technique.esa_tactics"],
-        otherNames: x["taGroup.esa_othernames"],
-      }));
+      return resTechniques.entities.map((x) => mapNestedKeys(x, {} as BaselineTechnique));
     }
   // {
   //   "@odata.etag": "W/\"16473250\"",
@@ -81,6 +74,11 @@ export class XrmRepository implements IRepository {
     const fetchXml: string = `
       <fetch>
         <entity name="esa_dynamicthreatactorttps">
+         <attribute name="esa_eventdate" />
+         <attribute name="esa_articletitle" />
+         <attribute name="esa_articlesummary" />
+         <attribute name="esa_articlelink" />
+         <attribute name="esa_target" />
         <link-entity name="esa_mitreenterprise" from="esa_mitreenterpriseid" to="esa_ttp" alias="technique">
           <attribute name="esa_mitreid" />
           <attribute name="esa_name" />
@@ -89,7 +87,7 @@ export class XrmRepository implements IRepository {
         <link-entity name="esa_threatactorgroup" from="esa_threatactorgroupid" to="esa_tagroup" alias="taGroup">
             <attribute name="esa_name" />
             <attribute name="esa_othernames" />
-            <link-entity name="esa_threatactorcategory" from="esa_threatactorcategoryid" to="esa_threatactorcategory" alias="category">
+            <link-entity name="esa_threatactorcategory" from="esa_threatactorcategoryid" to="esa_threatactorcategory" alias="taGroup.category">
             <attribute name="esa_name" />
             </link-entity>
           </link-entity>
@@ -102,14 +100,7 @@ export class XrmRepository implements IRepository {
         "esa_dynamicthreatactorttps",
         `?fetchXml=${encodeURIComponent(fetchXml)}`
       );
-    return res.entities.map((x) => ({
-      techniqueId: x["technique.esa_mitreid"] as string,
-      categoryName: x["category.esa_name"],
-      taGroup: x["taGroup.esa_name"],
-      techniqueName: x["technique.esa_name"],
-      techniqueTactics: x["technique.esa_tactics"],
-      otherNames: x["taGroup.esa_othernames"],
-    }));
+    return res.entities.map(x => mapNestedKeys(x, {} as TrendingTechnique))
   }
 }
 

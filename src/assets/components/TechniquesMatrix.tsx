@@ -1,13 +1,13 @@
-import { MitreTactic, TrendingTechnique } from "./Data";
-import { TechniqueColumn } from "./TechniqueColumn";
+import { BaselineTechnique, MitreTactic} from "./Data";
 import { KillChainHeaderItem } from "./KillChainHeaderItem";
+import TechniqueItem from "./TechniqueItem";
 import "./TechniquesMatrix.css";
 
 export function TechniquesMatrix({
   tacticsWithTechniques,
   tactics,
 }: {
-  tacticsWithTechniques: Map<string, TrendingTechnique[]>;
+  tacticsWithTechniques: Map<string, BaselineTechnique[]>;
   tactics: MitreTactic[];
 }) {
   tactics.sort((a, b) => a.number - b.number);
@@ -17,6 +17,12 @@ export function TechniquesMatrix({
       <div className="header-technique">
         {tactics.map((tactic) => {
           const techniques = tacticsWithTechniques.get(tactic.tacticsKey) ?? [];
+          const groupedByMitreId = Map.groupBy(techniques, x => x.technique.esa_mitreid)
+          const sortedByInstances = Array.from(groupedByMitreId).sort((a, b) => {
+            const [aMitreId, aOccurences] = a
+            const [bMitreId, bOccurences] = b
+            return bOccurences.length - aOccurences.length
+          })
           return (
             <div className="header-techniques-wrapper" key={tactic.id}>
               <KillChainHeaderItem
@@ -26,12 +32,12 @@ export function TechniquesMatrix({
               />
               <span className="line"></span>
               <div className="technique-column">
-                {techniques.map((technique) => (
-                  <TechniqueColumn
-                    name={technique.techniqueName}
-                    key={technique.techniqueTactics}
-                    count={technique.techniqueName.length}
-                    id={tactic.id}
+                {sortedByInstances.map(([mitreId, instances]) => (
+                  <TechniqueItem
+                    name={instances[0].technique.esa_name}
+                    key={mitreId}
+                    count={instances.length}
+                    id={mitreId}
                   />
                 ))}
               </div>

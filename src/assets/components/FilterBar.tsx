@@ -1,7 +1,5 @@
-import { Button, Dropdown, Form, Input, Select, Space } from "antd";
+import { Button, Form, Select, } from "antd";
 import "./FilterBar.css";
-import { TrendingTechnique } from "./Data";
-import clear from "./images/clear.png";
 
 type FilterBarProps = {
   categoryValues: string[];
@@ -32,11 +30,13 @@ export default function FilterBar({
     return { label: x, value: x };
   });
 
+  console.log(actorNames)
+
   const taActorAndOtherNames: ActorNames[] = actorNames.sort().map((x) => {
-    const otherNames = x.otherNames.replace(/\s?\(.*?\)/g, " ");
+    const otherNames = x.otherNames?.replace(/\s?\(.*?\)/g, " ") ?? ""
     return { mainName: x.mainName, otherNames: otherNames };
   });
-  console.log(onActorMainNameChange);
+
   const actorOptions = taActorAndOtherNames.map((actor) => {
     return {
       label: (
