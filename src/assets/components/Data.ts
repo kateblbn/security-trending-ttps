@@ -7,7 +7,7 @@ export type MitreTactic = {
 
 export type TrendingTechnique = {
   [x: string]: any;
-  ActorNames: string[]
+  // ActorNames: string[]
   techniqueId: string;
   categoryName: string,
   taGroup: string,
@@ -17,9 +17,9 @@ export type TrendingTechnique = {
 
 
 };
-export type BaselineTechnique = {
-  [x: string]: any;
-  name: string;
-  id: string;
-  tacticKeys: string;
-};
+// export type BaselineTechnique = {
+//   [x: string]: any;
+//   name: string;
+//   id: string;
+//   tacticKeys: string;
+// };

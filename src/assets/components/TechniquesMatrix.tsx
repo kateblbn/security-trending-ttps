@@ -1,4 +1,4 @@
-import {  MitreTactic, TrendingTechnique } from "./Data";
+import { MitreTactic, TrendingTechnique } from "./Data";
 import { TechniqueColumn } from "./TechniqueColumn";
 import { KillChainHeaderItem } from "./KillChainHeaderItem";
 import "./TechniquesMatrix.css";
@@ -11,15 +11,12 @@ export function TechniquesMatrix({
   tactics: MitreTactic[];
 }) {
   tactics.sort((a, b) => a.number - b.number);
-  // console.log(tacticsWithTechniques);
 
   return (
     <div className="container">
       <div className="header-technique">
         {tactics.map((tactic) => {
           const techniques = tacticsWithTechniques.get(tactic.tacticsKey) ?? [];
-          // console.log(techniques);
-
           return (
             <div className="header-techniques-wrapper" key={tactic.id}>
               <KillChainHeaderItem
@@ -33,7 +30,7 @@ export function TechniquesMatrix({
                   <TechniqueColumn
                     name={technique.techniqueName}
                     key={technique.techniqueTactics}
-                    count={tactic.number}
+                    count={technique.techniqueName.length}
                     id={tactic.id}
                   />
                 ))}

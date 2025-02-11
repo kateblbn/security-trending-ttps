@@ -1,4 +1,4 @@
-import { BaselineTechnique as DisplayingTechniques, MitreTactic, TrendingTechnique } from "../components/Data";
+import {  MitreTactic, TrendingTechnique } from "../components/Data";
 import { IRepository } from "./repository-interface";
 
 export class XrmRepository implements IRepository {
@@ -7,14 +7,6 @@ export class XrmRepository implements IRepository {
   constructor(xrm: Xrm.XrmStatic) {
     this.webApi = xrm.WebApi;
   }
-  // {
-  //   "@odata.etag": "W/\"16051313\"",
-  //   "esa_id": "TA0006",
-  //   "esa_number": 8,
-  //   "esa_keyname": "credential-access",
-  //   "esa_mitretacticsid": "3f8f912d-6286-46dd-bc16-1c5a0882d5b2",
-  //   "esa_name": "Credential Access"
-  // }
   async getTactics(): Promise<MitreTactic[]> {
     const fetchXml: string = `
       <fetch>
@@ -40,14 +32,6 @@ export class XrmRepository implements IRepository {
     }));
   }
 
-
-	// {
-  //   "@odata.etag": "W/\"15087017\"",
-  //   "esa_threatactorttpsid": "66359458-7fa6-ef11-b8e9-000d3a6685a9",
-  //   "technique.esa_mitreid": "T1027",
-  //   "technique.esa_name": "Obfuscated Files or Information",
-  //   "technique.esa_tactics": "defense-evasion"
-  // }, 
   async getBaselineTechniques(): Promise<TrendingTechnique[]> {
     const fetchXml: string = `
     <fetch>

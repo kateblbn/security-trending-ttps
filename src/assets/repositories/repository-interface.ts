@@ -1,4 +1,4 @@
-import { TrendingTechnique, MitreTactic, BaselineTechnique } from "../components/Data";
+import { TrendingTechnique, MitreTactic } from "../components/Data";
 
 export interface IRepository {
   getTactics(): Promise<MitreTactic[]>;

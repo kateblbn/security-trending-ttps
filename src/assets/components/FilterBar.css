@@ -1,7 +1,6 @@
 .filter-container {
   height: 100px;
   background-color: rgb(223, 223, 223);
-  /* position: relative; */
 }
 .dropdown-container {
   display: flex;
@@ -9,15 +8,21 @@
   gap: 10px;
   padding: 25px 0 0 70px;
 }
-.ant-select {
-  width: 185px;
+.dropdown {
+  width: 50%;
+}
+.ant-form {
+  display: flex;
+  flex-direction: row !important;
+  width: 900px;
+}
+.ant-form-item {
+  width: 575px;
+
 }
 .ant-select-selection-placeholder {
   color: black !important;
 }
-/* :where(.css-dev-only-do-not-override-cdzvx5) {
-height: 70px;
-} */
  .rc-virtual-list-holder {
 max-height: 150px;
 
@@ -30,4 +35,11 @@ max-height: 150px;
 .clear-icon {
   width: 15px;
   height: 15px;
+}
+
+.other-name {
+  font-size: 10px;
+  color: grey;
+  width: 100%;
+  white-space: pre-line;
 }

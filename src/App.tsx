@@ -1,10 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import {
-  BaselineTechnique,
-  MitreTactic,
-  TrendingTechnique,
-} from "./assets/components/Data";
+import { MitreTactic, TrendingTechnique } from "./assets/components/Data";
 import { XrmRepository } from "./assets/repositories/xrm-repository";
 import { TechniquesMatrix } from "./assets/components/TechniquesMatrix";
 import { TestRepository } from "./assets/repositories/test-repository";
@@ -16,18 +12,14 @@ import { ActorNames } from "./assets/components/FilterBar";
 function App() {
   const SELECT_ALL_VALUE = "all";
   const [tactics, setTactics] = useState<MitreTactic[]>();
-  const [techniques, setTechniques] = useState<TrendingTechnique[]>();
+  const [trendingTechniques, setTechniques] = useState<TrendingTechnique[]>();
   const [baselineTechniques, setBaselineTechniques] =
     useState<TrendingTechnique[]>();
-  const [taCategoryValue, setTaCategoryValue] = useState<string[]>([]); //value from NS = tacticKeys. fe command-and-control
-  console.log(taCategoryValue); // [{label: 'Nation-State (Others)', value: 'Nation-State (Others)'}, ... ]
-  const [taNameValue, setTaNameValue] = useState([]);
-  const [taOtherNameValue, setTaOtherName] = useState([]); //selected UNC94 (Mandiant) from filterBar
-  const [allNames, setAllNames] = useState<string[]>([]); //selected UNC94 (Mandiant) from filterBar
-
-  console.log(allNames);
-
+  const [selectedCategories, setTaCategoryValue] = useState<string[]>([]); //value from NS = tacticKeys. fe command-and-control
+  const [selectedActors, setSelectedActors] = useState<string[]>([]);
+  const [button, setButton] = useState<boolean>(false);
   const [toggle, setToggle] = useState(false);
+  console.log(trendingTechniques);
 
   let repo = import.meta.env.DEV
     ? new TestRepository()
@@ -42,51 +34,31 @@ function App() {
   const onChange = (x: boolean) => {
     setToggle(x);
   };
-  if (!tactics || !techniques || !baselineTechniques) {
+  if (!tactics || !trendingTechniques || !baselineTechniques) {
     return "Loading..";
   }
+  let techniques = toggle ? baselineTechniques : trendingTechniques;
+  console.log(techniques);
 
-  /// 1. filter techniques by threat category if selected
-
-  let filteredByCategory: TrendingTechnique[];
-
-  if (taCategoryValue.length == 0 || taCategoryValue.includes(SELECT_ALL_VALUE))
-    filteredByCategory = techniques;
-  else
-    filteredByCategory = techniques.filter((tech) =>
-      // console.log(tech);
-
-      taCategoryValue.some((x) => tech.categoryName == x)
+  let filteredTechniques = techniques;
+  // filter by category
+  if (selectedCategories.length !== 0) {
+    filteredTechniques = filteredTechniques.filter((x) =>
+      selectedCategories.includes(x.categoryName)
     );
+  }
 
-  /// 2. filter techniques by threat actor if selected
-  let filteredByActor: TrendingTechnique[];
-
-  if (taNameValue.length == 0 || taNameValue.includes(SELECT_ALL_VALUE))
-    filteredByActor = filteredByCategory;
-  else
-    filteredByActor = filteredByCategory.filter((tech) =>
-      taNameValue.some((x) => tech.taGroup == x)
+  // filter by actor name
+  if (selectedActors.length !== 0) {
+    filteredTechniques = filteredTechniques.filter((x) =>
+      selectedActors.some((actor) => actor === x.taGroup)
     );
-  // console.log(filteredByActor);
-
-  let filteredByOther: TrendingTechnique[];
-
-  if (
-    taOtherNameValue.length == 0 ||
-    taOtherNameValue.includes(SELECT_ALL_VALUE)
-  )
-    filteredByOther = filteredByActor;
-  else
-    filteredByOther = filteredByActor.filter((tech) =>
-      taOtherNameValue.some((x) => tech.otherNames === x)
-    );
+  }
 
   /// 3. group filtered techniques by tactic
-  const tacticsWithTechniques = filteredByOther.reduce(
+  const tacticsWithTechniques = filteredTechniques.reduce(
     (acc: Map<string, TrendingTechnique[]>, currentTechnique) => {
       const tactics = currentTechnique.techniqueTactics.split(", ");
-      // console.log(tactics); //['initial-access']
 
       for (let tactic of tactics) {
         if (acc.has(tactic)) acc.get(tactic).push(currentTechnique);
@@ -94,38 +66,39 @@ function App() {
       }
       return acc;
     },
-    new Map<string, TrendingTechnique[]>() //new array with techniques inside tatics
+    new Map<string, TrendingTechnique[]>()
   );
-
-  // console.log(filteredByOther);
 
   const uniqueCategories = techniques.reduce((acc: string[], current) => {
     if (!acc.includes(current.categoryName)) acc.push(current.categoryName);
-
     return acc;
   }, []);
 
-  // let newArray = [];
-
-  const uniqueActorMainNames = filteredByOther.reduce<ActorNames[]>(
+  const uniqueActorMainNames = techniques.reduce<ActorNames[]>(
     (acc, current) => {
-      const existingActor = acc.find( item => item.mainName === current.taGroup)
-  if(existingActor) {
-    if(!existingActor.otherNames.includes(current.otherNames)) {
-      existingActor.otherNames.push(current.otherNames)
-    } 
-  } else {
-    acc.push( {
-      mainName: current.taGroup,
-      otherNames: [current.otherNames]
-    })
-  }
-        return acc;
+      const existingActor = acc.find(
+        (item) => item.mainName === current.taGroup
+      );
+
+      // if we already added this actor, we don't want to add it again
+      if (existingActor) return acc;
+
+      if (
+        selectedCategories.length === 0 ||
+        selectedCategories.includes(current.categoryName)
+      ) {
+        acc.push({
+          mainName: current.taGroup,
+          otherNames: current.otherNames,
+        });
+      }
+
+      return acc;
     },
     []
   );
-  console.log(uniqueActorMainNames);
 
+  console.log(button);
 
   return (
     <>
@@ -138,7 +111,8 @@ function App() {
           categoryValues={uniqueCategories}
           actorNames={uniqueActorMainNames}
           onCategoryChange={setTaCategoryValue}
-          onActorMainNameChange={setTaNameValue}
+          onActorMainNameChange={setSelectedActors}
+          setButton={setButton}
         />
         <Switch onChange={onChange} />
       </div>

@@ -1,4 +1,4 @@
-import { Dropdown, Select, Space } from "antd";
+import { Button, Dropdown, Form, Input, Select, Space } from "antd";
 import "./FilterBar.css";
 import { TrendingTechnique } from "./Data";
 import clear from "./images/clear.png";
@@ -8,71 +8,98 @@ type FilterBarProps = {
   actorNames: ActorNames[];
   onCategoryChange: (value: string[]) => void;
   onActorMainNameChange: (string) => void;
+  setButton: (string) => void;
 };
+
 export type ActorNames = {
   mainName: string;
-  otherNames: string[];
+  otherNames: string;
 };
+
 export default function FilterBar({
   categoryValues,
   actorNames,
   onCategoryChange,
   onActorMainNameChange,
+  setButton,
 }: FilterBarProps) {
-  // console.log(categoryValues); //['Nation-State (Russia)']
-  // based  categoryValues, actorMainNames, actorOtherNames check if something choosed = actor Category is DISABLED!
-
   const onSearch = (value: string) => {
     console.log("search:", value);
   };
+
   const taCategoryValues = categoryValues.sort().map((x) => {
     // console.log(x);
     return { label: x, value: x };
   });
 
-  const taActorAndOtherNames = actorNames.sort().map((x) => ({
-    label: (
-      <>
-        <div>{x.mainName}</div>
-        <div>{x.otherNames} </div>
-      </>
-    ),
-    value: x,
-  }));
-  console.log(taActorAndOtherNames);
+  const taActorAndOtherNames: ActorNames[] = actorNames.sort().map((x) => {
+    const otherNames = x.otherNames.replace(/\s?\(.*?\)/g, " ");
+    return { mainName: x.mainName, otherNames: otherNames };
+  });
+  console.log(onActorMainNameChange);
+  const actorOptions = taActorAndOtherNames.map((actor) => {
+    return {
+      label: (
+        <>
+          <div className="main-name">{actor.mainName}</div>
+          <div className="other-name">{actor.otherNames}</div>
+        </>
+      ),
+      value: actor.mainName,
+    };
+  });
+
+  const [form] = Form.useForm();
+
+  const clearForm = () => {
+    form.resetFields();
+    onCategoryChange([]);
+    onActorMainNameChange([]);
+  };
   return (
     <div className="filter-container">
-      <div className="dropdown-container">
-        <div className="dropdown">
-          <Select
-            mode="tags"
-            virtual={false}
-            // disabled
-            // showSearch
-            allowClear
-            tokenSeparators={[", "]}
-            placeholder="Threat Actor Category"
-            // optionFilterProp="label"
-            onChange={onCategoryChange}
-            onSearch={onSearch}
-            options={taCategoryValues}
-          />
-        </div>
-        <div className="dropdown">
-          <Select
-            mode="tags"
-            showSearch
-            allowClear
-            virtual={false}
-            placeholder="Threat Actor Name"
-            optionFilterProp="label"
-            onChange={onActorMainNameChange}
-            onSearch={onSearch}
-            options={taActorAndOtherNames}
-          />
-          
-        </div>
-      </div>
+      <Form form={form} layout="horizontal">
+        <Form.Item label="" name="">
+          <div className="dropdown-container">
+            <div className="dropdown">
+              <Select
+                mode="tags"
+                virtual={false}
+                allowClear
+                placeholder="Threat Actor Category"
+                onChange={onCategoryChange}
+                onSearch={onSearch}
+                options={taCategoryValues}
+              />
+            </div>
+            <div className="dropdown">
+              <Select
+                mode="tags"
+                allowClear
+                virtual={false}
+                placeholder="Threat Actor Name"
+                onChange={onActorMainNameChange}
+                onSearch={onSearch}
+                options={actorOptions}
+                filterOption={(input, option) => {
+                  const mainName = option.value;
+                  const otherNames = taActorAndOtherNames.find(
+                    (x) => x.mainName == mainName
+                  ).otherNames;
+                  if (otherNames.toLowerCase().includes(input.toLowerCase()))
+                    return true;
+                  if (mainName.toLowerCase().includes(input.toLowerCase()))
+                    return true;
+                  return false;
+                }}
+              />
+            </div>
+            <Button onClick={clearForm} style={{ marginLeft: "10px" }}>
+              Clear Filters
+            </Button>
+          </div>
+        </Form.Item>
+      </Form>
     </div>
   );
 }

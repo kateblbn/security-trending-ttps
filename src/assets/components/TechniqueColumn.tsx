@@ -9,6 +9,7 @@ type TechniqueColumnProps = {
 };
 
 export const TechniqueColumn = ({ id, name, count }: TechniqueColumnProps) => {
+  
   const colors =
     count <= 2
       ? "subtechniques-event yellow"
