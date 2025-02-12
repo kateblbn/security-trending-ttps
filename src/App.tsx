@@ -119,7 +119,7 @@ function App() {
   return (
     <>
       <Header
-        title="Telenor"
+        title=""
         subTitle={isBaselineView ? "Baseline TTPs" : "Trending TTPs"}
       />
       <div className="switch-flex">
