@@ -6,9 +6,11 @@ import "./TechniquesMatrix.css";
 export function TechniquesMatrix({
   tacticsWithTechniques,
   tactics,
+  onTechniqueClick
 }: {
   tacticsWithTechniques: Map<string, BaselineTechnique[]>;
   tactics: MitreTactic[];
+  onTechniqueClick: (mitreId:string) => void
 }) {
   tactics.sort((a, b) => a.number - b.number);
 
@@ -38,6 +40,7 @@ export function TechniquesMatrix({
                     key={mitreId}
                     count={instances.length}
                     id={mitreId}
+                    onClick={onTechniqueClick}
                   />
                 ))}
               </div>

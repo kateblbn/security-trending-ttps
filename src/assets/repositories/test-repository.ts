@@ -2,6 +2,7 @@ import {
 	BaselineTechnique,
 	mapNestedKeys,
   MitreTactic,
+  MitreTechnique,
   TrendingTechnique,
 } from "../components/Data";
 import { IRepository } from "./repository-interface";
@@ -96,18 +97,39 @@ const dataOfTactics: MitreTactic[] = [
 
 
 export class TestRepository implements IRepository {
+
+  async getMitreTechnique(guid: string): Promise<MitreTechnique> {
+	return new Promise(resolve => {
+		setTimeout(()=> resolve(
+			 mapNestedKeys(
+		{
+            "@odata.etag": "W/\"12518745\"",
+            "esa_deprecated": false,
+            "esa_description": "Adversaries may attempt to hide their file-based artifacts by writing them to specific folders or file names excluded from antivirus (AV) scanning and other defensive capabilities. AV and other file-based scanners often include exclusions to optimize performance as well as ease installation and legitimate use of applications. These exclusions may be contextual (e.g., scans are only initiated in response to specific triggering events/alerts), but are also often hardcoded strings referencing specific folders and/or files assumed to be trusted and legitimate.(Citation: Microsoft File Folder Exclusions)Adversaries may abuse these exclusions to hide their file-based artifacts. For example, rather than  tampering with tool settings to add a new exclusion (i.e., [Disable or Modify Tools](https://attack.mitre.org/techniques/T1562/001)), adversaries may drop their file-based payloads in default or otherwise well-known exclusions. Adversaries may also use [Security Software Discovery](https://attack.mitre.org/techniques/T1518/001) and other [Discovery](https://attack.mitre.org/tactics/TA0007)/[Reconnaissance](https://attack.mitre.org/tactics/TA0043) activities to both discover and verify existing exclusions in a victim environment.",
+            "esa_url": "https://attack.mitre.org/techniques/T1564/012",
+            "esa_datasources": "File: File Creation",
+            "esa_tactics": "defense-evasion",
+            "esa_name": "File/Path Exclusions",
+            "esa_mitreenterpriseid": "11d15b72-b121-ef11-840a-000d3a68bfb4",
+            "esa_platforms": "Linux, macOS, Windows",
+            "esa_mitreid": "T1564.012"
+        },
+		)), 400)
+	}
+	)
+  }
   async getTrendingTechniques(): Promise<TrendingTechnique[]> {
-    return dataOfTechniquesTrending.map(x => mapNestedKeys(x, {} as TrendingTechnique)) ;
+    return dataOfTechniquesTrending.map(x => mapNestedKeys(x, ["esa_eventdate"])) ;
   }
   async getBaselineTechniques(): Promise<BaselineTechnique[]> {
-    return dataOfTechniquesBaseline.map(x => mapNestedKeys(x, {} as BaselineTechnique))
+    return dataOfTechniquesBaseline.map(x => mapNestedKeys(x))
   }
   async getTactics(): Promise<MitreTactic[]> {
     return dataOfTactics;
   }
 }
 
-const dataOfTechniquesTrending = [
+const dataOfTechniquesTrending =  [
 	{
             "@odata.etag": "W/\"16473250\"",
             "esa_target": "South Korea",
@@ -119,9 +141,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
             "technique.esa_mitreid": "T1204",
             "technique.esa_name": "User Execution",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "Kimsuky (NK)"
+            "technique.esa_mitreenterpriseid": "467b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Kimsuky (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517618\"",
@@ -134,9 +157,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Labyrinth Chollima (CrowdStrike), Jade Sleet (Microsoft)",
             "technique.esa_mitreid": "T1071.001",
             "technique.esa_name": "Web Protocols",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "Lazarus Group (NK)"
+            "technique.esa_mitreenterpriseid": "2182ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Lazarus Group (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517619\"",
@@ -149,9 +173,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1204",
             "technique.esa_name": "User Execution",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "467b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517620\"",
@@ -164,9 +189,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1574.002",
             "technique.esa_name": "DLL Side-Loading",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "persistence, privilege-escalation, defense-evasion",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "3c35d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517621\"",
@@ -179,9 +205,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1547.001",
             "technique.esa_name": "Registry Run Keys / Startup Folder",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "9c7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517622\"",
@@ -194,9 +221,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1036.005",
             "technique.esa_name": "Match Legitimate Name or Location",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "6ec6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517623\"",
@@ -209,9 +237,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1105",
             "technique.esa_name": "Ingress Tool Transfer",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "0882ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517624\"",
@@ -224,9 +253,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1078",
             "technique.esa_name": "Valid Accounts",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "defense-evasion, persistence, privilege-escalation, initial-access",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "683ada00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517625\"",
@@ -239,9 +269,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1566",
             "technique.esa_name": "Phishing",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "6d5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517626\"",
@@ -254,9 +285,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Hazel Sandstorm (Microsoft), Twisted Kitten (CrowdStrike)",
             "technique.esa_mitreid": "T1105",
             "technique.esa_name": "Ingress Tool Transfer",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "OilRig (Iran) / APT34"
+            "technique.esa_mitreenterpriseid": "0882ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "OilRig (Iran) / APT34",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517627\"",
@@ -269,9 +301,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Hazel Sandstorm (Microsoft), Twisted Kitten (CrowdStrike)",
             "technique.esa_mitreid": "T1112",
             "technique.esa_name": "Modify Registry",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "OilRig (Iran) / APT34"
+            "technique.esa_mitreenterpriseid": "a139da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "OilRig (Iran) / APT34",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517628\"",
@@ -284,9 +317,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Hazel Sandstorm (Microsoft), Twisted Kitten (CrowdStrike)",
             "technique.esa_mitreid": "T1547",
             "technique.esa_name": "Boot or Logon Autostart Execution",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "OilRig (Iran) / APT34"
+            "technique.esa_mitreenterpriseid": "267b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "OilRig (Iran) / APT34",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517629\"",
@@ -299,9 +333,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Hazel Sandstorm (Microsoft), Twisted Kitten (CrowdStrike)",
             "technique.esa_mitreid": "T1105",
             "technique.esa_name": "Ingress Tool Transfer",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "OilRig (Iran) / APT34"
+            "technique.esa_mitreenterpriseid": "0882ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "OilRig (Iran) / APT34",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517630\"",
@@ -314,9 +349,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Hazel Sandstorm (Microsoft), Twisted Kitten (CrowdStrike)",
             "technique.esa_mitreid": "T1204.002",
             "technique.esa_name": "Malicious File",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "OilRig (Iran) / APT34"
+            "technique.esa_mitreenterpriseid": "1a1dd1fa-29e5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "OilRig (Iran) / APT34",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517631\"",
@@ -329,9 +365,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Hazel Sandstorm (Microsoft), Twisted Kitten (CrowdStrike)",
             "technique.esa_mitreid": "T1027",
             "technique.esa_name": "Obfuscated Files or Information",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "OilRig (Iran) / APT34"
+            "technique.esa_mitreenterpriseid": "94c36601-2ae5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "OilRig (Iran) / APT34",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517633\"",
@@ -344,9 +381,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Hazel Sandstorm (Microsoft), Twisted Kitten (CrowdStrike)",
             "technique.esa_mitreid": "T1566",
             "technique.esa_name": "Phishing",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "OilRig (Iran) / APT34"
+            "technique.esa_mitreenterpriseid": "6d5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "OilRig (Iran) / APT34",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517634\"",
@@ -359,9 +397,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1059.001",
             "technique.esa_name": "PowerShell",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "2a82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517635\"",
@@ -374,9 +413,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1543",
             "technique.esa_name": "Create or Modify System Process",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "9f7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517636\"",
@@ -389,9 +429,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1119",
             "technique.esa_name": "Automated Collection",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "9939da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517637\"",
@@ -404,9 +445,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Violet Typhoon (Microsoft), Judgment Panda (CrowdStrike)",
             "technique.esa_mitreid": "T1190",
             "technique.esa_name": "Exploit Public-Facing Application",
-            "taGroup.category.esa_name": "Nation-State (China)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT31"
+            "technique.esa_mitreenterpriseid": "f9c5ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT31",
+            "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12517638\"",
@@ -419,9 +461,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Violet Typhoon (Microsoft), Judgment Panda (CrowdStrike)",
             "technique.esa_mitreid": "T1583",
             "technique.esa_name": "Acquire Infrastructure",
-            "taGroup.category.esa_name": "Nation-State (China)",
             "technique.esa_tactics": "resource-development",
-            "taGroup.esa_name": "APT31"
+            "technique.esa_mitreenterpriseid": "f57a76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT31",
+            "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12517639\"",
@@ -434,9 +477,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Threat Group-3390 (Secureworks), Emissary Panda (CrowdStrike)",
             "technique.esa_mitreid": "T1055",
             "technique.esa_name": "Process Injection",
-            "taGroup.category.esa_name": "Nation-State (China)",
             "technique.esa_tactics": "defense-evasion, privilege-escalation",
-            "taGroup.esa_name": "APT27"
+            "technique.esa_mitreenterpriseid": "3f8cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT27",
+            "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12517640\"",
@@ -449,9 +493,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Threat Group-3390 (Secureworks), Emissary Panda (CrowdStrike)",
             "technique.esa_mitreid": "T1070",
             "technique.esa_name": "Indicator Removal",
-            "taGroup.category.esa_name": "Nation-State (China)",
             "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT27"
+            "technique.esa_mitreenterpriseid": "663ada00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT27",
+            "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12517644\"",
@@ -464,9 +509,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Cozy Bear (CrowdStrike),  Midnight Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1204.002",
             "technique.esa_name": "Malicious File",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT29"
+            "technique.esa_mitreenterpriseid": "1a1dd1fa-29e5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "APT29",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517645\"",
@@ -479,9 +525,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Cozy Bear (CrowdStrike),  Midnight Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1566.001",
             "technique.esa_name": "Spearphishing Attachment",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT29"
+            "technique.esa_mitreenterpriseid": "5735d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT29",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517646\"",
@@ -494,9 +541,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Cozy Bear (CrowdStrike),  Midnight Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1584",
             "technique.esa_name": "Compromise Infrastructure",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "resource-development",
-            "taGroup.esa_name": "APT29"
+            "technique.esa_mitreenterpriseid": "677ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT29",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517647\"",
@@ -509,9 +557,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Cozy Bear (CrowdStrike),  Midnight Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1057",
             "technique.esa_name": "Process Discovery",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT29"
+            "technique.esa_mitreenterpriseid": "328cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT29",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517648\"",
@@ -524,9 +573,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Cozy Bear (CrowdStrike),  Midnight Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1078",
             "technique.esa_name": "Valid Accounts",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "defense-evasion, persistence, privilege-escalation, initial-access",
-            "taGroup.esa_name": "APT29"
+            "technique.esa_mitreenterpriseid": "683ada00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT29",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517649\"",
@@ -539,9 +589,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Cozy Bear (CrowdStrike),  Midnight Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1134",
             "technique.esa_name": "Access Token Manipulation",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "defense-evasion, privilege-escalation",
-            "taGroup.esa_name": "APT29"
+            "technique.esa_mitreenterpriseid": "9339da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT29",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517651\"",
@@ -553,9 +604,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- LockBit, a Ransomware-as-a-Service, has been employing anti-analysis and anti-debugging routines in its latest version, LockBit 3.0 (aka LockBit Black).\n- SentinelLabs reported the use of legitimate tools like VMwareXferlogs.exe and Windows Defender's MpCmdRun.exe by LockBit to side-load Cobalt Strike.\n- The initial compromise exploited the Log4j vulnerability in an unpatched VMware Horizon Server.\n- Post-compromise activities included using PowerShell for reconnaissance and executing multiple post-exploitation payloads.\n- LockBit's tactics include the novel use of 'living off the land' tools to evade detection and facilitate the loading of Cobalt Strike beacons.",
             "technique.esa_mitreid": "T1059.001",
             "technique.esa_name": "PowerShell",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "LockBit"
+            "technique.esa_mitreenterpriseid": "2a82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "LockBit",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"12517652\"",
@@ -567,9 +619,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- Dmitry Yuryevich Khoroshev, allegedly the leader of the LockBit ransomware group, has been indicted by the U.S. Department of Justice.\n- Khoroshev is accused of developing and administering LockBit, leading to over $100 million in ransom payments from more than 2,000 victims.\n- The LockBit group, under Khoroshev's leadership, targeted a diverse range of victims including individuals, businesses, and critical infrastructure across 120 countries.\n- LockBit practices included double extortion, demanding ransoms for decryption keys and for not releasing stolen data, though they reportedly never deleted the data even if the ransom was paid.",
             "technique.esa_mitreid": "T1486",
             "technique.esa_name": "Data Encrypted for Impact",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "impact",
-            "taGroup.esa_name": "LockBit"
+            "technique.esa_mitreenterpriseid": "fa5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "LockBit",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"12517653\"",
@@ -581,9 +634,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- Capita, a leading IT supplier in the UK, experienced a ransomware attack attributed to the Russian-linked group, Black Basta.\n- Initially, Capita described the issue as an 'IT Incident' and denied it being related to cybersecurity.\n- It took three days for Capita to acknowledge the security nature of the incident publicly.\n- Black Basta is known for double extortion tactics, including data theft and encryption for ransom.\n- The leaked data includes sensitive personal and financial information from various entities.\n- Despite public statements, there is evidence of significant data compromise, questioning Capita's transparency and response strategy.",
             "technique.esa_mitreid": "T1485",
             "technique.esa_name": "Data Destruction",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "impact",
-            "taGroup.esa_name": "Black Basta"
+            "technique.esa_mitreenterpriseid": "b37ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Black Basta",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"12517654\"",
@@ -595,9 +649,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- Black Basta ransomware is a new threat, using data exfiltration and encryption for double extortion.\n- Likely operated by ex-members of Conti and REvil groups, Black Basta rapidly became notorious by April 2022.\n- The group has affected 50 businesses across multiple countries, demanding up to $2M.\n- Attack methods include using QakBot for reconnaissance and lateral movement, disabling antivirus via GPOs, and encrypting files in unique patterns.\n- Recommendations include keeping software updated, establishing backups, enforcing Zero Trust policies, and using strong passwords.",
             "technique.esa_mitreid": "T1071.001",
             "technique.esa_name": "Web Protocols",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "Black Basta"
+            "technique.esa_mitreenterpriseid": "2182ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Black Basta",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"12517660\"",
@@ -610,9 +665,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
             "technique.esa_mitreid": "T1566.001",
             "technique.esa_name": "Spearphishing Attachment",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "Kimsuky (NK)"
+            "technique.esa_mitreenterpriseid": "5735d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "Kimsuky (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517661\"",
@@ -625,9 +681,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
             "technique.esa_mitreid": "T1105",
             "technique.esa_name": "Ingress Tool Transfer",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "Kimsuky (NK)"
+            "technique.esa_mitreenterpriseid": "0882ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Kimsuky (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517662\"",
@@ -640,9 +697,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
             "technique.esa_mitreid": "T1496",
             "technique.esa_name": "Resource Hijacking",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "impact",
-            "taGroup.esa_name": "Kimsuky (NK)"
+            "technique.esa_mitreenterpriseid": "035dd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Kimsuky (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517663\"",
@@ -655,9 +713,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
             "technique.esa_mitreid": "T1105",
             "technique.esa_name": "Ingress Tool Transfer",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "Kimsuky (NK)"
+            "technique.esa_mitreenterpriseid": "0882ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Kimsuky (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517664\"",
@@ -670,9 +729,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
             "technique.esa_mitreid": "T1059",
             "technique.esa_name": "Command and Scripting Interpreter",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "Kimsuky (NK)"
+            "technique.esa_mitreenterpriseid": "298cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Kimsuky (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517665\"",
@@ -685,9 +745,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Labyrinth Chollima (CrowdStrike), Jade Sleet (Microsoft)",
             "technique.esa_mitreid": "T1566.001",
             "technique.esa_name": "Spearphishing Attachment",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "Lazarus Group (NK)"
+            "technique.esa_mitreenterpriseid": "5735d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "Lazarus Group (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517666\"",
@@ -700,9 +761,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Labyrinth Chollima (CrowdStrike), Jade Sleet (Microsoft)",
             "technique.esa_mitreid": "T1190",
             "technique.esa_name": "Exploit Public-Facing Application",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "Lazarus Group (NK)"
+            "technique.esa_mitreenterpriseid": "f9c5ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Lazarus Group (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517667\"",
@@ -715,9 +777,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Labyrinth Chollima (CrowdStrike), Jade Sleet (Microsoft)",
             "technique.esa_mitreid": "T1105",
             "technique.esa_name": "Ingress Tool Transfer",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "Lazarus Group (NK)"
+            "technique.esa_mitreenterpriseid": "0882ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Lazarus Group (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517668\"",
@@ -730,9 +793,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Labyrinth Chollima (CrowdStrike), Jade Sleet (Microsoft)",
             "technique.esa_mitreid": "T1071",
             "technique.esa_name": "Application Layer Protocol",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "Lazarus Group (NK)"
+            "technique.esa_mitreenterpriseid": "1e82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Lazarus Group (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517669\"",
@@ -745,9 +809,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Labyrinth Chollima (CrowdStrike), Jade Sleet (Microsoft)",
             "technique.esa_mitreid": "T1566.002",
             "technique.esa_name": "Spearphishing Link",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "Lazarus Group (NK)"
+            "technique.esa_mitreenterpriseid": "7c7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Lazarus Group (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517670\"",
@@ -760,9 +825,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Labyrinth Chollima (CrowdStrike), Jade Sleet (Microsoft)",
             "technique.esa_mitreid": "T1204",
             "technique.esa_name": "User Execution",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "Lazarus Group (NK)"
+            "technique.esa_mitreenterpriseid": "467b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Lazarus Group (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517671\"",
@@ -775,9 +841,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Labyrinth Chollima (CrowdStrike), Jade Sleet (Microsoft)",
             "technique.esa_mitreid": "T1496",
             "technique.esa_name": "Resource Hijacking",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "impact",
-            "taGroup.esa_name": "Lazarus Group (NK)"
+            "technique.esa_mitreenterpriseid": "035dd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Lazarus Group (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517672\"",
@@ -790,9 +857,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Labyrinth Chollima (CrowdStrike), Jade Sleet (Microsoft)",
             "technique.esa_mitreid": "T1110",
             "technique.esa_name": "Brute Force",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "Lazarus Group (NK)"
+            "technique.esa_mitreenterpriseid": "43c6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Lazarus Group (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517673\"",
@@ -805,9 +873,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Labyrinth Chollima (CrowdStrike), Jade Sleet (Microsoft)",
             "technique.esa_mitreid": "T1068",
             "technique.esa_name": "Exploitation for Privilege Escalation",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "privilege-escalation",
-            "taGroup.esa_name": "Lazarus Group (NK)"
+            "technique.esa_mitreenterpriseid": "5dc6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Lazarus Group (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517674\"",
@@ -820,9 +889,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Labyrinth Chollima (CrowdStrike), Jade Sleet (Microsoft)",
             "technique.esa_mitreid": "T1189",
             "technique.esa_name": "Drive-by Compromise",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "Lazarus Group (NK)"
+            "technique.esa_mitreenterpriseid": "eb81ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Lazarus Group (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517675\"",
@@ -835,9 +905,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Labyrinth Chollima (CrowdStrike), Jade Sleet (Microsoft)",
             "technique.esa_mitreid": "T1567.002",
             "technique.esa_name": "Exfiltration to Cloud Storage",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "exfiltration",
-            "taGroup.esa_name": "Lazarus Group (NK)"
+            "technique.esa_mitreenterpriseid": "7f7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Lazarus Group (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517676\"",
@@ -850,9 +921,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Labyrinth Chollima (CrowdStrike), Jade Sleet (Microsoft)",
             "technique.esa_mitreid": "T1496",
             "technique.esa_name": "Resource Hijacking",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "impact",
-            "taGroup.esa_name": "Lazarus Group (NK)"
+            "technique.esa_mitreenterpriseid": "035dd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Lazarus Group (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517677\"",
@@ -865,9 +937,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1486",
             "technique.esa_name": "Data Encrypted for Impact",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "impact",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "fa5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517678\"",
@@ -880,9 +953,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1059",
             "technique.esa_name": "Command and Scripting Interpreter",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "298cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517679\"",
@@ -895,9 +969,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1547",
             "technique.esa_name": "Boot or Logon Autostart Execution",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "267b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517680\"",
@@ -910,9 +985,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1071.001",
             "technique.esa_name": "Web Protocols",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "2182ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517681\"",
@@ -925,9 +1001,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1606.001",
             "technique.esa_name": "Web Cookies",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "c47a76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517682\"",
@@ -940,9 +1017,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1566.001",
             "technique.esa_name": "Spearphishing Attachment",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "5735d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517683\"",
@@ -955,9 +1033,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1204.002",
             "technique.esa_name": "Malicious File",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "1a1dd1fa-29e5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517684\"",
@@ -970,9 +1049,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1027",
             "technique.esa_name": "Obfuscated Files or Information",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "94c36601-2ae5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517685\"",
@@ -985,9 +1065,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1567",
             "technique.esa_name": "Exfiltration Over Web Service",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "exfiltration",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "fe7a76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517686\"",
@@ -1000,9 +1081,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1082",
             "technique.esa_name": "System Information Discovery",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "52c6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517687\"",
@@ -1015,9 +1097,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1059.001",
             "technique.esa_name": "PowerShell",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "2a82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517688\"",
@@ -1030,9 +1113,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Mango Sandstorm (Microsoft), MuddyWater (Unity 42)",
             "technique.esa_mitreid": "T1574",
             "technique.esa_name": "Hijack Execution Flow",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "persistence, privilege-escalation, defense-evasion",
-            "taGroup.esa_name": "Static Kitten (Iran)"
+            "technique.esa_mitreenterpriseid": "3b35d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "Static Kitten (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517689\"",
@@ -1045,9 +1129,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Hazel Sandstorm (Microsoft), Twisted Kitten (CrowdStrike)",
             "technique.esa_mitreid": "T1053.005",
             "technique.esa_name": "Scheduled Task",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "execution, persistence, privilege-escalation",
-            "taGroup.esa_name": "OilRig (Iran) / APT34"
+            "technique.esa_mitreenterpriseid": "408cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "OilRig (Iran) / APT34",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517690\"",
@@ -1060,9 +1145,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Hazel Sandstorm (Microsoft), Twisted Kitten (CrowdStrike)",
             "technique.esa_mitreid": "T1071.001",
             "technique.esa_name": "Web Protocols",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "OilRig (Iran) / APT34"
+            "technique.esa_mitreenterpriseid": "2182ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "OilRig (Iran) / APT34",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517691\"",
@@ -1075,9 +1161,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Hazel Sandstorm (Microsoft), Twisted Kitten (CrowdStrike)",
             "technique.esa_mitreid": "T1568.002",
             "technique.esa_name": "Domain Generation Algorithms",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "OilRig (Iran) / APT34"
+            "technique.esa_mitreenterpriseid": "3d35d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "OilRig (Iran) / APT34",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517692\"",
@@ -1090,9 +1177,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Hazel Sandstorm (Microsoft), Twisted Kitten (CrowdStrike)",
             "technique.esa_mitreid": "T1562.001",
             "technique.esa_name": "Disable or Modify Tools",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "OilRig (Iran) / APT34"
+            "technique.esa_mitreenterpriseid": "ff7a76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "OilRig (Iran) / APT34",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517693\"",
@@ -1105,9 +1193,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Hazel Sandstorm (Microsoft), Twisted Kitten (CrowdStrike)",
             "technique.esa_mitreid": "T1041",
             "technique.esa_name": "Exfiltration Over C2 Channel",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "exfiltration",
-            "taGroup.esa_name": "OilRig (Iran) / APT34"
+            "technique.esa_mitreenterpriseid": "6dc6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "OilRig (Iran) / APT34",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517694\"",
@@ -1120,9 +1209,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1566.002",
             "technique.esa_name": "Spearphishing Link",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "7c7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517695\"",
@@ -1135,9 +1225,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1566.001",
             "technique.esa_name": "Spearphishing Attachment",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "5735d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517696\"",
@@ -1150,9 +1241,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1204.002",
             "technique.esa_name": "Malicious File",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "1a1dd1fa-29e5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517697\"",
@@ -1165,9 +1257,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1204.002",
             "technique.esa_name": "Malicious File",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "1a1dd1fa-29e5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517698\"",
@@ -1180,9 +1273,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1071.001",
             "technique.esa_name": "Web Protocols",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "2182ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517699\"",
@@ -1195,9 +1289,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1547.001",
             "technique.esa_name": "Registry Run Keys / Startup Folder",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "9c7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517700\"",
@@ -1210,9 +1305,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1566",
             "technique.esa_name": "Phishing",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "6d5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517701\"",
@@ -1225,9 +1321,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1059",
             "technique.esa_name": "Command and Scripting Interpreter",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "298cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517702\"",
@@ -1240,9 +1337,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1036",
             "technique.esa_name": "Masquerading",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "4b82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517703\"",
@@ -1255,9 +1353,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1547",
             "technique.esa_name": "Boot or Logon Autostart Execution",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "267b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517704\"",
@@ -1270,9 +1369,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1552.001",
             "technique.esa_name": "Credentials In Files",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "7035d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517705\"",
@@ -1285,9 +1385,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1059.001",
             "technique.esa_name": "PowerShell",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "2a82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517706\"",
@@ -1300,9 +1401,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1190",
             "technique.esa_name": "Exploit Public-Facing Application",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "f9c5ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517707\"",
@@ -1315,9 +1417,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1018",
             "technique.esa_name": "Remote System Discovery",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "c4f9df03-2ae5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517708\"",
@@ -1330,9 +1433,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1584.005",
             "technique.esa_name": "Botnet",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "resource-development",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "dd7a76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517709\"",
@@ -1345,9 +1449,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1016",
             "technique.esa_name": "System Network Configuration Discovery",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "6b8cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517710\"",
@@ -1360,9 +1465,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1082",
             "technique.esa_name": "System Information Discovery",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT28"
+            "technique.esa_mitreenterpriseid": "52c6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517711\"",
@@ -1375,9 +1481,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Threat Group-3390 (Secureworks), Emissary Panda (CrowdStrike)",
             "technique.esa_mitreid": "T1566",
             "technique.esa_name": "Phishing",
-            "taGroup.category.esa_name": "Nation-State (China)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT27"
+            "technique.esa_mitreenterpriseid": "6d5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT27",
+            "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12517713\"",
@@ -1390,9 +1497,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Vanguard Panda (CrowdStrike)",
             "technique.esa_mitreid": "T1190",
             "technique.esa_name": "Exploit Public-Facing Application",
-            "taGroup.category.esa_name": "Nation-State (China)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "Volt Typhoon"
+            "technique.esa_mitreenterpriseid": "f9c5ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Volt Typhoon",
+            "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12517714\"",
@@ -1405,9 +1513,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Vanguard Panda (CrowdStrike)",
             "technique.esa_mitreid": "T1583",
             "technique.esa_name": "Acquire Infrastructure",
-            "taGroup.category.esa_name": "Nation-State (China)",
             "technique.esa_tactics": "resource-development",
-            "taGroup.esa_name": "Volt Typhoon"
+            "technique.esa_mitreenterpriseid": "f57a76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Volt Typhoon",
+            "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12517715\"",
@@ -1420,9 +1529,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Vanguard Panda (CrowdStrike)",
             "technique.esa_mitreid": "T1595",
             "technique.esa_name": "Active Scanning",
-            "taGroup.category.esa_name": "Nation-State (China)",
             "technique.esa_tactics": "reconnaissance",
-            "taGroup.esa_name": "Volt Typhoon"
+            "technique.esa_mitreenterpriseid": "0d5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Volt Typhoon",
+            "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12517716\"",
@@ -1435,9 +1545,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Vanguard Panda (CrowdStrike)",
             "technique.esa_mitreid": "T1486",
             "technique.esa_name": "Data Encrypted for Impact",
-            "taGroup.category.esa_name": "Nation-State (China)",
             "technique.esa_tactics": "impact",
-            "taGroup.esa_name": "Volt Typhoon"
+            "technique.esa_mitreenterpriseid": "fa5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Volt Typhoon",
+            "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12517717\"",
@@ -1450,9 +1561,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Cozy Bear (CrowdStrike),  Midnight Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1059.001",
             "technique.esa_name": "PowerShell",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT29"
+            "technique.esa_mitreenterpriseid": "2a82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT29",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517718\"",
@@ -1465,9 +1577,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Cozy Bear (CrowdStrike),  Midnight Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1210",
             "technique.esa_name": "Exploitation of Remote Services",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "lateral-movement",
-            "taGroup.esa_name": "APT29"
+            "technique.esa_mitreenterpriseid": "0a5dd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT29",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517719\"",
@@ -1480,9 +1593,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Cozy Bear (CrowdStrike),  Midnight Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1566.002",
             "technique.esa_name": "Spearphishing Link",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT29"
+            "technique.esa_mitreenterpriseid": "7c7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT29",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517720\"",
@@ -1495,9 +1609,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Cozy Bear (CrowdStrike),  Midnight Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1566.001",
             "technique.esa_name": "Spearphishing Attachment",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT29"
+            "technique.esa_mitreenterpriseid": "5735d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT29",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517721\"",
@@ -1510,9 +1625,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Cozy Bear (CrowdStrike),  Midnight Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1070.004",
             "technique.esa_name": "File Deletion",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT29"
+            "technique.esa_mitreenterpriseid": "5c3ada00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT29",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517722\"",
@@ -1525,9 +1641,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Cozy Bear (CrowdStrike),  Midnight Blizzard (Microsoft)",
             "technique.esa_mitreid": "T1055.003",
             "technique.esa_name": "Thread Execution Hijacking",
-            "taGroup.category.esa_name": "Nation-State (Russia)",
             "technique.esa_tactics": "defense-evasion, privilege-escalation",
-            "taGroup.esa_name": "APT29"
+            "technique.esa_mitreenterpriseid": "2f82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT29",
+            "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12517723\"",
@@ -1539,9 +1656,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- LockBit ransomware gang claims responsibility for an attack on Bridgestone Americas.\n- Data theft announced by the gang with a countdown for data leak.\n- Bridgestone disconnected many of its facilities in response to the incident.\n- Incident first detected on February 27, 2022, and was later confirmed to be a ransomware attack.\n- Bridgestone working with law enforcement and Accenture Security to investigate the scope of the attack.\n- LockBit is a prominent ransomware actor, especially active in targeting the industrial sector.",
             "technique.esa_mitreid": "T1486",
             "technique.esa_name": "Data Encrypted for Impact",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "impact",
-            "taGroup.esa_name": "LockBit"
+            "technique.esa_mitreenterpriseid": "fa5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "LockBit",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"12517724\"",
@@ -1553,9 +1671,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- LockBit ransomware gang claims responsibility for an attack on Bridgestone Americas.\n- Data theft announced by the gang with a countdown for data leak.\n- Bridgestone disconnected many of its facilities in response to the incident.\n- Incident first detected on February 27, 2022, and was later confirmed to be a ransomware attack.\n- Bridgestone working with law enforcement and Accenture Security to investigate the scope of the attack.\n- LockBit is a prominent ransomware actor, especially active in targeting the industrial sector.",
             "technique.esa_mitreid": "T1489",
             "technique.esa_name": "Service Stop",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "impact",
-            "taGroup.esa_name": "LockBit"
+            "technique.esa_mitreenterpriseid": "191dd1fa-29e5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "LockBit",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"12517725\"",
@@ -1567,9 +1686,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- LockBit ransomware gang claims responsibility for an attack on Bridgestone Americas.\n- Data theft announced by the gang with a countdown for data leak.\n- Bridgestone disconnected many of its facilities in response to the incident.\n- Incident first detected on February 27, 2022, and was later confirmed to be a ransomware attack.\n- Bridgestone working with law enforcement and Accenture Security to investigate the scope of the attack.\n- LockBit is a prominent ransomware actor, especially active in targeting the industrial sector.",
             "technique.esa_mitreid": "T1490",
             "technique.esa_name": "Inhibit System Recovery",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "impact",
-            "taGroup.esa_name": "LockBit"
+            "technique.esa_mitreenterpriseid": "f95cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "LockBit",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"12517728\"",
@@ -1581,9 +1701,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- Dmitry Yuryevich Khoroshev, allegedly the leader of the LockBit ransomware group, has been indicted by the U.S. Department of Justice.\n- Khoroshev is accused of developing and administering LockBit, leading to over $100 million in ransom payments from more than 2,000 victims.\n- The LockBit group, under Khoroshev's leadership, targeted a diverse range of victims including individuals, businesses, and critical infrastructure across 120 countries.\n- LockBit practices included double extortion, demanding ransoms for decryption keys and for not releasing stolen data, though they reportedly never deleted the data even if the ransom was paid.",
             "technique.esa_mitreid": "T1560",
             "technique.esa_name": "Archive Collected Data",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "LockBit"
+            "technique.esa_mitreenterpriseid": "867ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "LockBit",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"12517729\"",
@@ -1595,9 +1716,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- ALPHV ransomware group claimed responsibility for the MGM Resorts International hack.\n- The attack involved compromising MGM's systems including hotel room pass cards and casino gaming systems.\n- ALPHV tried to negotiate with MGM but resorted to deploying ransomware on MGM's ESXi hypervisors after failed communication.\n- The group still claims to have access to MGM's network and threatens further actions.\n- ALPHV criticizes the media and cybersecurity specialists for inaccurate reporting and lack of insight.",
             "technique.esa_mitreid": "T1562.001",
             "technique.esa_name": "Disable or Modify Tools",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "ALPHV"
+            "technique.esa_mitreenterpriseid": "ff7a76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "ALPHV",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"12517732\"",
@@ -1609,9 +1731,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- Ascension Healthcare, a large US healthcare provider, experienced a ransomware attack attributed to the Black Basta group.\n- The attack disrupted various systems including phone and medical order systems, and forced manual operations.\n- Ascension responded by training staff for paper-based operations, diverting emergency services, and contacting the FBI and CISA.\n- Black Basta uses double extortion tactics, often starting with spear-phishing or exploiting vulnerabilities.\n- The Black Basta group has targeted many sectors but focuses on healthcare due to its critical nature and ransom potential.",
             "technique.esa_mitreid": "T1133",
             "technique.esa_name": "External Remote Services",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "persistence, initial-access",
-            "taGroup.esa_name": "Black Basta"
+            "technique.esa_mitreenterpriseid": "ff81ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Black Basta",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"12517733\"",
@@ -1623,9 +1746,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- Capita, a leading IT supplier in the UK, experienced a ransomware attack attributed to the Russian-linked group, Black Basta.\n- Initially, Capita described the issue as an 'IT Incident' and denied it being related to cybersecurity.\n- It took three days for Capita to acknowledge the security nature of the incident publicly.\n- Black Basta is known for double extortion tactics, including data theft and encryption for ransom.\n- The leaked data includes sensitive personal and financial information from various entities.\n- Despite public statements, there is evidence of significant data compromise, questioning Capita's transparency and response strategy.",
             "technique.esa_mitreid": "T1567",
             "technique.esa_name": "Exfiltration Over Web Service",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "exfiltration",
-            "taGroup.esa_name": "Black Basta"
+            "technique.esa_mitreenterpriseid": "fe7a76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Black Basta",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"12517734\"",
@@ -1637,9 +1761,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- Black Basta ransomware is a new threat, using data exfiltration and encryption for double extortion.\n- Likely operated by ex-members of Conti and REvil groups, Black Basta rapidly became notorious by April 2022.\n- The group has affected 50 businesses across multiple countries, demanding up to $2M.\n- Attack methods include using QakBot for reconnaissance and lateral movement, disabling antivirus via GPOs, and encrypting files in unique patterns.\n- Recommendations include keeping software updated, establishing backups, enforcing Zero Trust policies, and using strong passwords.",
             "technique.esa_mitreid": "T1486",
             "technique.esa_name": "Data Encrypted for Impact",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "impact",
-            "taGroup.esa_name": "Black Basta"
+            "technique.esa_mitreenterpriseid": "fa5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Black Basta",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"12517735\"",
@@ -1651,9 +1776,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- The Toronto Public Library (TPL) experienced a cyberattack last week, attributed to the Black Basta ransomware group.\n- TPL services, including website, account access, and digital collections, were disrupted.\n- Public computers and printing services are down; however, phone lines and WiFi remain operational.\n- TPL is working on restoring all systems.\n- There's no current evidence that personal data was compromised, though risks remain.\n- The attack was executed overnight on Oct. 27, with defensive shutdowns by TPL to prevent malware spread.\n- Main servers with sensitive data were reportedly not encrypted, but unauthorized data access hasn't been ruled out.",
             "technique.esa_mitreid": "T1486",
             "technique.esa_name": "Data Encrypted for Impact",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "impact",
-            "taGroup.esa_name": "Black Basta"
+            "technique.esa_mitreenterpriseid": "fa5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Black Basta",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"12517736\"",
@@ -1665,9 +1791,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- Scattered Spider, a threat actor group, has been actively attacking large organizations including MGM Resorts, Caesars Entertainment, and Clorox.\n- They use AlphV ransomware and sophisticated techniques to gain access, often bypassing multifactor authentication.\n- Federal agencies like the FBI and CISA urge more companies to report attacks for effective action against such threat actors.\n- The group is known for using social engineering, phishing, and living-off-the-land techniques to breach security.",
             "technique.esa_mitreid": "T1574",
             "technique.esa_name": "Hijack Execution Flow",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "persistence, privilege-escalation, defense-evasion",
-            "taGroup.esa_name": "Scattered Spider"
+            "technique.esa_mitreenterpriseid": "3b35d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "Scattered Spider",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"12517738\"",
@@ -1680,9 +1807,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Charming Kitten (Crowdstrike)",
             "technique.esa_mitreid": "T1566",
             "technique.esa_name": "Phishing",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT35 (Iran)"
+            "technique.esa_mitreenterpriseid": "6d5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT35 (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517739\"",
@@ -1695,9 +1823,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Charming Kitten (Crowdstrike)",
             "technique.esa_mitreid": "T1547",
             "technique.esa_name": "Boot or Logon Autostart Execution",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "APT35 (Iran)"
+            "technique.esa_mitreenterpriseid": "267b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT35 (Iran)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517743\"",
@@ -1709,9 +1838,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- Tasmania's technology minister confirmed an ongoing investigation into a hack of the third-party file transfer site GoAnywhere MFT, used by the Tasmanian government among others. \n- There is no current evidence that government-held data was compromised, although personal information might have been affected. \n- The hack is attributed to the ransomware gang Cl0p, who exploited a vulnerability in GoAnywhere MFT, affecting over 150 organizations globally. \n- The nature of compromised data is unclear as it involves information transfer rather than storage. \n- The government's cyber security team is working closely with federal experts to resolve the issue.",
             "technique.esa_mitreid": "T1190",
             "technique.esa_name": "Exploit Public-Facing Application",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "Cl0P"
+            "technique.esa_mitreenterpriseid": "f9c5ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Cl0P",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"12517744\"",
@@ -1723,9 +1853,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- The CL0P ransomware gang exploited a zero-day vulnerability in the MOVEit software.\n- This software is used by organizations globally to transfer sensitive data securely.\n- The Cybersecurity and Infrastructure Security Agency (CISA) issued an advisory on June 7, 2023.\n- Victims include British Airways, BBC, Boots, and various U.S. and Canadian government agencies.\n- Progress Software, the creator of MOVEit, released a patch in late May, but not all clients applied it promptly.\n- Several cybersecurity measures and practices were recommended by CISA to mitigate further risks.",
             "technique.esa_mitreid": "T1190",
             "technique.esa_name": "Exploit Public-Facing Application",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "Cl0P"
+            "technique.esa_mitreenterpriseid": "f9c5ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Cl0P",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"12517745\"",
@@ -1737,9 +1868,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- The CL0P ransomware gang exploited a zero-day vulnerability in the MOVEit software.\n- This software is used by organizations globally to transfer sensitive data securely.\n- The Cybersecurity and Infrastructure Security Agency (CISA) issued an advisory on June 7, 2023.\n- Victims include British Airways, BBC, Boots, and various U.S. and Canadian government agencies.\n- Progress Software, the creator of MOVEit, released a patch in late May, but not all clients applied it promptly.\n- Several cybersecurity measures and practices were recommended by CISA to mitigate further risks.",
             "technique.esa_mitreid": "T1566",
             "technique.esa_name": "Phishing",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "Cl0P"
+            "technique.esa_mitreenterpriseid": "6d5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Cl0P",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"12517746\"",
@@ -1751,9 +1883,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- The Cl0p ransomware group claimed to have breached Thames Water, UK's largest water and wastewater company.\n- Confusion arose as leaked documents suggested the actual victim was South Staffordshire Water.\n- South Staffordshire confirmed a cyber incident affecting its corporate IT but assured that water supply and quality were not compromised.\n- The threat actors claimed to have accessed SCADA systems, potentially allowing them to alter water treatment processes.\n- They also claimed to have stolen over 5 Tb of data and spent months inside the network, although they did not encrypt files as commonly seen in other ransomware attacks.",
             "technique.esa_mitreid": "T1486",
             "technique.esa_name": "Data Encrypted for Impact",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "impact",
-            "taGroup.esa_name": "Cl0P"
+            "technique.esa_mitreenterpriseid": "fa5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Cl0P",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"12517747\"",
@@ -1765,9 +1898,10 @@ const dataOfTechniquesTrending = [
             "esa_articlesummary": "- The Cl0p ransomware group claimed to have breached Thames Water, UK's largest water and wastewater company.\n- Confusion arose as leaked documents suggested the actual victim was South Staffordshire Water.\n- South Staffordshire confirmed a cyber incident affecting its corporate IT but assured that water supply and quality were not compromised.\n- The threat actors claimed to have accessed SCADA systems, potentially allowing them to alter water treatment processes.\n- They also claimed to have stolen over 5 Tb of data and spent months inside the network, although they did not encrypt files as commonly seen in other ransomware attacks.",
             "technique.esa_mitreid": "T1489",
             "technique.esa_name": "Service Stop",
-            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)",
             "technique.esa_tactics": "impact",
-            "taGroup.esa_name": "Cl0P"
+            "technique.esa_mitreenterpriseid": "191dd1fa-29e5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "Cl0P",
+            "taGroup.category.esa_name": "Organised Criminal Group (Ransomware)"
         },
         {
             "@odata.etag": "W/\"16751453\"",
@@ -1780,9 +1914,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
             "technique.esa_mitreid": "T1078",
             "technique.esa_name": "Valid Accounts",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "defense-evasion, persistence, privilege-escalation, initial-access",
-            "taGroup.esa_name": "Kimsuky (NK)"
+            "technique.esa_mitreenterpriseid": "683ada00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Kimsuky (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"16751454\"",
@@ -1795,9 +1930,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
             "technique.esa_mitreid": "T1193",
             "technique.esa_name": "Spearphishing Attachment",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "Kimsuky (NK)"
+            "technique.esa_mitreenterpriseid": "ec81ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Kimsuky (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"16751455\"",
@@ -1810,9 +1946,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
             "technique.esa_mitreid": "T1566.001",
             "technique.esa_name": "Spearphishing Attachment",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "Kimsuky (NK)"
+            "technique.esa_mitreenterpriseid": "5735d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "Kimsuky (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"16751456\"",
@@ -1825,9 +1962,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
             "technique.esa_mitreid": "T1566.002",
             "technique.esa_name": "Spearphishing Link",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "Kimsuky (NK)"
+            "technique.esa_mitreenterpriseid": "7c7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Kimsuky (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517748\"",
@@ -1840,9 +1978,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
             "technique.esa_mitreid": "T1114",
             "technique.esa_name": "Email Collection",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "Kimsuky (NK)"
+            "technique.esa_mitreenterpriseid": "9f39da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Kimsuky (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517749\"",
@@ -1855,9 +1994,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
             "technique.esa_mitreid": "T1557",
             "technique.esa_name": "Adversary-in-the-Middle",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "credential-access, collection",
-            "taGroup.esa_name": "Kimsuky (NK)"
+            "technique.esa_mitreenterpriseid": "8e7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Kimsuky (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517750\"",
@@ -1870,9 +2010,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
             "technique.esa_mitreid": "T1560",
             "technique.esa_name": "Archive Collected Data",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "Kimsuky (NK)"
+            "technique.esa_mitreenterpriseid": "867ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Kimsuky (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517751\"",
@@ -1885,9 +2026,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
             "technique.esa_mitreid": "T1059.005",
             "technique.esa_name": "Visual Basic",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "Kimsuky (NK)"
+            "technique.esa_mitreenterpriseid": "2982ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Kimsuky (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517752\"",
@@ -1900,9 +2042,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
             "technique.esa_mitreid": "T1606",
             "technique.esa_name": "Forge Web Credentials",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "Kimsuky (NK)"
+            "technique.esa_mitreenterpriseid": "407ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Kimsuky (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517753\"",
@@ -1915,9 +2058,10 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
             "technique.esa_mitreid": "T1193",
             "technique.esa_name": "Spearphishing Attachment",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "Kimsuky (NK)"
+            "technique.esa_mitreenterpriseid": "ec81ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Kimsuky (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12517754\"",
@@ -1930,36 +2074,119 @@ const dataOfTechniquesTrending = [
             "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
             "technique.esa_mitreid": "T1112",
             "technique.esa_name": "Modify Registry",
-            "taGroup.category.esa_name": "Nation-State (Others)",
             "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "Kimsuky (NK)"
+            "technique.esa_mitreenterpriseid": "a139da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Kimsuky (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
+        },
+        {
+            "@odata.etag": "W/\"12517755\"",
+            "esa_target": "South Korea",
+            "esa_dynamicthreatactorttpsid": "eb431590-ed70-ef11-a670-000d3a67888a",
+            "esa_articlelink": "https://www.theregister.com/2024/03/21/kimsuky_chm_file_campaign/",
+            "esa_eventdate": "2023-10-04T00:00:00Z",
+            "esa_articletitle": "North Korea's Kimsuky Group Launches New Cyber Attack Campaign",
+            "esa_articlesummary": "- North Korea's Kimsuky cyber crime gang, also known as Black Banshee, Thallium, APT 43, and Velvet Chollima, is noted for targeting government agencies and think tanks to gather intelligence.\n- The group's favored attack method is spear phishing, often preceded by extensive social engineering, where they pose as academics or journalists.\n- The latest tactics involve using poisoned Microsoft Compiled HTML Help (CHM) files along with other file types like ISO, VHD, ZIP, and RAR to distribute malware.\n- CHM files allow execution of JavaScript and can be used to execute arbitrary commands on Windows machines through HTML and ActiveX.\n- These attacks install a VBScript, modify the Windows registry for persistence, and harvest information such as system data and recent Word documents.\n- Rapid7 has moderate confidence that these tactics are the work of Kimsuky, targeting primarily South Korea, with indications of activity in Germany.",
+            "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
+            "technique.esa_mitreid": "T1083",
+            "technique.esa_name": "File and Directory Discovery",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "1182ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Kimsuky (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
+        },
+        {
+            "@odata.etag": "W/\"12517756\"",
+            "esa_target": "Aerospace company in the Netherlands; Political journalist in Belgium",
+            "esa_dynamicthreatactorttpsid": "b636849c-ed70-ef11-a670-000d3a67888a",
+            "esa_articlelink": "https://www.infosecurity-magazine.com/news/lazarus-group-exploit-dell-driver/",
+            "esa_eventdate": "2021-09-01T00:00:00Z",
+            "esa_articletitle": "Lazarus Group Deploys Windows Rootkit Using Dell Firmware Driver Exploit",
+            "esa_articlesummary": "- North Korea-backed Lazarus Group exploited a Dell firmware driver.\n- ESET researchers observed the campaign in autumn 2021.\n- Spearphishing with malicious documents initiated the attack.\n- Targets: an aerospace employee in the Netherlands and a journalist in Belgium.\n- Attack leveraged CVE-2021-21551 for data exfiltration.\n- Dell patched the vulnerability in May 2021.\n- Malware disabled security monitoring and manipulated Windows kernel mechanisms.\n- Attackers used sophisticated tools including the BLINDINGCAN backdoor.",
+            "taGroup.esa_othernames": "Labyrinth Chollima (CrowdStrike), Jade Sleet (Microsoft)",
+            "technique.esa_mitreid": "T1562.001",
+            "technique.esa_name": "Disable or Modify Tools",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "ff7a76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Lazarus Group (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
+        },
+        {
+            "@odata.etag": "W/\"12517757\"",
+            "esa_target": "Multiple sectors (Manufacturing, Agriculture, Physical Security)",
+            "esa_dynamicthreatactorttpsid": "261586a2-ed70-ef11-a670-000d3a67888a",
+            "esa_articlelink": "https://thehackernews.com/2023/12/lazarus-group-using-log4j-exploits-to.html",
+            "esa_eventdate": "2023-09-01T00:00:00Z",
+            "esa_articletitle": "North Korea-Linked Lazarus Group Exploits Log4j Flaws in New Cyberattacks",
+            "esa_articlesummary": "- The Lazarus Group is leveraging Log4j vulnerabilities in a campaign named Operation Blacksmith.\n- They deploy RATs like NineRAT, which uses Telegram for C2, along with DLRAT and BottomLoader.\n- Targets include sectors like manufacturing, agriculture, and physical security.\n- CVE-2021-44228 (Log4Shell) is exploited on VMWare Horizon servers.\n- NineRAT has been active since March 2023, with recent attacks in South America and Europe.\n- The group also uses HazyLoad for downloading and executing malware.",
+            "taGroup.esa_othernames": "Labyrinth Chollima (CrowdStrike), Jade Sleet (Microsoft)",
+            "technique.esa_mitreid": "T1190",
+            "technique.esa_name": "Exploit Public-Facing Application",
+            "technique.esa_tactics": "initial-access",
+            "technique.esa_mitreenterpriseid": "f9c5ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Lazarus Group (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
+        },
+        {
+            "@odata.etag": "W/\"12517758\"",
+            "esa_target": "Multiple sectors (Manufacturing, Agriculture, Physical Security)",
+            "esa_dynamicthreatactorttpsid": "291586a2-ed70-ef11-a670-000d3a67888a",
+            "esa_articlelink": "https://thehackernews.com/2023/12/lazarus-group-using-log4j-exploits-to.html",
+            "esa_eventdate": "2023-09-01T00:00:00Z",
+            "esa_articletitle": "North Korea-Linked Lazarus Group Exploits Log4j Flaws in New Cyberattacks",
+            "esa_articlesummary": "- The Lazarus Group is leveraging Log4j vulnerabilities in a campaign named Operation Blacksmith.\n- They deploy RATs like NineRAT, which uses Telegram for C2, along with DLRAT and BottomLoader.\n- Targets include sectors like manufacturing, agriculture, and physical security.\n- CVE-2021-44228 (Log4Shell) is exploited on VMWare Horizon servers.\n- NineRAT has been active since March 2023, with recent attacks in South America and Europe.\n- The group also uses HazyLoad for downloading and executing malware.",
+            "taGroup.esa_othernames": "Labyrinth Chollima (CrowdStrike), Jade Sleet (Microsoft)",
+            "technique.esa_mitreid": "T1071.001",
+            "technique.esa_name": "Web Protocols",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "2182ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Lazarus Group (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
+        },
+        {
+            "@odata.etag": "W/\"12517759\"",
+            "esa_target": "Ronin Network",
+            "esa_dynamicthreatactorttpsid": "3c1586a2-ed70-ef11-a670-000d3a67888a",
+            "esa_articlelink": "https://therecord.media/us-agency-attributes-540-million-ronin-hack-to-north-korean-apt-group",
+            "esa_eventdate": "2022-03-29T00:00:00Z",
+            "esa_articletitle": "US Treasury Attributes Major DeFi Hack to North Korean Lazarus Group, Imposes Sanctions",
+            "esa_articlesummary": "- North Korean APT group Lazarus was identified by the US Treasury's OFAC as responsible for a major hack on the Ronin Network.\n- Approximately $540 million in Ethereum and USDC were stolen on March 29.\n- The funds have been incrementally laundered, with a significant amount still unspent.\n- Sanctions were imposed to prevent further cash out through U.S.-based exchanges.\n- Lazarus Group used methods like swapping stolen USDC for ETH via decentralized exchanges to evade AML and KYC checks.",
+            "taGroup.esa_othernames": "Labyrinth Chollima (CrowdStrike), Jade Sleet (Microsoft)",
+            "technique.esa_mitreid": "T1567.002",
+            "technique.esa_name": "Exfiltration to Cloud Storage",
+            "technique.esa_tactics": "exfiltration",
+            "technique.esa_mitreenterpriseid": "7f7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Lazarus Group (NK)",
+            "taGroup.category.esa_name": "Nation-State (Others)"
         },
 ]
-
 const dataOfTechniquesBaseline = [
-	 {
+	{
             "@odata.etag": "W/\"15091136\"",
             "esa_threatactorttpsid": "682bb9ef-20a7-ef11-b8e9-000d3ab67859",
-            "technique.esa_mitreid": "T1041",
             "technique.esa_name": "Exfiltration Over C2 Channel",
-            "technique.esa_tactics": "exfiltration",
-            "taGroup.esa_name": "Hexane (Iran)",
+            "technique.esa_mitreid": "T1041",
             "taGroup.esa_othernames": "Cobalt Lyceum (SecureWorks)",
+            "technique.esa_tactics": "exfiltration",
+            "technique.esa_mitreenterpriseid": "6dc6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Hexane (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"16751499\"",
             "esa_threatactorttpsid": "f784b201-17df-ef11-a72f-000d3ab6d9cd",
-            "technique.esa_mitreid": "T1592.002",
             "technique.esa_name": "Software",
-            "technique.esa_tactics": "reconnaissance",
-            "taGroup.esa_name": "Lazarus Group (NK)",
+            "technique.esa_mitreid": "T1592.002",
             "taGroup.esa_othernames": "Labyrinth Chollima (CrowdStrike), Jade Sleet (Microsoft)",
+            "technique.esa_tactics": "reconnaissance",
+            "technique.esa_mitreenterpriseid": "d37a76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Lazarus Group (NK)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526749\"",
             "esa_threatactorttpsid": "51088013-6198-ef11-8a6a-000d3ab828ba",
+            "technique.esa_mitreenterpriseid": "fa5cd8fa-29e5-ee11-904c-000d3ab64c9a",
             "technique.esa_mitreid": "T1486",
             "technique.esa_name": "Data Encrypted for Impact",
             "technique.esa_tactics": "impact",
@@ -1969,16 +2196,18 @@ const dataOfTechniquesBaseline = [
         {
             "@odata.etag": "W/\"12526752\"",
             "esa_threatactorttpsid": "55088013-6198-ef11-8a6a-000d3ab828ba",
-            "technique.esa_mitreid": "T1552.001",
             "technique.esa_name": "Credentials In Files",
-            "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1552.001",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "credential-access",
+            "technique.esa_mitreenterpriseid": "7035d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526757\"",
             "esa_threatactorttpsid": "5f088013-6198-ef11-8a6a-000d3ab828ba",
+            "technique.esa_mitreenterpriseid": "f95cd8fa-29e5-ee11-904c-000d3ab64c9a",
             "technique.esa_mitreid": "T1490",
             "technique.esa_name": "Inhibit System Recovery",
             "technique.esa_tactics": "impact",
@@ -1988,26 +2217,29 @@ const dataOfTechniquesBaseline = [
         {
             "@odata.etag": "W/\"12526761\"",
             "esa_threatactorttpsid": "e5ec3120-6198-ef11-8a6a-000d3ab828ba",
-            "technique.esa_mitreid": "T1105",
             "technique.esa_name": "Ingress Tool Transfer",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT35 (Iran)",
+            "technique.esa_mitreid": "T1105",
             "taGroup.esa_othernames": "Charming Kitten (Crowdstrike)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "0882ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT35 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526763\"",
             "esa_threatactorttpsid": "e7ec3120-6198-ef11-8a6a-000d3ab828ba",
-            "technique.esa_mitreid": "T1204",
             "technique.esa_name": "User Execution",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT35 (Iran)",
+            "technique.esa_mitreid": "T1204",
             "taGroup.esa_othernames": "Charming Kitten (Crowdstrike)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "467b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT35 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526766\"",
             "esa_threatactorttpsid": "edec3120-6198-ef11-8a6a-000d3ab828ba",
+            "technique.esa_mitreenterpriseid": "835cd8fa-29e5-ee11-904c-000d3ab64c9a",
             "technique.esa_mitreid": "T1556.003",
             "technique.esa_name": "Pluggable Authentication Modules",
             "technique.esa_tactics": "credential-access, defense-evasion, persistence",
@@ -2017,6 +2249,7 @@ const dataOfTechniquesBaseline = [
         {
             "@odata.etag": "W/\"12526767\"",
             "esa_threatactorttpsid": "eeec3120-6198-ef11-8a6a-000d3ab828ba",
+            "technique.esa_mitreenterpriseid": "f4c5ca02-2ae5-ee11-904d-000d3adccea2",
             "technique.esa_mitreid": "T1199",
             "technique.esa_name": "Trusted Relationship",
             "technique.esa_tactics": "initial-access",
@@ -2026,6 +2259,7 @@ const dataOfTechniquesBaseline = [
         {
             "@odata.etag": "W/\"12526768\"",
             "esa_threatactorttpsid": "efec3120-6198-ef11-8a6a-000d3ab828ba",
+            "technique.esa_mitreenterpriseid": "3b35d2fd-29e5-ee11-904d-002248a3efe6",
             "technique.esa_mitreid": "T1574",
             "technique.esa_name": "Hijack Execution Flow",
             "technique.esa_tactics": "persistence, privilege-escalation, defense-evasion",
@@ -2035,6 +2269,7 @@ const dataOfTechniquesBaseline = [
         {
             "@odata.etag": "W/\"12526770\"",
             "esa_threatactorttpsid": "f3ec3120-6198-ef11-8a6a-000d3ab828ba",
+            "technique.esa_mitreenterpriseid": "b37ad2fc-29e5-ee11-904d-000d3adccea2",
             "technique.esa_mitreid": "T1485",
             "technique.esa_name": "Data Destruction",
             "technique.esa_tactics": "impact",
@@ -2044,6 +2279,7 @@ const dataOfTechniquesBaseline = [
         {
             "@odata.etag": "W/\"12526771\"",
             "esa_threatactorttpsid": "f4ec3120-6198-ef11-8a6a-000d3ab828ba",
+            "technique.esa_mitreenterpriseid": "588cd206-2ae5-ee11-904c-000d3ab64c9a",
             "technique.esa_mitreid": "T1021.002",
             "technique.esa_name": "SMB/Windows Admin Shares",
             "technique.esa_tactics": "lateral-movement",
@@ -2053,6 +2289,7 @@ const dataOfTechniquesBaseline = [
         {
             "@odata.etag": "W/\"12526775\"",
             "esa_threatactorttpsid": "f7bb0e2d-6198-ef11-8a6a-000d3ab828ba",
+            "technique.esa_mitreenterpriseid": "867ad2fc-29e5-ee11-904d-000d3adccea2",
             "technique.esa_mitreid": "T1560",
             "technique.esa_name": "Archive Collected Data",
             "technique.esa_tactics": "collection",
@@ -2062,2809 +2299,2487 @@ const dataOfTechniquesBaseline = [
         {
             "@odata.etag": "W/\"12526779\"",
             "esa_threatactorttpsid": "ffbb0e2d-6198-ef11-8a6a-000d3ab828ba",
-            "technique.esa_mitreid": "T1566",
             "technique.esa_name": "Phishing",
-            "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT29",
+            "technique.esa_mitreid": "T1566",
             "taGroup.esa_othernames": "Cozy Bear (CrowdStrike),  Midnight Blizzard (Microsoft)",
+            "technique.esa_tactics": "initial-access",
+            "technique.esa_mitreenterpriseid": "6d5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT29",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526780\"",
             "esa_threatactorttpsid": "02bc0e2d-6198-ef11-8a6a-000d3ab828ba",
-            "technique.esa_mitreid": "T1098",
             "technique.esa_name": "Account Manipulation",
-            "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "APT29",
+            "technique.esa_mitreid": "T1098",
             "taGroup.esa_othernames": "Cozy Bear (CrowdStrike),  Midnight Blizzard (Microsoft)",
+            "technique.esa_tactics": "persistence, privilege-escalation",
+            "technique.esa_mitreenterpriseid": "b539da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT29",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526781\"",
             "esa_threatactorttpsid": "05bc0e2d-6198-ef11-8a6a-000d3ab828ba",
-            "technique.esa_mitreid": "T1027",
             "technique.esa_name": "Obfuscated Files or Information",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT29",
+            "technique.esa_mitreid": "T1027",
             "taGroup.esa_othernames": "Cozy Bear (CrowdStrike),  Midnight Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "94c36601-2ae5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "APT29",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526782\"",
             "esa_threatactorttpsid": "1ebc0e2d-6198-ef11-8a6a-000d3ab828ba",
-            "technique.esa_mitreid": "T1574.002",
             "technique.esa_name": "DLL Side-Loading",
-            "technique.esa_tactics": "persistence, privilege-escalation, defense-evasion",
-            "taGroup.esa_name": "APT29",
+            "technique.esa_mitreid": "T1574.002",
             "taGroup.esa_othernames": "Cozy Bear (CrowdStrike),  Midnight Blizzard (Microsoft)",
+            "technique.esa_tactics": "persistence, privilege-escalation, defense-evasion",
+            "technique.esa_mitreenterpriseid": "3c35d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT29",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"15091073\"",
             "esa_threatactorttpsid": "554e9bcd-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1027",
             "technique.esa_name": "Obfuscated Files or Information",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "Deep Panda",
+            "technique.esa_mitreid": "T1027",
             "taGroup.esa_othernames": "Black Vine (Symantec)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "94c36601-2ae5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "Deep Panda",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"15091078\"",
             "esa_threatactorttpsid": "774f9bcd-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1059.003",
             "technique.esa_name": "Windows Command Shell",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "Deep Panda",
+            "technique.esa_mitreid": "T1059.003",
             "taGroup.esa_othernames": "Black Vine (Symantec)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "60c6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Deep Panda",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"15091084\"",
             "esa_threatactorttpsid": "a0dcc4d4-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1041",
             "technique.esa_name": "Exfiltration Over C2 Channel",
-            "technique.esa_tactics": "exfiltration",
-            "taGroup.esa_name": "Deep Panda",
+            "technique.esa_mitreid": "T1041",
             "taGroup.esa_othernames": "Black Vine (Symantec)",
+            "technique.esa_tactics": "exfiltration",
+            "technique.esa_mitreenterpriseid": "6dc6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Deep Panda",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"15091087\"",
             "esa_threatactorttpsid": "bedcc4d4-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1583.004",
             "technique.esa_name": "Server",
-            "technique.esa_tactics": "resource-development",
-            "taGroup.esa_name": "Deep Panda",
+            "technique.esa_mitreid": "T1583.004",
             "taGroup.esa_othernames": "Black Vine (Symantec)",
+            "technique.esa_tactics": "resource-development",
+            "technique.esa_mitreenterpriseid": "575cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Deep Panda",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"15091090\"",
             "esa_threatactorttpsid": "cddcc4d4-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1588.005",
             "technique.esa_name": "Exploits",
-            "technique.esa_tactics": "resource-development",
-            "taGroup.esa_name": "Deep Panda",
+            "technique.esa_mitreid": "T1588.005",
             "taGroup.esa_othernames": "Black Vine (Symantec)",
+            "technique.esa_tactics": "resource-development",
+            "technique.esa_mitreenterpriseid": "5b7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Deep Panda",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"15091092\"",
             "esa_threatactorttpsid": "dddcc4d4-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1003",
             "technique.esa_name": "OS Credential Dumping",
-            "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "Deep Panda",
+            "technique.esa_mitreid": "T1003",
             "taGroup.esa_othernames": "Black Vine (Symantec)",
+            "technique.esa_tactics": "credential-access",
+            "technique.esa_mitreenterpriseid": "5a82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Deep Panda",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"15091095\"",
             "esa_threatactorttpsid": "fddcc4d4-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1589",
             "technique.esa_name": "Gather Victim Identity Information",
-            "technique.esa_tactics": "reconnaissance",
-            "taGroup.esa_name": "Deep Panda",
+            "technique.esa_mitreid": "T1589",
             "taGroup.esa_othernames": "Black Vine (Symantec)",
+            "technique.esa_tactics": "reconnaissance",
+            "technique.esa_mitreenterpriseid": "2f35d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "Deep Panda",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"15091096\"",
             "esa_threatactorttpsid": "02ddc4d4-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1573.001",
             "technique.esa_name": "Symmetric Cryptography",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "Deep Panda",
+            "technique.esa_mitreid": "T1573.001",
             "taGroup.esa_othernames": "Black Vine (Symantec)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "3f35d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "Deep Panda",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"15091102\"",
             "esa_threatactorttpsid": "bcc1e5da-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1040",
             "technique.esa_name": "Network Sniffing",
-            "technique.esa_tactics": "credential-access, discovery",
-            "taGroup.esa_name": "Deep Panda",
+            "technique.esa_mitreid": "T1040",
             "taGroup.esa_othernames": "Black Vine (Symantec)",
+            "technique.esa_tactics": "credential-access, discovery",
+            "technique.esa_mitreenterpriseid": "6cc6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Deep Panda",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"15091104\"",
             "esa_threatactorttpsid": "c2c1e5da-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1083",
             "technique.esa_name": "File and Directory Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "Deep Panda",
+            "technique.esa_mitreid": "T1083",
             "taGroup.esa_othernames": "Black Vine (Symantec)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "1182ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Deep Panda",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"15091125\"",
             "esa_threatactorttpsid": "f9477fed-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1590",
             "technique.esa_name": "Gather Victim Network Information",
-            "technique.esa_tactics": "reconnaissance",
-            "taGroup.esa_name": "Hexane (Iran)",
+            "technique.esa_mitreid": "T1590",
             "taGroup.esa_othernames": "Cobalt Lyceum (SecureWorks)",
+            "technique.esa_tactics": "reconnaissance",
+            "technique.esa_mitreenterpriseid": "525cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Hexane (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"15091127\"",
             "esa_threatactorttpsid": "fc477fed-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1059.003",
             "technique.esa_name": "Windows Command Shell",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "Hexane (Iran)",
+            "technique.esa_mitreid": "T1059.003",
             "taGroup.esa_othernames": "Cobalt Lyceum (SecureWorks)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "60c6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Hexane (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"15091128\"",
             "esa_threatactorttpsid": "0c487fed-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1055.001",
             "technique.esa_name": "Dynamic-link Library Injection",
-            "technique.esa_tactics": "defense-evasion, privilege-escalation",
-            "taGroup.esa_name": "Hexane (Iran)",
+            "technique.esa_mitreid": "T1055.001",
             "taGroup.esa_othernames": "Cobalt Lyceum (SecureWorks)",
+            "technique.esa_tactics": "defense-evasion, privilege-escalation",
+            "technique.esa_mitreenterpriseid": "3482ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Hexane (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"15091129\"",
             "esa_threatactorttpsid": "0e487fed-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1071.001",
             "technique.esa_name": "Web Protocols",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "Hexane (Iran)",
+            "technique.esa_mitreid": "T1071.001",
             "taGroup.esa_othernames": "Cobalt Lyceum (SecureWorks)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "2182ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Hexane (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"15091138\"",
             "esa_threatactorttpsid": "5f319ef3-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1574.002",
             "technique.esa_name": "DLL Side-Loading",
-            "technique.esa_tactics": "persistence, privilege-escalation, defense-evasion",
-            "taGroup.esa_name": "Hexane (Iran)",
+            "technique.esa_mitreid": "T1574.002",
             "taGroup.esa_othernames": "Cobalt Lyceum (SecureWorks)",
+            "technique.esa_tactics": "persistence, privilege-escalation, defense-evasion",
+            "technique.esa_mitreenterpriseid": "3c35d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "Hexane (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"15091142\"",
             "esa_threatactorttpsid": "97319ef3-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1001",
             "technique.esa_name": "Data Obfuscation",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "Hexane (Iran)",
+            "technique.esa_mitreid": "T1001",
             "taGroup.esa_othernames": "Cobalt Lyceum (SecureWorks)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "538cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Hexane (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"15091143\"",
             "esa_threatactorttpsid": "fe319ef3-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1588.005",
             "technique.esa_name": "Exploits",
-            "technique.esa_tactics": "resource-development",
-            "taGroup.esa_name": "Hexane (Iran)",
+            "technique.esa_mitreid": "T1588.005",
             "taGroup.esa_othernames": "Cobalt Lyceum (SecureWorks)",
+            "technique.esa_tactics": "resource-development",
+            "technique.esa_mitreenterpriseid": "5b7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Hexane (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"15091146\"",
             "esa_threatactorttpsid": "08329ef3-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1003",
             "technique.esa_name": "OS Credential Dumping",
-            "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "Hexane (Iran)",
+            "technique.esa_mitreid": "T1003",
             "taGroup.esa_othernames": "Cobalt Lyceum (SecureWorks)",
+            "technique.esa_tactics": "credential-access",
+            "technique.esa_mitreenterpriseid": "5a82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Hexane (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"15091147\"",
             "esa_threatactorttpsid": "21329ef3-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1547.001",
             "technique.esa_name": "Registry Run Keys / Startup Folder",
-            "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "Hexane (Iran)",
+            "technique.esa_mitreid": "T1547.001",
             "taGroup.esa_othernames": "Cobalt Lyceum (SecureWorks)",
+            "technique.esa_tactics": "persistence, privilege-escalation",
+            "technique.esa_mitreenterpriseid": "9c7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Hexane (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"15091149\"",
             "esa_threatactorttpsid": "38329ef3-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1573.001",
             "technique.esa_name": "Symmetric Cryptography",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "Hexane (Iran)",
+            "technique.esa_mitreid": "T1573.001",
             "taGroup.esa_othernames": "Cobalt Lyceum (SecureWorks)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "3f35d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "Hexane (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"15091152\"",
             "esa_threatactorttpsid": "305d42fa-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1005",
             "technique.esa_name": "Data from Local System",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "Hexane (Iran)",
+            "technique.esa_mitreid": "T1005",
             "taGroup.esa_othernames": "Cobalt Lyceum (SecureWorks)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "c2f9df03-2ae5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "Hexane (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"15091156\"",
             "esa_threatactorttpsid": "3f5d42fa-20a7-ef11-b8e9-000d3ab828ba",
-            "technique.esa_mitreid": "T1489",
             "technique.esa_name": "Service Stop",
-            "technique.esa_tactics": "impact",
-            "taGroup.esa_name": "Hexane (Iran)",
+            "technique.esa_mitreid": "T1489",
             "taGroup.esa_othernames": "Cobalt Lyceum (SecureWorks)",
+            "technique.esa_tactics": "impact",
+            "technique.esa_mitreenterpriseid": "191dd1fa-29e5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "Hexane (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526783\"",
             "esa_threatactorttpsid": "c5a81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1587.001",
             "technique.esa_name": "Malware",
-            "technique.esa_tactics": "resource-development",
-            "taGroup.esa_name": "Aoqin Dragon",
+            "technique.esa_mitreid": "T1587.001",
             "taGroup.esa_othernames": "UNC94 (Mandiant)",
+            "technique.esa_tactics": "resource-development",
+            "technique.esa_mitreenterpriseid": "597ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Aoqin Dragon",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526784\"",
             "esa_threatactorttpsid": "c7a81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1203",
             "technique.esa_name": "Exploitation for Client Execution",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "Aoqin Dragon",
+            "technique.esa_mitreid": "T1203",
             "taGroup.esa_othernames": "UNC94 (Mandiant)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "c97ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Aoqin Dragon",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526785\"",
             "esa_threatactorttpsid": "c9a81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1083",
             "technique.esa_name": "File and Directory Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "Aoqin Dragon",
+            "technique.esa_mitreid": "T1083",
             "taGroup.esa_othernames": "UNC94 (Mandiant)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "1182ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "Aoqin Dragon",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526786\"",
             "esa_threatactorttpsid": "cba81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1570",
             "technique.esa_name": "Lateral Tool Transfer",
-            "technique.esa_tactics": "lateral-movement",
-            "taGroup.esa_name": "Aoqin Dragon",
+            "technique.esa_mitreid": "T1570",
             "taGroup.esa_othernames": "UNC94 (Mandiant)",
+            "technique.esa_tactics": "lateral-movement",
+            "technique.esa_mitreenterpriseid": "5f5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Aoqin Dragon",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526787\"",
             "esa_threatactorttpsid": "cda81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1036.005",
             "technique.esa_name": "Match Legitimate Name or Location",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "Aoqin Dragon",
+            "technique.esa_mitreid": "T1036.005",
             "taGroup.esa_othernames": "UNC94 (Mandiant)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "6ec6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "Aoqin Dragon",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526788\"",
             "esa_threatactorttpsid": "cfa81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1027.002",
             "technique.esa_name": "Software Packing",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "Aoqin Dragon",
+            "technique.esa_mitreid": "T1027.002",
             "taGroup.esa_othernames": "UNC94 (Mandiant)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "4f8cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Aoqin Dragon",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526789\"",
             "esa_threatactorttpsid": "d1a81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1588.002",
             "technique.esa_name": "Tool",
-            "technique.esa_tactics": "resource-development",
-            "taGroup.esa_name": "Aoqin Dragon",
+            "technique.esa_mitreid": "T1588.002",
             "taGroup.esa_othernames": "UNC94 (Mandiant)",
+            "technique.esa_tactics": "resource-development",
+            "technique.esa_mitreenterpriseid": "0c5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Aoqin Dragon",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526790\"",
             "esa_threatactorttpsid": "d3a81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1091",
             "technique.esa_name": "Replication Through Removable Media",
-            "technique.esa_tactics": "lateral-movement, initial-access",
-            "taGroup.esa_name": "Aoqin Dragon",
+            "technique.esa_mitreid": "T1091",
             "taGroup.esa_othernames": "UNC94 (Mandiant)",
+            "technique.esa_tactics": "lateral-movement, initial-access",
+            "technique.esa_mitreenterpriseid": "ad39da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "Aoqin Dragon",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526791\"",
             "esa_threatactorttpsid": "d5a81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1204.002",
             "technique.esa_name": "Malicious File",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "Aoqin Dragon",
+            "technique.esa_mitreid": "T1204.002",
             "taGroup.esa_othernames": "UNC94 (Mandiant)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "1a1dd1fa-29e5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "Aoqin Dragon",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526792\"",
             "esa_threatactorttpsid": "d7a81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1071.001",
             "technique.esa_name": "Web Protocols",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1071.001",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "2182ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526793\"",
             "esa_threatactorttpsid": "d9a81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1547.001",
             "technique.esa_name": "Registry Run Keys / Startup Folder",
-            "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1547.001",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "persistence, privilege-escalation",
+            "technique.esa_mitreenterpriseid": "9c7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526794\"",
             "esa_threatactorttpsid": "dba81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1059",
             "technique.esa_name": "Command and Scripting Interpreter",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1059",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "298cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526795\"",
             "esa_threatactorttpsid": "dda81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1059.001",
             "technique.esa_name": "PowerShell",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1059.001",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "2a82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526796\"",
             "esa_threatactorttpsid": "dfa81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1543.003",
             "technique.esa_name": "Windows Service",
-            "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1543.003",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "persistence, privilege-escalation",
+            "technique.esa_mitreenterpriseid": "277b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526797\"",
             "esa_threatactorttpsid": "e1a81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1132.001",
             "technique.esa_name": "Standard Encoding",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1132.001",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "fd81ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526798\"",
             "esa_threatactorttpsid": "e3a81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1140",
             "technique.esa_name": "Deobfuscate/Decode Files or Information",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1140",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "8539da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526799\"",
             "esa_threatactorttpsid": "e5a81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1189",
             "technique.esa_name": "Drive-by Compromise",
-            "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1189",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "initial-access",
+            "technique.esa_mitreenterpriseid": "eb81ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526800\"",
             "esa_threatactorttpsid": "e7a81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1564.003",
             "technique.esa_name": "Hidden Window",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1564.003",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "735cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526801\"",
             "esa_threatactorttpsid": "e9a81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1574.002",
             "technique.esa_name": "DLL Side-Loading",
-            "technique.esa_tactics": "persistence, privilege-escalation, defense-evasion",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1574.002",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "persistence, privilege-escalation, defense-evasion",
+            "technique.esa_mitreenterpriseid": "3c35d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526802\"",
             "esa_threatactorttpsid": "eba81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1112",
             "technique.esa_name": "Modify Registry",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1112",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "a139da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526803\"",
             "esa_threatactorttpsid": "eda81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1027",
             "technique.esa_name": "Obfuscated Files or Information",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1027",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "94c36601-2ae5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526804\"",
             "esa_threatactorttpsid": "efa81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1027.010",
             "technique.esa_name": "Command Obfuscation",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1027.010",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "4d82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526805\"",
             "esa_threatactorttpsid": "f1a81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1588.002",
             "technique.esa_name": "Tool",
-            "technique.esa_tactics": "resource-development",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1588.002",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "resource-development",
+            "technique.esa_mitreenterpriseid": "0c5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526806\"",
             "esa_threatactorttpsid": "f3a81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1566.001",
             "technique.esa_name": "Spearphishing Attachment",
-            "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1566.001",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "initial-access",
+            "technique.esa_mitreenterpriseid": "5735d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526807\"",
             "esa_threatactorttpsid": "f5a81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1218.010",
             "technique.esa_name": "Regsvr32",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1218.010",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "be7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526808\"",
             "esa_threatactorttpsid": "f7a81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1218.011",
             "technique.esa_name": "Rundll32",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1218.011",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "9335d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526809\"",
             "esa_threatactorttpsid": "f9a81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1082",
             "technique.esa_name": "System Information Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1082",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "52c6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526810\"",
             "esa_threatactorttpsid": "fba81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1016",
             "technique.esa_name": "System Network Configuration Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1016",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "6b8cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526811\"",
             "esa_threatactorttpsid": "fda81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1033",
             "technique.esa_name": "System Owner/User Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1033",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "4c8cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526812\"",
             "esa_threatactorttpsid": "ffa81221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1204.002",
             "technique.esa_name": "Malicious File",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT19",
+            "technique.esa_mitreid": "T1204.002",
             "taGroup.esa_othernames": "Codoso (Unity 42)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "1a1dd1fa-29e5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "APT19",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526813\"",
             "esa_threatactorttpsid": "01a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1134.001",
             "technique.esa_name": "Token Impersonation/Theft",
-            "technique.esa_tactics": "defense-evasion, privilege-escalation",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1134.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion, privilege-escalation",
+            "technique.esa_mitreenterpriseid": "28c6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526814\"",
             "esa_threatactorttpsid": "03a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1098.002",
             "technique.esa_name": "Additional Email Delegate Permissions",
-            "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1098.002",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "persistence, privilege-escalation",
+            "technique.esa_mitreenterpriseid": "0d82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526815\"",
             "esa_threatactorttpsid": "05a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1583.001",
             "technique.esa_name": "Domains",
-            "technique.esa_tactics": "resource-development",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1583.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "resource-development",
+            "technique.esa_mitreenterpriseid": "e47a76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526816\"",
             "esa_threatactorttpsid": "07a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1583.006",
             "technique.esa_name": "Web Services",
-            "technique.esa_tactics": "resource-development",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1583.006",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "resource-development",
+            "technique.esa_mitreenterpriseid": "627ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526817\"",
             "esa_threatactorttpsid": "09a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1595.002",
             "technique.esa_name": "Vulnerability Scanning",
-            "technique.esa_tactics": "reconnaissance",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1595.002",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "reconnaissance",
+            "technique.esa_mitreenterpriseid": "cc7a76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526818\"",
             "esa_threatactorttpsid": "0ba91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1071.001",
             "technique.esa_name": "Web Protocols",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1071.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "2182ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526819\"",
             "esa_threatactorttpsid": "0da91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1071.003",
             "technique.esa_name": "Mail Protocols",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1071.003",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "1a82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526820\"",
             "esa_threatactorttpsid": "0fa91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1560",
             "technique.esa_name": "Archive Collected Data",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1560",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "867ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526821\"",
             "esa_threatactorttpsid": "11a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1560.001",
             "technique.esa_name": "Archive via Utility",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1560.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "7e5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526822\"",
             "esa_threatactorttpsid": "13a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1119",
             "technique.esa_name": "Automated Collection",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1119",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "9939da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526823\"",
             "esa_threatactorttpsid": "15a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1547.001",
             "technique.esa_name": "Registry Run Keys / Startup Folder",
-            "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1547.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "persistence, privilege-escalation",
+            "technique.esa_mitreenterpriseid": "9c7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526824\"",
             "esa_threatactorttpsid": "17a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1037.001",
             "technique.esa_name": "Logon Script (Windows)",
-            "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1037.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "persistence, privilege-escalation",
+            "technique.esa_mitreenterpriseid": "448cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526825\"",
             "esa_threatactorttpsid": "19a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1110",
             "technique.esa_name": "Brute Force",
-            "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1110",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "credential-access",
+            "technique.esa_mitreenterpriseid": "43c6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526826\"",
             "esa_threatactorttpsid": "1ba91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1110.001",
             "technique.esa_name": "Password Guessing",
-            "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1110.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "credential-access",
+            "technique.esa_mitreenterpriseid": "ac39da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526827\"",
             "esa_threatactorttpsid": "23a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1110.003",
             "technique.esa_name": "Password Spraying",
-            "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1110.003",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "credential-access",
+            "technique.esa_mitreenterpriseid": "40c6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526828\"",
             "esa_threatactorttpsid": "25a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1059.001",
             "technique.esa_name": "PowerShell",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1059.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "2a82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526829\"",
             "esa_threatactorttpsid": "27a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1059.003",
             "technique.esa_name": "Windows Command Shell",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1059.003",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "60c6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526830\"",
             "esa_threatactorttpsid": "29a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1092",
             "technique.esa_name": "Communication Through Removable Media",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1092",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "4cc6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526831\"",
             "esa_threatactorttpsid": "2ba91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1586.002",
             "technique.esa_name": "Email Accounts",
-            "technique.esa_tactics": "resource-development",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1586.002",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "resource-development",
+            "technique.esa_mitreenterpriseid": "537ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526832\"",
             "esa_threatactorttpsid": "2da91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1213",
             "technique.esa_name": "Data from Information Repositories",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1213",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "427b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526833\"",
             "esa_threatactorttpsid": "2fa91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1213.002",
             "technique.esa_name": "Sharepoint",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1213.002",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "477b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526834\"",
             "esa_threatactorttpsid": "31a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1005",
             "technique.esa_name": "Data from Local System",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1005",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "c2f9df03-2ae5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526835\"",
             "esa_threatactorttpsid": "33a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1039",
             "technique.esa_name": "Data from Network Shared Drive",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1039",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "458cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526836\"",
             "esa_threatactorttpsid": "35a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1025",
             "technique.esa_name": "Data from Removable Media",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1025",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "5282ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526837\"",
             "esa_threatactorttpsid": "37a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1001.001",
             "technique.esa_name": "Junk Data",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1001.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "5f8cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526838\"",
             "esa_threatactorttpsid": "39a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1074.001",
             "technique.esa_name": "Local Data Staging",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1074.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "56c6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526839\"",
             "esa_threatactorttpsid": "3ba91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1074.002",
             "technique.esa_name": "Remote Data Staging",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1074.002",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "58c6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526840\"",
             "esa_threatactorttpsid": "3da91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1030",
             "technique.esa_name": "Data Transfer Size Limits",
-            "technique.esa_tactics": "exfiltration",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1030",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "exfiltration",
+            "technique.esa_mitreenterpriseid": "b6f9df03-2ae5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526841\"",
             "esa_threatactorttpsid": "3fa91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1140",
             "technique.esa_name": "Deobfuscate/Decode Files or Information",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1140",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "8539da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526842\"",
             "esa_threatactorttpsid": "41a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1189",
             "technique.esa_name": "Drive-by Compromise",
-            "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1189",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "initial-access",
+            "technique.esa_mitreenterpriseid": "eb81ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526843\"",
             "esa_threatactorttpsid": "43a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1114.002",
             "technique.esa_name": "Remote Email Collection",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1114.002",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "3fc6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526844\"",
             "esa_threatactorttpsid": "45a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1573.001",
             "technique.esa_name": "Symmetric Cryptography",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1573.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "3f35d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526845\"",
             "esa_threatactorttpsid": "47a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1546.015",
             "technique.esa_name": "Component Object Model Hijacking",
-            "technique.esa_tactics": "privilege-escalation, persistence",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1546.015",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "privilege-escalation, persistence",
+            "technique.esa_mitreenterpriseid": "247b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526846\"",
             "esa_threatactorttpsid": "49a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1048.002",
             "technique.esa_name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
-            "technique.esa_tactics": "exfiltration",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1048.002",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "exfiltration",
+            "technique.esa_mitreenterpriseid": "438cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526847\"",
             "esa_threatactorttpsid": "4ba91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1567",
             "technique.esa_name": "Exfiltration Over Web Service",
-            "technique.esa_tactics": "exfiltration",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1567",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "exfiltration",
+            "technique.esa_mitreenterpriseid": "fe7a76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526849\"",
             "esa_threatactorttpsid": "4da91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1190",
             "technique.esa_name": "Exploit Public-Facing Application",
-            "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1190",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "initial-access",
+            "technique.esa_mitreenterpriseid": "f9c5ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526850\"",
             "esa_threatactorttpsid": "4fa91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1203",
             "technique.esa_name": "Exploitation for Client Execution",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1203",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "c97ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526851\"",
             "esa_threatactorttpsid": "51a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1211",
             "technique.esa_name": "Exploitation for Defense Evasion",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1211",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "487b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526852\"",
             "esa_threatactorttpsid": "53a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1068",
             "technique.esa_name": "Exploitation for Privilege Escalation",
-            "technique.esa_tactics": "privilege-escalation",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1068",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "privilege-escalation",
+            "technique.esa_mitreenterpriseid": "5dc6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526853\"",
             "esa_threatactorttpsid": "55a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1210",
             "technique.esa_name": "Exploitation of Remote Services",
-            "technique.esa_tactics": "lateral-movement",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1210",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "lateral-movement",
+            "technique.esa_mitreenterpriseid": "0a5dd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526854\"",
             "esa_threatactorttpsid": "57a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1133",
             "technique.esa_name": "External Remote Services",
-            "technique.esa_tactics": "persistence, initial-access",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1133",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "persistence, initial-access",
+            "technique.esa_mitreenterpriseid": "ff81ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526855\"",
             "esa_threatactorttpsid": "5aa91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1083",
             "technique.esa_name": "File and Directory Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1083",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "1182ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526856\"",
             "esa_threatactorttpsid": "5ca91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1589.001",
             "technique.esa_name": "Credentials",
-            "technique.esa_tactics": "reconnaissance",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1589.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "reconnaissance",
+            "technique.esa_mitreenterpriseid": "5a7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526857\"",
             "esa_threatactorttpsid": "5ea91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1564.001",
             "technique.esa_name": "Hidden Files and Directories",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1564.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "5a35d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526858\"",
             "esa_threatactorttpsid": "60a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1564.003",
             "technique.esa_name": "Hidden Window",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1564.003",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "735cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526859\"",
             "esa_threatactorttpsid": "62a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1070.001",
             "technique.esa_name": "Clear Windows Event Logs",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1070.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "5cc6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526860\"",
             "esa_threatactorttpsid": "64a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1070.004",
             "technique.esa_name": "File Deletion",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1070.004",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "5c3ada00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526861\"",
             "esa_threatactorttpsid": "66a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1070.006",
             "technique.esa_name": "Timestomp",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1070.006",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "1b82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526862\"",
             "esa_threatactorttpsid": "68a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1105",
             "technique.esa_name": "Ingress Tool Transfer",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1105",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "0882ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526863\"",
             "esa_threatactorttpsid": "6aa91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1056.001",
             "technique.esa_name": "Keylogging",
-            "technique.esa_tactics": "collection, credential-access",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1056.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "collection, credential-access",
+            "technique.esa_mitreenterpriseid": "a9f9df03-2ae5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526864\"",
             "esa_threatactorttpsid": "6ca91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1559.002",
             "technique.esa_name": "Dynamic Data Exchange",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1559.002",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "5e35d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526865\"",
             "esa_threatactorttpsid": "6ea91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1036",
             "technique.esa_name": "Masquerading",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1036",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "4b82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526866\"",
             "esa_threatactorttpsid": "70a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1036.005",
             "technique.esa_name": "Match Legitimate Name or Location",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1036.005",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "6ec6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526867\"",
             "esa_threatactorttpsid": "72a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1498",
             "technique.esa_name": "Network Denial of Service",
-            "technique.esa_tactics": "impact",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1498",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "impact",
+            "technique.esa_mitreenterpriseid": "005dd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526868\"",
             "esa_threatactorttpsid": "74a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1040",
             "technique.esa_name": "Network Sniffing",
-            "technique.esa_tactics": "credential-access, discovery",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1040",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "credential-access, discovery",
+            "technique.esa_mitreenterpriseid": "6cc6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526869\"",
             "esa_threatactorttpsid": "76a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1027",
             "technique.esa_name": "Obfuscated Files or Information",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1027",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "94c36601-2ae5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526870\"",
             "esa_threatactorttpsid": "78a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1588.002",
             "technique.esa_name": "Tool",
-            "technique.esa_tactics": "resource-development",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1588.002",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "resource-development",
+            "technique.esa_mitreenterpriseid": "0c5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526871\"",
             "esa_threatactorttpsid": "7aa91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1137.002",
             "technique.esa_name": "Office Test",
-            "technique.esa_tactics": "persistence",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1137.002",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "persistence",
+            "technique.esa_mitreenterpriseid": "8839da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526872\"",
             "esa_threatactorttpsid": "7ca91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1003",
             "technique.esa_name": "OS Credential Dumping",
-            "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1003",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "credential-access",
+            "technique.esa_mitreenterpriseid": "5a82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526873\"",
             "esa_threatactorttpsid": "7ea91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1003.001",
             "technique.esa_name": "LSASS Memory",
-            "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1003.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "credential-access",
+            "technique.esa_mitreenterpriseid": "598cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526874\"",
             "esa_threatactorttpsid": "80a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1003.003",
             "technique.esa_name": "NTDS",
-            "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1003.003",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "credential-access",
+            "technique.esa_mitreenterpriseid": "435c6d07-2ae5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526875\"",
             "esa_threatactorttpsid": "82a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1120",
             "technique.esa_name": "Peripheral Device Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1120",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "2dc6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526876\"",
             "esa_threatactorttpsid": "84a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1566.001",
             "technique.esa_name": "Spearphishing Attachment",
-            "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1566.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "initial-access",
+            "technique.esa_mitreenterpriseid": "5735d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526877\"",
             "esa_threatactorttpsid": "86a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1566.002",
             "technique.esa_name": "Spearphishing Link",
-            "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1566.002",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "initial-access",
+            "technique.esa_mitreenterpriseid": "7c7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526878\"",
             "esa_threatactorttpsid": "88a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1598",
             "technique.esa_name": "Phishing for Information",
-            "technique.esa_tactics": "reconnaissance",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1598",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "reconnaissance",
+            "technique.esa_mitreenterpriseid": "457ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526879\"",
             "esa_threatactorttpsid": "8aa91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1598.003",
             "technique.esa_name": "Spearphishing Link",
-            "technique.esa_tactics": "reconnaissance",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1598.003",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "reconnaissance",
+            "technique.esa_mitreenterpriseid": "5df7cdf7-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526880\"",
             "esa_threatactorttpsid": "8ca91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1542.003",
             "technique.esa_name": "Bootkit",
-            "technique.esa_tactics": "persistence, defense-evasion",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1542.003",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "persistence, defense-evasion",
+            "technique.esa_mitreenterpriseid": "181dd1fa-29e5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526881\"",
             "esa_threatactorttpsid": "8ea91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1057",
             "technique.esa_name": "Process Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1057",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "328cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526882\"",
             "esa_threatactorttpsid": "90a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1090.002",
             "technique.esa_name": "External Proxy",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1090.002",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "4ac6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526883\"",
             "esa_threatactorttpsid": "92a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1090.003",
             "technique.esa_name": "Multi-hop Proxy",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1090.003",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "c039da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526884\"",
             "esa_threatactorttpsid": "94a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1021.002",
             "technique.esa_name": "SMB/Windows Admin Shares",
-            "technique.esa_tactics": "lateral-movement",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1021.002",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "lateral-movement",
+            "technique.esa_mitreenterpriseid": "588cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526885\"",
             "esa_threatactorttpsid": "96a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1091",
             "technique.esa_name": "Replication Through Removable Media",
-            "technique.esa_tactics": "lateral-movement, initial-access",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1091",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "lateral-movement, initial-access",
+            "technique.esa_mitreenterpriseid": "ad39da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526886\"",
             "esa_threatactorttpsid": "98a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1014",
             "technique.esa_name": "Rootkit",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1014",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "5c8cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526887\"",
             "esa_threatactorttpsid": "9aa91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1113",
             "technique.esa_name": "Screen Capture",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1113",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "0682ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526888\"",
             "esa_threatactorttpsid": "9ca91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1505.003",
             "technique.esa_name": "Web Shell",
-            "technique.esa_tactics": "persistence",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1505.003",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "persistence",
+            "technique.esa_mitreenterpriseid": "327b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526889\"",
             "esa_threatactorttpsid": "9ea91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1528",
             "technique.esa_name": "Steal Application Access Token",
-            "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1528",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "credential-access",
+            "technique.esa_mitreenterpriseid": "2f7b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526890\"",
             "esa_threatactorttpsid": "a0a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1218.011",
             "technique.esa_name": "Rundll32",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1218.011",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "9335d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526891\"",
             "esa_threatactorttpsid": "a2a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1221",
             "technique.esa_name": "Template Injection",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1221",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "065dd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526892\"",
             "esa_threatactorttpsid": "a4a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1199",
             "technique.esa_name": "Trusted Relationship",
-            "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1199",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "initial-access",
+            "technique.esa_mitreenterpriseid": "f4c5ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526893\"",
             "esa_threatactorttpsid": "a6a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1550.001",
             "technique.esa_name": "Application Access Token",
-            "technique.esa_tactics": "defense-evasion, lateral-movement",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1550.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion, lateral-movement",
+            "technique.esa_mitreenterpriseid": "187b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526894\"",
             "esa_threatactorttpsid": "a8a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1550.002",
             "technique.esa_name": "Pass the Hash",
-            "technique.esa_tactics": "defense-evasion, lateral-movement",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1550.002",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion, lateral-movement",
+            "technique.esa_mitreenterpriseid": "1a7b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526895\"",
             "esa_threatactorttpsid": "aaa91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1204.001",
             "technique.esa_name": "Malicious Link",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1204.001",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "457b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526896\"",
             "esa_threatactorttpsid": "aca91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1204.002",
             "technique.esa_name": "Malicious File",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1204.002",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "1a1dd1fa-29e5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526897\"",
             "esa_threatactorttpsid": "aea91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1078",
             "technique.esa_name": "Valid Accounts",
-            "technique.esa_tactics": "defense-evasion, persistence, privilege-escalation, initial-access",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1078",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion, persistence, privilege-escalation, initial-access",
+            "technique.esa_mitreenterpriseid": "683ada00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526898\"",
             "esa_threatactorttpsid": "b0a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1078.004",
             "technique.esa_name": "Cloud Accounts",
-            "technique.esa_tactics": "defense-evasion, persistence, privilege-escalation, initial-access",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1078.004",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "defense-evasion, persistence, privilege-escalation, initial-access",
+            "technique.esa_mitreenterpriseid": "1682ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526899\"",
             "esa_threatactorttpsid": "b2a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1102.002",
             "technique.esa_name": "Bidirectional Communication",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT28",
+            "technique.esa_mitreid": "T1102.002",
             "taGroup.esa_othernames": "Fancy Bear (CrowdStrike), Forest Blizzard (Microsoft)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "45c6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT28",
             "taGroup.category.esa_name": "Nation-State (Russia)"
         },
         {
             "@odata.etag": "W/\"12526900\"",
             "esa_threatactorttpsid": "b4a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1071.001",
             "technique.esa_name": "Web Protocols",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1071.001",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "2182ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526901\"",
             "esa_threatactorttpsid": "b6a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1071.004",
             "technique.esa_name": "DNS",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1071.004",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "5ac6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526902\"",
             "esa_threatactorttpsid": "b8a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1560.001",
             "technique.esa_name": "Archive via Utility",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1560.001",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "7e5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526903\"",
             "esa_threatactorttpsid": "baa91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1197",
             "technique.esa_name": "BITS Jobs",
-            "technique.esa_tactics": "defense-evasion, persistence",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1197",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "defense-evasion, persistence",
+            "technique.esa_mitreenterpriseid": "f7c5ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526904\"",
             "esa_threatactorttpsid": "bca91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1547.001",
             "technique.esa_name": "Registry Run Keys / Startup Folder",
-            "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1547.001",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "persistence, privilege-escalation",
+            "technique.esa_mitreenterpriseid": "9c7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526905\"",
             "esa_threatactorttpsid": "bea91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1547.009",
             "technique.esa_name": "Shortcut Modification",
-            "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1547.009",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "persistence, privilege-escalation",
+            "technique.esa_mitreenterpriseid": "7735d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526906\"",
             "esa_threatactorttpsid": "c0a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1110",
             "technique.esa_name": "Brute Force",
-            "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1110",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "credential-access",
+            "technique.esa_mitreenterpriseid": "43c6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526907\"",
             "esa_threatactorttpsid": "c2a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1115",
             "technique.esa_name": "Clipboard Data",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1115",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "9e39da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526908\"",
             "esa_threatactorttpsid": "c4a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1059",
             "technique.esa_name": "Command and Scripting Interpreter",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1059",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "298cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526909\"",
             "esa_threatactorttpsid": "c6a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1059.001",
             "technique.esa_name": "PowerShell",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1059.001",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "2a82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526910\"",
             "esa_threatactorttpsid": "c8a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1059.005",
             "technique.esa_name": "Visual Basic",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1059.005",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "2982ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526911\"",
             "esa_threatactorttpsid": "caa91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1059.006",
             "technique.esa_name": "Python",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1059.006",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "2b82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526912\"",
             "esa_threatactorttpsid": "cca91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1136.001",
             "technique.esa_name": "Local Account",
-            "technique.esa_tactics": "persistence",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1136.001",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "persistence",
+            "technique.esa_mitreenterpriseid": "27c6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526913\"",
             "esa_threatactorttpsid": "cea91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1555",
             "technique.esa_name": "Credentials from Password Stores",
-            "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1555",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "credential-access",
+            "technique.esa_mitreenterpriseid": "947ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526914\"",
             "esa_threatactorttpsid": "d0a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1005",
             "technique.esa_name": "Data from Local System",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1005",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "c2f9df03-2ae5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526915\"",
             "esa_threatactorttpsid": "d2a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1074.001",
             "technique.esa_name": "Local Data Staging",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1074.001",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "56c6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526916\"",
             "esa_threatactorttpsid": "d4a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1140",
             "technique.esa_name": "Deobfuscate/Decode Files or Information",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1140",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "8539da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526917\"",
             "esa_threatactorttpsid": "d6a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1546.010",
             "technique.esa_name": "AppInit DLLs",
-            "technique.esa_tactics": "privilege-escalation, persistence",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1546.010",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "privilege-escalation, persistence",
+            "technique.esa_mitreenterpriseid": "bc5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526918\"",
             "esa_threatactorttpsid": "d8a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1041",
             "technique.esa_name": "Exfiltration Over C2 Channel",
-            "technique.esa_tactics": "exfiltration",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1041",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "exfiltration",
+            "technique.esa_mitreenterpriseid": "6dc6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526919\"",
             "esa_threatactorttpsid": "daa91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1190",
             "technique.esa_name": "Exploit Public-Facing Application",
-            "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1190",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "initial-access",
+            "technique.esa_mitreenterpriseid": "f9c5ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526920\"",
             "esa_threatactorttpsid": "dca91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1083",
             "technique.esa_name": "File and Directory Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1083",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "1182ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526921\"",
             "esa_threatactorttpsid": "dea91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1070.004",
             "technique.esa_name": "File Deletion",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1070.004",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "5c3ada00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526922\"",
             "esa_threatactorttpsid": "e0a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1105",
             "technique.esa_name": "Ingress Tool Transfer",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1105",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "0882ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526923\"",
             "esa_threatactorttpsid": "e2a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1056",
             "technique.esa_name": "Input Capture",
-            "technique.esa_tactics": "collection, credential-access",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1056",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "collection, credential-access",
+            "technique.esa_mitreenterpriseid": "378cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526924\"",
             "esa_threatactorttpsid": "e4a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1056.001",
             "technique.esa_name": "Keylogging",
-            "technique.esa_tactics": "collection, credential-access",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1056.001",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "collection, credential-access",
+            "technique.esa_mitreenterpriseid": "a9f9df03-2ae5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526925\"",
             "esa_threatactorttpsid": "e6a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1036.005",
             "technique.esa_name": "Match Legitimate Name or Location",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1036.005",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "6ec6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526926\"",
             "esa_threatactorttpsid": "e8a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1046",
             "technique.esa_name": "Network Service Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1046",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "418cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526927\"",
             "esa_threatactorttpsid": "eaa91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1135",
             "technique.esa_name": "Network Share Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1135",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "8f39da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526928\"",
             "esa_threatactorttpsid": "eca91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1027",
             "technique.esa_name": "Obfuscated Files or Information",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1027",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "94c36601-2ae5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526929\"",
             "esa_threatactorttpsid": "eea91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1027.002",
             "technique.esa_name": "Software Packing",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1027.002",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "4f8cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526930\"",
             "esa_threatactorttpsid": "f0a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1588.002",
             "technique.esa_name": "Tool",
-            "technique.esa_tactics": "resource-development",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1588.002",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "resource-development",
+            "technique.esa_mitreenterpriseid": "0c5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526931\"",
             "esa_threatactorttpsid": "f2a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1003",
             "technique.esa_name": "OS Credential Dumping",
-            "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1003",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "credential-access",
+            "technique.esa_mitreenterpriseid": "5a82ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526932\"",
             "esa_threatactorttpsid": "f4a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1003.001",
             "technique.esa_name": "LSASS Memory",
-            "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1003.001",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "credential-access",
+            "technique.esa_mitreenterpriseid": "598cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526933\"",
             "esa_threatactorttpsid": "f6a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1566.001",
             "technique.esa_name": "Spearphishing Attachment",
-            "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1566.001",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "initial-access",
+            "technique.esa_mitreenterpriseid": "5735d2fd-29e5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526934\"",
             "esa_threatactorttpsid": "f8a91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1566.002",
             "technique.esa_name": "Spearphishing Link",
-            "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1566.002",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "initial-access",
+            "technique.esa_mitreenterpriseid": "7c7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526935\"",
             "esa_threatactorttpsid": "faa91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1090.001",
             "technique.esa_name": "Internal Proxy",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1090.001",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "4dc6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526936\"",
             "esa_threatactorttpsid": "fca91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1090.002",
             "technique.esa_name": "External Proxy",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1090.002",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "4ac6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526937\"",
             "esa_threatactorttpsid": "fea91221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1012",
             "technique.esa_name": "Query Registry",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1012",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "7ac6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526938\"",
             "esa_threatactorttpsid": "00aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1021.001",
             "technique.esa_name": "Remote Desktop Protocol",
-            "technique.esa_tactics": "lateral-movement",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1021.001",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "lateral-movement",
+            "technique.esa_mitreenterpriseid": "5e8cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526939\"",
             "esa_threatactorttpsid": "02aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1021.002",
             "technique.esa_name": "SMB/Windows Admin Shares",
-            "technique.esa_tactics": "lateral-movement",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1021.002",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "lateral-movement",
+            "technique.esa_mitreenterpriseid": "588cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526940\"",
             "esa_threatactorttpsid": "04aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1021.004",
             "technique.esa_name": "SSH",
-            "technique.esa_tactics": "lateral-movement",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1021.004",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "lateral-movement",
+            "technique.esa_mitreenterpriseid": "5b8cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526941\"",
             "esa_threatactorttpsid": "06aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1018",
             "technique.esa_name": "Remote System Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1018",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "c4f9df03-2ae5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526942\"",
             "esa_threatactorttpsid": "08aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1053.005",
             "technique.esa_name": "Scheduled Task",
-            "technique.esa_tactics": "execution, persistence, privilege-escalation",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1053.005",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "execution, persistence, privilege-escalation",
+            "technique.esa_mitreenterpriseid": "408cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526943\"",
             "esa_threatactorttpsid": "0aaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1113",
             "technique.esa_name": "Screen Capture",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1113",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "0682ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526944\"",
             "esa_threatactorttpsid": "0caa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1505.003",
             "technique.esa_name": "Web Shell",
-            "technique.esa_tactics": "persistence",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1505.003",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "persistence",
+            "technique.esa_mitreenterpriseid": "327b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526945\"",
             "esa_threatactorttpsid": "0eaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1553.006",
             "technique.esa_name": "Code Signing Policy Modification",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1553.006",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "885cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526946\"",
             "esa_threatactorttpsid": "10aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1033",
             "technique.esa_name": "System Owner/User Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1033",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "4c8cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526947\"",
             "esa_threatactorttpsid": "12aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1569.002",
             "technique.esa_name": "Service Execution",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1569.002",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "6d7ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526948\"",
             "esa_threatactorttpsid": "14aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1204.001",
             "technique.esa_name": "Malicious Link",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1204.001",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "457b76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526949\"",
             "esa_threatactorttpsid": "16aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1204.002",
             "technique.esa_name": "Malicious File",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1204.002",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "1a1dd1fa-29e5-ee11-904c-6045bde0cdf4",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526950\"",
             "esa_threatactorttpsid": "18aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1078",
             "technique.esa_name": "Valid Accounts",
-            "technique.esa_tactics": "defense-evasion, persistence, privilege-escalation, initial-access",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1078",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "defense-evasion, persistence, privilege-escalation, initial-access",
+            "technique.esa_mitreenterpriseid": "683ada00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526951\"",
             "esa_threatactorttpsid": "1aaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1102.002",
             "technique.esa_name": "Bidirectional Communication",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT39 (Iran)",
+            "technique.esa_mitreid": "T1102.002",
             "taGroup.esa_othernames": "Remix Kitten (CrowdStrike)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "45c6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT39 (Iran)",
             "taGroup.category.esa_name": "Nation-State (Others)"
         },
         {
             "@odata.etag": "W/\"12526952\"",
             "esa_threatactorttpsid": "1caa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1134",
             "technique.esa_name": "Access Token Manipulation",
-            "technique.esa_tactics": "defense-evasion, privilege-escalation",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1134",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "defense-evasion, privilege-escalation",
+            "technique.esa_mitreenterpriseid": "9339da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526953\"",
             "esa_threatactorttpsid": "1eaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1098",
             "technique.esa_name": "Account Manipulation",
-            "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1098",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "persistence, privilege-escalation",
+            "technique.esa_mitreenterpriseid": "b539da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526954\"",
             "esa_threatactorttpsid": "20aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1197",
             "technique.esa_name": "BITS Jobs",
-            "technique.esa_tactics": "defense-evasion, persistence",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1197",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "defense-evasion, persistence",
+            "technique.esa_mitreenterpriseid": "f7c5ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526955\"",
             "esa_threatactorttpsid": "22aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1486",
             "technique.esa_name": "Data Encrypted for Impact",
-            "technique.esa_tactics": "impact",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1486",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "impact",
+            "technique.esa_mitreenterpriseid": "fa5cd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526956\"",
             "esa_threatactorttpsid": "24aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1005",
             "technique.esa_name": "Data from Local System",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1005",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "collection",
+            "technique.esa_mitreenterpriseid": "c2f9df03-2ae5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526957\"",
             "esa_threatactorttpsid": "26aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1140",
             "technique.esa_name": "Deobfuscate/Decode Files or Information",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1140",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "8539da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526958\"",
             "esa_threatactorttpsid": "28aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1041",
             "technique.esa_name": "Exfiltration Over C2 Channel",
-            "technique.esa_tactics": "exfiltration",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1041",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "exfiltration",
+            "technique.esa_mitreenterpriseid": "6dc6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526959\"",
             "esa_threatactorttpsid": "2aaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1567",
             "technique.esa_name": "Exfiltration Over Web Service",
-            "technique.esa_tactics": "exfiltration",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1567",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "exfiltration",
+            "technique.esa_mitreenterpriseid": "fe7a76fb-29e5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526960\"",
             "esa_threatactorttpsid": "2caa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1190",
             "technique.esa_name": "Exploit Public-Facing Application",
-            "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1190",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "initial-access",
+            "technique.esa_mitreenterpriseid": "f9c5ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526961\"",
             "esa_threatactorttpsid": "2eaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1203",
             "technique.esa_name": "Exploitation for Client Execution",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1203",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "c97ad2fc-29e5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526962\"",
             "esa_threatactorttpsid": "30aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1068",
             "technique.esa_name": "Exploitation for Privilege Escalation",
-            "technique.esa_tactics": "privilege-escalation",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1068",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "privilege-escalation",
+            "technique.esa_mitreenterpriseid": "5dc6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526963\"",
             "esa_threatactorttpsid": "32aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1133",
             "technique.esa_name": "External Remote Services",
-            "technique.esa_tactics": "persistence, initial-access",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1133",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "persistence, initial-access",
+            "technique.esa_mitreenterpriseid": "ff81ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526964\"",
             "esa_threatactorttpsid": "34aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1008",
             "technique.esa_name": "Fallback Channels",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1008",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "c7f9df03-2ae5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526965\"",
             "esa_threatactorttpsid": "36aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1083",
             "technique.esa_name": "File and Directory Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1083",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "1182ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526966\"",
             "esa_threatactorttpsid": "38aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1105",
             "technique.esa_name": "Ingress Tool Transfer",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1105",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "0882ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526967\"",
             "esa_threatactorttpsid": "3aaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1112",
             "technique.esa_name": "Modify Registry",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1112",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "a139da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526968\"",
             "esa_threatactorttpsid": "3caa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1104",
             "technique.esa_name": "Multi-Stage Channels",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1104",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "a239da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526969\"",
             "esa_threatactorttpsid": "3eaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1046",
             "technique.esa_name": "Network Service Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1046",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "418cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526970\"",
             "esa_threatactorttpsid": "40aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1135",
             "technique.esa_name": "Network Share Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1135",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "8f39da00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526971\"",
             "esa_threatactorttpsid": "42aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1055",
             "technique.esa_name": "Process Injection",
-            "technique.esa_tactics": "defense-evasion, privilege-escalation",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1055",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "defense-evasion, privilege-escalation",
+            "technique.esa_mitreenterpriseid": "3f8cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526972\"",
             "esa_threatactorttpsid": "44aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1090",
             "technique.esa_name": "Proxy",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1090",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "4bc6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526973\"",
             "esa_threatactorttpsid": "46aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1496",
             "technique.esa_name": "Resource Hijacking",
-            "technique.esa_tactics": "impact",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1496",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "impact",
+            "technique.esa_mitreenterpriseid": "035dd8fa-29e5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526974\"",
             "esa_threatactorttpsid": "48aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1014",
             "technique.esa_name": "Rootkit",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1014",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "defense-evasion",
+            "technique.esa_mitreenterpriseid": "5c8cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526975\"",
             "esa_threatactorttpsid": "4aaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1082",
             "technique.esa_name": "System Information Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1082",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "52c6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526976\"",
             "esa_threatactorttpsid": "4caa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1016",
             "technique.esa_name": "System Network Configuration Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1016",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "6b8cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526977\"",
             "esa_threatactorttpsid": "4eaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1049",
             "technique.esa_name": "System Network Connections Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1049",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "a8f9df03-2ae5-ee11-904d-002248a3efe6",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526978\"",
             "esa_threatactorttpsid": "50aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1033",
             "technique.esa_name": "System Owner/User Discovery",
-            "technique.esa_tactics": "discovery",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1033",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "discovery",
+            "technique.esa_mitreenterpriseid": "4c8cd206-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526979\"",
             "esa_threatactorttpsid": "52aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1078",
             "technique.esa_name": "Valid Accounts",
-            "technique.esa_tactics": "defense-evasion, persistence, privilege-escalation, initial-access",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1078",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "defense-evasion, persistence, privilege-escalation, initial-access",
+            "technique.esa_mitreenterpriseid": "683ada00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526980\"",
             "esa_threatactorttpsid": "54aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1047",
             "technique.esa_name": "Windows Management Instrumentation",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1047",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "execution",
+            "technique.esa_mitreenterpriseid": "6ac6ca02-2ae5-ee11-904d-000d3adccea2",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526981\"",
             "esa_threatactorttpsid": "56aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1071.001",
             "technique.esa_name": "Web Protocols",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1071.001",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "2182ce01-2ae5-ee11-904d-0022489c2592",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526982\"",
             "esa_threatactorttpsid": "58aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1071.002",
             "technique.esa_name": "File Transfer Protocols",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT41",
+            "technique.esa_mitreid": "T1071.002",
             "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
+            "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "673ada00-2ae5-ee11-904c-000d3ab64c9a",
+            "taGroup.esa_name": "APT41",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
         {
             "@odata.etag": "W/\"12526983\"",
             "esa_threatactorttpsid": "5aaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1071.004",
             "technique.esa_name": "DNS",
+            "technique.esa_mitreid": "T1071.004",
+            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
             "technique.esa_tactics": "command-and-control",
+            "technique.esa_mitreenterpriseid": "5ac6ca02-2ae5-ee11-904d-000d3adccea2",
             "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12526984\"",
-            "esa_threatactorttpsid": "5caa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1560.001",
-            "technique.esa_name": "Archive via Utility",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12526985\"",
-            "esa_threatactorttpsid": "5eaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1560.003",
-            "technique.esa_name": "Archive via Custom Method",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12526986\"",
-            "esa_threatactorttpsid": "60aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1547.001",
-            "technique.esa_name": "Registry Run Keys / Startup Folder",
-            "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12526987\"",
-            "esa_threatactorttpsid": "62aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1110.002",
-            "technique.esa_name": "Password Cracking",
-            "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12526988\"",
-            "esa_threatactorttpsid": "64aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1059.001",
-            "technique.esa_name": "PowerShell",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12526989\"",
-            "esa_threatactorttpsid": "66aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1059.003",
-            "technique.esa_name": "Windows Command Shell",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12526990\"",
-            "esa_threatactorttpsid": "68aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1059.004",
-            "technique.esa_name": "Unix Shell",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12526991\"",
-            "esa_threatactorttpsid": "6aaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1059.007",
-            "technique.esa_name": "JavaScript",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12526992\"",
-            "esa_threatactorttpsid": "6caa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1136.001",
-            "technique.esa_name": "Local Account",
-            "technique.esa_tactics": "persistence",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12526993\"",
-            "esa_threatactorttpsid": "6eaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1543.003",
-            "technique.esa_name": "Windows Service",
-            "technique.esa_tactics": "persistence, privilege-escalation",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12526994\"",
-            "esa_threatactorttpsid": "70aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1001.003",
-            "technique.esa_name": "Protocol Impersonation",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12526995\"",
-            "esa_threatactorttpsid": "72aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1074.001",
-            "technique.esa_name": "Local Data Staging",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12526996\"",
-            "esa_threatactorttpsid": "74aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1568.002",
-            "technique.esa_name": "Domain Generation Algorithms",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12526997\"",
-            "esa_threatactorttpsid": "76aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1546.008",
-            "technique.esa_name": "Accessibility Features",
-            "technique.esa_tactics": "privilege-escalation, persistence",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12526998\"",
-            "esa_threatactorttpsid": "78aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1480.001",
-            "technique.esa_name": "Environmental Keying",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12526999\"",
-            "esa_threatactorttpsid": "7aaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1048.003",
-            "technique.esa_name": "Exfiltration Over Unencrypted Non-C2 Protocol",
-            "technique.esa_tactics": "exfiltration",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527000\"",
-            "esa_threatactorttpsid": "7caa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1574",
-            "technique.esa_name": "Hijack Execution Flow",
-            "technique.esa_tactics": "persistence, privilege-escalation, defense-evasion",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527001\"",
-            "esa_threatactorttpsid": "7eaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1574.001",
-            "technique.esa_name": "DLL Search Order Hijacking",
-            "technique.esa_tactics": "persistence, privilege-escalation, defense-evasion",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527002\"",
-            "esa_threatactorttpsid": "80aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1574.002",
-            "technique.esa_name": "DLL Side-Loading",
-            "technique.esa_tactics": "persistence, privilege-escalation, defense-evasion",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527003\"",
-            "esa_threatactorttpsid": "82aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1574.006",
-            "technique.esa_name": "Dynamic Linker Hijacking",
-            "technique.esa_tactics": "persistence, privilege-escalation, defense-evasion",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527004\"",
-            "esa_threatactorttpsid": "84aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1070.001",
-            "technique.esa_name": "Clear Windows Event Logs",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527005\"",
-            "esa_threatactorttpsid": "86aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1070.003",
-            "technique.esa_name": "Clear Command History",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527006\"",
-            "esa_threatactorttpsid": "88aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1070.004",
-            "technique.esa_name": "File Deletion",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527007\"",
-            "esa_threatactorttpsid": "8aaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1056.001",
-            "technique.esa_name": "Keylogging",
-            "technique.esa_tactics": "collection, credential-access",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527008\"",
-            "esa_threatactorttpsid": "8caa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1036.004",
-            "technique.esa_name": "Masquerade Task or Service",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527009\"",
-            "esa_threatactorttpsid": "8eaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1036.005",
-            "technique.esa_name": "Match Legitimate Name or Location",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527010\"",
-            "esa_threatactorttpsid": "90aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1027",
-            "technique.esa_name": "Obfuscated Files or Information",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527011\"",
-            "esa_threatactorttpsid": "92aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1027.002",
-            "technique.esa_name": "Software Packing",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527012\"",
-            "esa_threatactorttpsid": "94aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1588.002",
-            "technique.esa_name": "Tool",
-            "technique.esa_tactics": "resource-development",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527013\"",
-            "esa_threatactorttpsid": "96aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1003.001",
-            "technique.esa_name": "LSASS Memory",
-            "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527014\"",
-            "esa_threatactorttpsid": "98aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1003.002",
-            "technique.esa_name": "Security Account Manager",
-            "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527015\"",
-            "esa_threatactorttpsid": "9aaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1566.001",
-            "technique.esa_name": "Spearphishing Attachment",
-            "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527016\"",
-            "esa_threatactorttpsid": "9caa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1542.003",
-            "technique.esa_name": "Bootkit",
-            "technique.esa_tactics": "persistence, defense-evasion",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527017\"",
-            "esa_threatactorttpsid": "9eaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1021.001",
-            "technique.esa_name": "Remote Desktop Protocol",
-            "technique.esa_tactics": "lateral-movement",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527018\"",
-            "esa_threatactorttpsid": "a0aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1021.002",
-            "technique.esa_name": "SMB/Windows Admin Shares",
-            "technique.esa_tactics": "lateral-movement",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527019\"",
-            "esa_threatactorttpsid": "a2aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1053.005",
-            "technique.esa_name": "Scheduled Task",
-            "technique.esa_tactics": "execution, persistence, privilege-escalation",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527020\"",
-            "esa_threatactorttpsid": "a4aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1505.003",
-            "technique.esa_name": "Web Shell",
-            "technique.esa_tactics": "persistence",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527021\"",
-            "esa_threatactorttpsid": "a6aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1553.002",
-            "technique.esa_name": "Code Signing",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527022\"",
-            "esa_threatactorttpsid": "a8aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1195.002",
-            "technique.esa_name": "Compromise Software Supply Chain",
-            "technique.esa_tactics": "initial-access",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527023\"",
-            "esa_threatactorttpsid": "aaaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1218.001",
-            "technique.esa_name": "Compiled HTML File",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527024\"",
-            "esa_threatactorttpsid": "acaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1218.011",
-            "technique.esa_name": "Rundll32",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527025\"",
-            "esa_threatactorttpsid": "aeaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1569.002",
-            "technique.esa_name": "Service Execution",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527026\"",
-            "esa_threatactorttpsid": "b0aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1102",
-            "technique.esa_name": "Web Service",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527027\"",
-            "esa_threatactorttpsid": "b2aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1102.001",
-            "technique.esa_name": "Dead Drop Resolver",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "APT41",
-            "taGroup.esa_othernames": "Wicked Panda  (CrowdStrike), Earth Baku (Trend Micro)",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527028\"",
-            "esa_threatactorttpsid": "b4aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1595.002",
-            "technique.esa_name": "Vulnerability Scanning",
-            "technique.esa_tactics": "reconnaissance",
-            "taGroup.esa_name": "Aquatic Panda",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527029\"",
-            "esa_threatactorttpsid": "b6aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1560.001",
-            "technique.esa_name": "Archive via Utility",
-            "technique.esa_tactics": "collection",
-            "taGroup.esa_name": "Aquatic Panda",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527030\"",
-            "esa_threatactorttpsid": "b8aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1059.001",
-            "technique.esa_name": "PowerShell",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "Aquatic Panda",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527031\"",
-            "esa_threatactorttpsid": "baaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1059.003",
-            "technique.esa_name": "Windows Command Shell",
-            "technique.esa_tactics": "execution",
-            "taGroup.esa_name": "Aquatic Panda",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527032\"",
-            "esa_threatactorttpsid": "bcaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1574.001",
-            "technique.esa_name": "DLL Search Order Hijacking",
-            "technique.esa_tactics": "persistence, privilege-escalation, defense-evasion",
-            "taGroup.esa_name": "Aquatic Panda",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527033\"",
-            "esa_threatactorttpsid": "beaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1562.001",
-            "technique.esa_name": "Disable or Modify Tools",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "Aquatic Panda",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527034\"",
-            "esa_threatactorttpsid": "c0aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1070.004",
-            "technique.esa_name": "File Deletion",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "Aquatic Panda",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527035\"",
-            "esa_threatactorttpsid": "c2aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1105",
-            "technique.esa_name": "Ingress Tool Transfer",
-            "technique.esa_tactics": "command-and-control",
-            "taGroup.esa_name": "Aquatic Panda",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527036\"",
-            "esa_threatactorttpsid": "c4aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1027.010",
-            "technique.esa_name": "Command Obfuscation",
-            "technique.esa_tactics": "defense-evasion",
-            "taGroup.esa_name": "Aquatic Panda",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527037\"",
-            "esa_threatactorttpsid": "c6aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1588.001",
-            "technique.esa_name": "Malware",
-            "technique.esa_tactics": "resource-development",
-            "taGroup.esa_name": "Aquatic Panda",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527038\"",
-            "esa_threatactorttpsid": "c8aa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1588.002",
-            "technique.esa_name": "Tool",
-            "technique.esa_tactics": "resource-development",
-            "taGroup.esa_name": "Aquatic Panda",
-            "taGroup.category.esa_name": "Nation-State (China)"
-        },
-        {
-            "@odata.etag": "W/\"12527039\"",
-            "esa_threatactorttpsid": "caaa1221-666f-ef11-a670-0022489b4d69",
-            "technique.esa_mitreid": "T1003.001",
-            "technique.esa_name": "LSASS Memory",
-            "technique.esa_tactics": "credential-access",
-            "taGroup.esa_name": "Aquatic Panda",
             "taGroup.category.esa_name": "Nation-State (China)"
         },
 ]

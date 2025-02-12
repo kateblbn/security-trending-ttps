@@ -6,9 +6,10 @@ type TechniqueColumnProps = {
   id: string;
   name: string;
   count: number;
+  onClick: (mitreId:string) => void
 };
 
-export const TechniqueColumn = ({ id, name, count }: TechniqueColumnProps) => {
+export const TechniqueColumn = ({ id, name, count, onClick}: TechniqueColumnProps) => {
   
   const colors =
     count <= 2
@@ -29,7 +30,7 @@ export const TechniqueColumn = ({ id, name, count }: TechniqueColumnProps) => {
         </div>
   } color={color}>
       
-      <div className="tecnique-wrapper">
+      <div className="tecnique-wrapper" onClick={e => onClick(id)}>
         <div className="subtechniques-list">
           <div className="subtechniques-list-wrapper">
             <div className="subtechniques-list-box">

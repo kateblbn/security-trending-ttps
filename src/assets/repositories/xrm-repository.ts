@@ -1,4 +1,4 @@
-import {  BaselineTechnique, mapNestedKeys, MitreTactic, TrendingTechnique } from "../components/Data";
+import {  BaselineTechnique, mapNestedKeys, MitreTactic, MitreTechnique, TrendingTechnique } from "../components/Data";
 import { IRepository } from "./repository-interface";
 
 export class XrmRepository implements IRepository {
@@ -6,6 +6,14 @@ export class XrmRepository implements IRepository {
 
   constructor(xrm: Xrm.XrmStatic) {
     this.webApi = xrm.WebApi;
+  }
+  async getMitreTechnique(guid: string): Promise<MitreTechnique> {
+    const options = "?$select=esa_mitreid, esa_name, esa_description, esa_deprecated, esa_url, esa_datasources, esa_tactics, esa_platforms"   
+
+    const res = await this.webApi.retrieveRecord("esa_mitreenterprise", guid, options)
+
+    return mapNestedKeys(res)
+
   }
   async getTactics(): Promise<MitreTactic[]> {
     const fetchXml: string = `
@@ -37,6 +45,7 @@ export class XrmRepository implements IRepository {
     <fetch>
 	    <entity name='esa_threatactorttps'>
         <link-entity name="esa_mitreenterprise" from="esa_mitreenterpriseid" to="esa_mitreid" alias="technique">
+          <attribute name="esa_mitreenterpriseid" />
           <attribute name="esa_mitreid" />
           <attribute name="esa_name" />
           <attribute name="esa_tactics" />
@@ -57,7 +66,7 @@ export class XrmRepository implements IRepository {
         `?fetchXml=${encodeURIComponent(fetchXml)}`
       );
 
-      return resTechniques.entities.map((x) => mapNestedKeys(x, {} as BaselineTechnique));
+      return resTechniques.entities.map((x) => mapNestedKeys(x));
     }
   // {
   //   "@odata.etag": "W/\"16473250\"",
@@ -80,6 +89,7 @@ export class XrmRepository implements IRepository {
          <attribute name="esa_articlelink" />
          <attribute name="esa_target" />
         <link-entity name="esa_mitreenterprise" from="esa_mitreenterpriseid" to="esa_ttp" alias="technique">
+          <attribute name="esa_mitreenterpriseid" />
           <attribute name="esa_mitreid" />
           <attribute name="esa_name" />
           <attribute name="esa_tactics" />
@@ -100,7 +110,7 @@ export class XrmRepository implements IRepository {
         "esa_dynamicthreatactorttps",
         `?fetchXml=${encodeURIComponent(fetchXml)}`
       );
-    return res.entities.map(x => mapNestedKeys(x, {} as TrendingTechnique))
+    return res.entities.map(x => mapNestedKeys(x, ["esa_eventdate"]))
   }
 }
 

@@ -4,10 +4,24 @@ export type MitreTactic = {
   id: string;
   tacticsKey: string;
 };
+
+export type MitreTechnique = {
+  "@odata.etag": string
+  esa_deprecated: boolean
+  esa_description: string
+  esa_url: string
+  esa_datasources: string
+  esa_tactics: string
+  esa_name: string
+  esa_mitreenterpriseid: string
+  esa_platforms: string
+  esa_mitreid: string
+}
+
 export type BaselineTechnique = {
   "@odata.etag": string;
-  // ActorNames: string[]
   technique: {
+    esa_mitreenterpriseid: string
     esa_mitreid: string;
     esa_name: string;
     esa_tactics: string;
@@ -31,7 +45,7 @@ export type TrendingTechnique = {
 
 
 
-export function mapNestedKeys<T extends Record<string, any>>(obj: Record<string, any>, typeRef: T): T {
+export function mapNestedKeys<T extends Record<string, any>>(obj: Record<string, any>, dateKeys?: string[]): T {
   const result: any = {};
 
   for (const key in obj) {
@@ -49,7 +63,7 @@ export function mapNestedKeys<T extends Record<string, any>>(obj: Record<string,
     const lastKey = parts[parts.length - 1];
 
     // If the corresponding type in typeRef is Date, convert value to Date
-    if (getNestedType(typeRef, parts) === Date && typeof value === "string") {
+    if (dateKeys && dateKeys.includes(key)) {
       current[lastKey] = new Date(value);
     } else {
       current[lastKey] = value;
@@ -57,11 +71,6 @@ export function mapNestedKeys<T extends Record<string, any>>(obj: Record<string,
   }
 
   return result;
-}
-
-// Helper function to get nested type from type reference
-function getNestedType<T>(typeRef: T, path: string[]): any {
-  return path.reduce((acc, key) => acc?.[key], typeRef);
 }
 
 // export type BaselineTechnique = {

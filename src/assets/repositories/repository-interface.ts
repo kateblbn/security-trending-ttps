@@ -1,11 +1,8 @@
-import { TrendingTechnique, MitreTactic, BaselineTechnique } from "../components/Data";
+import { TrendingTechnique, MitreTactic, BaselineTechnique, MitreTechnique } from "../components/Data";
 
 export interface IRepository {
   getTactics(): Promise<MitreTactic[]>;
-}
-export interface IRepository {
   getBaselineTechniques(): Promise<BaselineTechnique[]>;
-}
-export interface IRepository {
   getTrendingTechniques(): Promise<TrendingTechnique[]>;
+  getMitreTechnique(guid:string): Promise<MitreTechnique> 
 }
