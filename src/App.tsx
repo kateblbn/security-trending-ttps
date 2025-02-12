@@ -23,7 +23,7 @@ function App() {
   const [selectedMitreId, setSelectedMitreId] = useState<string|undefined>()
   console.log(trendingTechniques);
 
-  let repo = import.meta.env.DEV
+  const repo = import.meta.env.DEV
     ? new TestRepository()
     : new XrmRepository(window.parent.Xrm);
 

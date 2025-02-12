@@ -1,15 +1,14 @@
 import "./TechniqueItem.css";
-import "./HeaderItem.css";
 import { Tooltip } from "antd";
 
-type TechniqueColumnProps = {
+type TechniqueItemProps = {
   id: string;
   name: string;
   count: number;
   onClick: (mitreId:string) => void
 };
 
-export const TechniqueColumn = ({ id, name, count, onClick}: TechniqueColumnProps) => {
+export const TechniqueItem = ({ id, name, count, onClick}: TechniqueItemProps) => {
   
   const colors =
     count <= 2
@@ -46,4 +45,4 @@ export const TechniqueColumn = ({ id, name, count, onClick}: TechniqueColumnProp
   );
 };
 
-export default TechniqueColumn;
+export default TechniqueItem;

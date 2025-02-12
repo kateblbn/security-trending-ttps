@@ -12,10 +12,13 @@
   background-color: #f5f8fc;
   transition: 0.7s;
 }
-
 .subtechniques-name {
-  /* font-size: 0.5vw; */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 5px;
 }
+
 .subtechniques-list-box {
   box-sizing: border-box;
   padding: 8px;
