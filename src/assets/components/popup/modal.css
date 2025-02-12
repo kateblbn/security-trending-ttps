@@ -3,6 +3,10 @@
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
  }
+
+ .popup table{
+    display: table;
+ }
  
  .popup .column {
     width: calc(33.33% - 2em);

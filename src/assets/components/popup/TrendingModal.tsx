@@ -3,7 +3,7 @@ import { MitreTechnique, TrendingTechnique } from "../Data"
 import "./modal.css"
 import { useEffect, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarAlt, faChevronDown, faChevronUp, faInfoCircle, faShield, faShieldAlt } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarAlt, faChevronDown, faChevronUp, faInfoCircle, faShield, faShieldAlt, faUserSecret } from "@fortawesome/free-solid-svg-icons";
 import Markdown from "marked-react";
 import { IRepository } from "../../repositories/repository-interface";
 
@@ -47,8 +47,20 @@ export default function TrendingModal({ repository, occurences , onClose}: Trend
 
     const firstOccurance = occurences[0]
 
-    console.log(occurences)
+    if (!firstOccurance) return
 
+    occurences.sort((a, b) => b.esa_eventdate.getTime() - a.esa_eventdate.getTime())
+
+    const uniqueActors = occurences.reduce<{mainName:string,otherNames:string,category:string,}[]>((acc, current) => {
+        if (!acc.some(x => x.mainName === current.taGroup.esa_name))
+            acc.push({
+        mainName : current.taGroup.esa_name,
+        otherNames : current.taGroup.esa_othernames,
+        category: current.taGroup.category.esa_name,
+    })
+
+        return acc
+    }, [])
 
     return (
         <Modal
@@ -111,6 +123,30 @@ export default function TrendingModal({ repository, occurences , onClose}: Trend
                                                 {x.esa_articletitle}
                                             </a>
                                         </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )
+                },
+                {
+                    key: "actors",
+                    label: <><FontAwesomeIcon icon={faUserSecret} /> Threat Actors <span>({uniqueActors.length})</span></>,
+                    children: (
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Main name</th>
+                                    <th>Other names</th>
+                                    <th>Category</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {uniqueActors.map(x => (
+                                    <tr>
+                                        <td>{x.mainName}</td>
+                                        <td>{x.otherNames}</td>
+                                        <td>{x.category}</td>
                                     </tr>
                                 ))}
                             </tbody>
