@@ -1,4 +1,4 @@
-import {  BaselineTechnique, mapNestedKeys, MitreTactic, MitreTechnique, TrendingTechnique } from "../components/Data";
+import { BaselineTechnique, IsoControl, mapNestedKeys, MitreTactic, MitreTechnique, NistControl, NistControlApiModel, TrendingTechnique } from "../components/Data";
 import { IRepository } from "./repository-interface";
 
 export class XrmRepository implements IRepository {
@@ -7,8 +7,56 @@ export class XrmRepository implements IRepository {
   constructor(xrm: Xrm.XrmStatic) {
     this.webApi = xrm.WebApi;
   }
+  async getIsoControls(mitreGuid: string): Promise<IsoControl[]> {
+
+    const fetchXml = `
+      <fetch>
+        <entity name='esa_nisttomitre'>
+          <filter>
+            <condition attribute='esa_mitreid' operator='eq' value='a004ae4b-31e5-ee11-904d-0022489b4696' />
+          </filter>
+          <link-entity name='esa_nist80053' to='esa_nist80053id' from='esa_nistcontrolid' >          
+            <link-entity name='esa_isotonist' from='esa_isotonistid' to='esa_nistcontrolid'>
+              <attribute name='esa_name' />
+            </link-entity>
+          </link-entity>
+          </entity>
+      </fetch>
+    `
+    const res = await this.webApi.retrieveMultipleRecords(
+      "esa_nittomitre",
+      `?fetchXml=${encodeURIComponent(fetchXml)}`
+    )
+
+    return res.entities.map(x => mapNestedKeys(x))
+  }
+
+  async getNistControls(mitreGuid: string): Promise<NistControlApiModel[]> {
+
+    const fetchXml = `
+      <fetch>
+      <entity name='esa_nisttomitre'>
+        <filter>
+          <condition attribute='esa_mitreid' operator='eq' value='${mitreGuid}' />
+        </filter>
+        <link-entity name='esa_nist80053' from='esa_nist80053id' to='esa_nistcontrolid' alias='nistControl'>
+          <attribute name='esa_controlid' />
+          <attribute name='esa_controlname' />
+          <attribute name='esa_nist80053id' />
+          </link-entity>
+        </entity>
+      </fetch>
+    `
+    const res = await this.webApi.retrieveMultipleRecords(
+      "esa_nittomitre",
+      `?fetchXml=${encodeURIComponent(fetchXml)}`
+    )
+
+    return res.entities.map(x => mapNestedKeys(x))
+  }
+
   async getMitreTechnique(guid: string): Promise<MitreTechnique> {
-    const options = "?$select=esa_mitreid, esa_name, esa_description, esa_deprecated, esa_url, esa_datasources, esa_tactics, esa_platforms"   
+    const options = "?$select=esa_mitreid, esa_name, esa_description, esa_deprecated, esa_url, esa_datasources, esa_tactics, esa_platforms"
 
     const res = await this.webApi.retrieveRecord("esa_mitreenterprise", guid, options)
 
@@ -66,8 +114,8 @@ export class XrmRepository implements IRepository {
         `?fetchXml=${encodeURIComponent(fetchXml)}`
       );
 
-      return resTechniques.entities.map((x) => mapNestedKeys(x));
-    }
+    return resTechniques.entities.map((x) => mapNestedKeys(x));
+  }
   // {
   //   "@odata.etag": "W/\"16473250\"",
   //   "esa_dynamicthreatactorttpsid": "7cf0f591-ed70-ef11-a670-000d3a664cf5",
@@ -78,7 +126,7 @@ export class XrmRepository implements IRepository {
   //   "taGroup.esa_othernames": "Velvet Chollima  (CrowdStrike)",
   //   "category.esa_name": "Nation-State (Others)"
   // },
-  
+
   async getTrendingTechniques(): Promise<TrendingTechnique[]> {
     const fetchXml: string = `
       <fetch>
@@ -118,7 +166,7 @@ export class XrmRepository implements IRepository {
 
 /* <link-entity name="esa_threatactorgroup" from="esa_threatactorgroupid" to="esa_tagroup" alias="taGroup">
           <attribute name="esa_name" />
-					<attribute name="esa_othernames" />
+          <attribute name="esa_othernames" />
           <link-entity name="esa_threatactorcategory" from="esa_threatactorcategoryid" to="esa_threatactorcategory" alias="category">
           <attribute name="esa_name" />
           </link-entity>

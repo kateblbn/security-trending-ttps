@@ -20,7 +20,7 @@ function App() {
   const [selectedActors, setSelectedActors] = useState<string[]>([]);
   const [button, setButton] = useState<boolean>(false);
   const [isBaselineView, setIsBaselineView] = useState(false);
-  const [selectedMitreId, setSelectedMitreId] = useState<string|undefined>()
+  const [selectedMitreId, setSelectedMitreId] = useState<string | undefined>()
   console.log(trendingTechniques);
 
   const repo = import.meta.env.DEV
@@ -36,7 +36,6 @@ function App() {
   function onToggleChange(x: boolean){
     setIsBaselineView(x);
   };
-
 
   if (!tactics || !trendingTechniques || !baselineTechniques) {
     return "Loading..";
@@ -102,11 +101,11 @@ function App() {
   );
 
   let modal = null
-  if (selectedMitreId){
-    if (isBaselineView){
+  if (selectedMitreId) {
+    if (isBaselineView) {
 
     }
-    else{
+    else {
       modal = <TrendingModal 
         repository={repo}
         occurences={(filteredTechniques as TrendingTechnique[])

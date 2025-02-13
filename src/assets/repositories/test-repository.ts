@@ -1,8 +1,11 @@
 import {
 	BaselineTechnique,
+	IsoControl,
 	mapNestedKeys,
   MitreTactic,
   MitreTechnique,
+  NistControl,
+  NistControlApiModel,
   TrendingTechnique,
 } from "../components/Data";
 import { IRepository } from "./repository-interface";
@@ -97,6 +100,17 @@ const dataOfTactics: MitreTactic[] = [
 
 
 export class TestRepository implements IRepository {
+  getIsoControls(mitreGuid: string): Promise<IsoControl[]> {
+      throw new Error("Method not implemented.");
+  }
+  async getNistControls(mitreGuid: string): Promise<NistControlApiModel[]> {
+return new Promise(resolve => {
+	  setTimeout(()=> resolve(
+			nistControls.map(x => mapNestedKeys(x)
+		)), 400)
+	}
+	)
+  }
 
   async getMitreTechnique(guid: string): Promise<MitreTechnique> {
 	return new Promise(resolve => {
@@ -128,6 +142,66 @@ export class TestRepository implements IRepository {
     return dataOfTactics;
   }
 }
+
+const nistControls = 
+		[
+			{
+            "@odata.etag": "W/\"12520052\"",
+            "esa_nisttomitreid": "69f8ad4b-31e5-ee11-904d-0022489b4696",
+            "nistControl.esa_controlid": "AC-1",
+            "nistControl.esa_controlname": "Access Control Policy and Procedures",
+            "nistControl.esa_nist80053id": "00ce6f07-fce2-ee11-904d-002248a29e66"
+        },
+        {
+            "@odata.etag": "W/\"12521308\"",
+            "esa_nisttomitreid": "3202ae4b-31e5-ee11-904d-0022489b4696",
+            "nistControl.esa_controlid": "AC-6",
+            "nistControl.esa_controlname": "Least Privilege",
+            "nistControl.esa_nist80053id": "0ace6f07-fce2-ee11-904d-002248a29e66"
+        },
+        {
+            "@odata.etag": "W/\"12521328\"",
+            "esa_nisttomitreid": "5a02ae4b-31e5-ee11-904d-0022489b4696",
+            "nistControl.esa_controlid": "AU-1",
+            "nistControl.esa_controlname": "Audit and Accountability Policy and Procedures",
+            "nistControl.esa_nist80053id": "3ece6f07-fce2-ee11-904d-002248a29e66"
+        },
+        {
+            "@odata.etag": "W/\"12521330\"",
+            "esa_nisttomitreid": "5e02ae4b-31e5-ee11-904d-0022489b4696",
+            "nistControl.esa_controlid": "AU-2",
+            "nistControl.esa_controlname": "Event Logging",
+            "nistControl.esa_nist80053id": "40ce6f07-fce2-ee11-904d-002248a29e66"
+        },
+        {
+            "@odata.etag": "W/\"12520431\"",
+            "esa_nisttomitreid": "5ffbad4b-31e5-ee11-904d-0022489b4696",
+            "nistControl.esa_controlid": "AC-2",
+            "nistControl.esa_controlname": "Account Management",
+            "nistControl.esa_nist80053id": "02ce6f07-fce2-ee11-904d-002248a29e66"
+        },
+        {
+            "@odata.etag": "W/\"12520762\"",
+            "esa_nisttomitreid": "f1fdad4b-31e5-ee11-904d-0022489b4696",
+            "nistControl.esa_controlid": "AC-3",
+            "nistControl.esa_controlname": "Access Enforcement",
+            "nistControl.esa_nist80053id": "04ce6f07-fce2-ee11-904d-002248a29e66"
+        },
+        {
+            "@odata.etag": "W/\"12522777\"",
+            "esa_nisttomitreid": "a40dae4b-31e5-ee11-904d-0022489b4696",
+            "nistControl.esa_controlid": "IA-11",
+            "nistControl.esa_controlname": "Re-authentication",
+            "nistControl.esa_nist80053id": "bace6f07-fce2-ee11-904d-002248a29e66"
+        },
+        {
+            "@odata.etag": "W/\"12522940\"",
+            "esa_nisttomitreid": "ea0eae4b-31e5-ee11-904d-0022489b4696",
+            "nistControl.esa_controlid": "IA-2",
+            "nistControl.esa_controlname": "Identification and Authentication (Organizational Users)",
+            "nistControl.esa_nist80053id": "a8ce6f07-fce2-ee11-904d-002248a29e66"
+        }
+		]
 
 const dataOfTechniquesTrending =  [
 	{

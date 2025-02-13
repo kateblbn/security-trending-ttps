@@ -43,7 +43,24 @@ export type TrendingTechnique = {
   esa_target: string
 } & BaselineTechnique
 
+export type IsoControl = {
+  "@odata.etag": string
+  esa_iso270012022id: string
+  esa_controlid: string
+  esa_controlname: string
+  esa_domain:string
+}
 
+export type NistControl = {
+  "@odata.etag": string
+  esa_nist80053id: string
+  esa_controlid: string
+  esa_controlname: string
+}
+
+export type NistControlApiModel = {
+  nistControl:NistControl
+}
 
 export function mapNestedKeys<T extends Record<string, any>>(obj: Record<string, any>, dateKeys?: string[]): T {
   const result: any = {};

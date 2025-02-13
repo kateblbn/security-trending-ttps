@@ -1,11 +1,12 @@
 import { Collapse, Modal, Table } from "antd"
-import { MitreTechnique, TrendingTechnique } from "../Data"
+import { MitreTechnique, NistControl, TrendingTechnique } from "../Data"
 import "./modal.css"
 import { useEffect, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt, faChevronDown, faChevronUp, faInfoCircle, faShield, faShieldAlt, faUserSecret } from "@fortawesome/free-solid-svg-icons";
 import Markdown from "marked-react";
 import { IRepository } from "../../repositories/repository-interface";
+import { getNistSubChapter } from "./helpers";
 
 type TrendingModalProps = {
     repository: IRepository
@@ -17,6 +18,7 @@ export default function TrendingModal({ repository, occurences, onClose }: Trend
     const [open, setOpen] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
     const [technique, setTechnique] = useState<MitreTechnique | undefined>()
+    const [nistControls, setNistControls] = useState<NistControl[] | undefined>()
     const [expandedSummaryId, setExpandedSummaryId] = useState<number>(null);
 
     useEffect(() => {
@@ -29,8 +31,13 @@ export default function TrendingModal({ repository, occurences, onClose }: Trend
         async function openNewModal() {
             setOpen(true)
             setIsLoading(true)
-            const technique = await repository.getMitreTechnique(occurences[0].technique.esa_mitreenterpriseid)
-            setTechnique(technique)
+            const mitreGuid = occurences[0].technique.esa_mitreenterpriseid
+            const [techniqueResponse, nistControlsResponse] = await Promise.all([
+                repository.getMitreTechnique(mitreGuid),
+                repository.getNistControls(mitreGuid)
+            ])
+            setTechnique(techniqueResponse)
+            setNistControls(nistControlsResponse.map(x => x.nistControl))
             setIsLoading(false)
         }
 
@@ -50,6 +57,13 @@ export default function TrendingModal({ repository, occurences, onClose }: Trend
     if (!firstOccurance) return
 
     occurences.sort((a, b) => b.esa_eventdate.getTime() - a.esa_eventdate.getTime())
+    nistControls?.sort((a, b) => {
+        const aNistChapter = a.esa_controlid.substring(0, 2)
+        const bNistChapter = b.esa_controlid.substring(0, 2)
+        if (aNistChapter.localeCompare(bNistChapter) === 0)
+            return getNistSubChapter(a.esa_controlid) - getNistSubChapter(b.esa_controlid)
+        else return aNistChapter.localeCompare(bNistChapter)
+    })
 
     const uniqueActors = occurences.reduce<{ mainName: string, otherNames: string, category: string, }[]>((acc, current) => {
         if (!acc.some(x => x.mainName === current.taGroup.esa_name))
@@ -149,15 +163,20 @@ export default function TrendingModal({ repository, occurences, onClose }: Trend
                                     key: "category",
                                     dataIndex: "category"
                                 },
-                            ]} 
-                            dataSource={uniqueActors.map(x => ({...x, key:x.mainName}))}
-                     />
-                    )
+                            ]}
+                                dataSource={uniqueActors.map(x => ({ ...x, key: x.mainName }))}
+                            />
+                        )
                     },
                     {
                         key: "controls",
                         label: <><FontAwesomeIcon icon={faShieldAlt} /> Controls</>,
-                        children: "Lorem ipsum."
+                        children: <Table title={() => <h3>NIST 800-53</h3>} columns={[
+                            {title: "Control ID", key:"controlId", dataIndex:"esa_controlid"},
+                            {title: "Control name", key:"controlName", dataIndex:"esa_controlname"},
+                        ]}
+                        dataSource={nistControls?.map(x => ({...x, key:x.esa_controlid}))}
+                        />
                     },
                 ]} />
         </Modal>
