@@ -4,16 +4,12 @@ import logo from "./images/telenorLogo.png";
 
 type HeaderProps = {
   title: string;
-  subTitle?: ReactNode;
-  lowerRightCorner?: ReactNode;
   //consider making optional
   children?: ReactNode;
 };
 
 export default function Header(props: HeaderProps) {
   return (
-    <div className="header-wrapper">
-       <div className="subTitle">{props.subTitle}</div>
 
       <div className="Header">
         {/* <img src="./images/telenorLogo.png" id="telenorLogo" /> */}
@@ -23,7 +19,5 @@ export default function Header(props: HeaderProps) {
 
         {props.children}
       </div>
-      <div className="lowerRightCorner">{props.lowerRightCorner}</div>
-    </div>
   );
 }

@@ -10,7 +10,7 @@
   flex-direction: column;
 }
 .tecnique-wrapper:nth-child(odd) {
-  background-color: #ffffff;
+  background-color: #f1f1f1;
 }
 .tecnique-wrapper:hover {
   background-color: #f5f8fc;
@@ -38,7 +38,7 @@
 }
 
 .yellow {
-  background-color: #ffd903 !important;
+  background-color: #d5b60a !important;
 }
 .orange {
   background-color: #e9692c !important;

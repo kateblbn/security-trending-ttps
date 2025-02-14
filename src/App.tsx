@@ -4,11 +4,13 @@ import { BaselineTechnique, MitreTactic, TrendingTechnique } from "./assets/comp
 import { XrmRepository } from "./assets/repositories/xrm-repository";
 import { TechniquesMatrix } from "./assets/components/TechniquesMatrix";
 import { TestRepository } from "./assets/repositories/test-repository";
-import { Button, Switch } from "antd";
+import { Button, ConfigProvider, Flex, Switch, Tooltip } from "antd";
 import FilterBar from "./assets/components/FilterBar";
 import Header from "./assets/components/Header";
 import { ActorNames } from "./assets/components/FilterBar";
 import TrendingModal from "./assets/components/popup/TrendingModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 function App() {
   const SELECT_ALL_VALUE = "all";
@@ -33,7 +35,7 @@ function App() {
     repo.getBaselineTechniques().then((x) => setBaselineTechniques(x));
   }, []);
 
-  function onToggleChange(x: boolean){
+  function onToggleChange(x: boolean) {
     setIsBaselineView(x);
   };
 
@@ -81,10 +83,10 @@ function App() {
       const existingActor = acc.find(
         (item) => item.mainName === current.taGroup.esa_name
       );
-      
+
       // if we already added this actor, we don't want to add it again
       if (existingActor) return acc;
-      
+
       if (
         selectedCategories.length === 0 ||
         selectedCategories.includes(current.taGroup.category.esa_name)
@@ -94,7 +96,7 @@ function App() {
           otherNames: current.taGroup.esa_othernames,
         });
       }
-      
+
       return acc;
     },
     []
@@ -106,22 +108,36 @@ function App() {
 
     }
     else {
-      modal = <TrendingModal 
+      modal = <TrendingModal
         repository={repo}
         occurences={(filteredTechniques as TrendingTechnique[])
           .filter(x => x.technique.esa_mitreid === selectedMitreId)}
         onClose={() => setSelectedMitreId(null)}
-        />
+      />
     }
   }
 
   return (
-    <>
+    <ConfigProvider theme={{
+      components:{
+        Switch: {
+          // colorPrimary:"#00C8FF",
+        }
+      }
+    }}>
       <Header
-        title=""
-        subTitle={isBaselineView ? "Baseline TTPs" : "Trending TTPs"}
-      />
-      <div className="switch-flex">
+        title={isBaselineView ? "Baseline TTPs" : "Trending TTPs"}
+      >
+        <div className="switch-group">
+          <Tooltip title={trendingTooltip}> <FontAwesomeIcon icon={faCircleInfo}  /></Tooltip>
+          <h4>Trending</h4>
+          <Switch onChange={onToggleChange} />
+          <h4>Baseline</h4>
+          <Tooltip title={baselineTooltip}><FontAwesomeIcon icon={faCircleInfo}  /></Tooltip>
+        </div>
+
+      </Header>
+      <div className="filters-flex">
         <FilterBar
           categoryValues={uniqueCategories}
           actorNames={uniqueActorMainNames}
@@ -129,9 +145,8 @@ function App() {
           onActorMainNameChange={setSelectedActors}
           setButton={setButton}
         />
-        <Switch onChange={onToggleChange} />
-      </div>
 
+      </div>
       <TechniquesMatrix
         tactics={tactics}
         tacticsWithTechniques={tacticsWithTechniques}
@@ -139,8 +154,11 @@ function App() {
       />
 
       {modal}
-    </>
+    </ConfigProvider>
   );
 }
 
 export default App;
+
+const trendingTooltip = "Based on known events"
+const baselineTooltip = "Unique combinations of threat actors and their techniques"
