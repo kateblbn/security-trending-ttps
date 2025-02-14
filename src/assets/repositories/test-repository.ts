@@ -1,7 +1,9 @@
 import {
 	BaselineTechnique,
 	IsoControl,
+	IsoControlApiModel,
 	mapNestedKeys,
+  MaturityModelControlApiModel,
   MitreTactic,
   MitreTechnique,
   NistControl,
@@ -100,8 +102,23 @@ const dataOfTactics: MitreTactic[] = [
 
 
 export class TestRepository implements IRepository {
-  getIsoControls(mitreGuid: string): Promise<IsoControl[]> {
-      throw new Error("Method not implemented.");
+
+  getMaturityModelControls(mitreGuid: string): Promise<MaturityModelControlApiModel[]> {
+return new Promise(resolve => {
+	  setTimeout(()=> resolve(
+			mmControls.map(x => mapNestedKeys(x)
+		)), 400)
+	}
+	)
+  }
+
+  getIsoControls(mitreGuid: string): Promise<IsoControlApiModel[]> {
+return new Promise(resolve => {
+	  setTimeout(()=> resolve(
+			isoControls.map(x => mapNestedKeys(x)
+		)), 400)
+	}
+	)
   }
   async getNistControls(mitreGuid: string): Promise<NistControlApiModel[]> {
 return new Promise(resolve => {
@@ -142,6 +159,1171 @@ return new Promise(resolve => {
     return dataOfTactics;
   }
 }
+
+const mmControls = [
+    {
+            "@odata.etag": "W/\"12520189\"",
+            "esa_nisttomitreid": "7cf9ad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "929c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "9.5",
+            "mmControl.esa_controlname": "Information transfer ",
+            "mmControl.esa_chapter": "9. Communications Security",
+            "mmControl.esa_index": "09.5"
+        },
+        {
+            "@odata.etag": "W/\"12520189\"",
+            "esa_nisttomitreid": "7cf9ad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "7c9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.4.1",
+            "mmControl.esa_controlname": "Logging and monitoring",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.4.1"
+        },
+        {
+            "@odata.etag": "W/\"12520189\"",
+            "esa_nisttomitreid": "7cf9ad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "7e9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.4.2",
+            "mmControl.esa_controlname": "Logging and monitoring - Telco",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.4.2"
+        },
+        {
+            "@odata.etag": "W/\"12520216\"",
+            "esa_nisttomitreid": "b0f9ad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "929c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "9.5",
+            "mmControl.esa_controlname": "Information transfer ",
+            "mmControl.esa_chapter": "9. Communications Security",
+            "mmControl.esa_index": "09.5"
+        },
+        {
+            "@odata.etag": "W/\"12520216\"",
+            "esa_nisttomitreid": "b0f9ad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "8c9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "9.2",
+            "mmControl.esa_controlname": "Network security controls",
+            "mmControl.esa_chapter": "9. Communications Security",
+            "mmControl.esa_index": "09.2"
+        },
+        {
+            "@odata.etag": "W/\"12520243\"",
+            "esa_nisttomitreid": "e6f9ad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "929c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "9.5",
+            "mmControl.esa_controlname": "Information transfer ",
+            "mmControl.esa_chapter": "9. Communications Security",
+            "mmControl.esa_index": "09.5"
+        },
+        {
+            "@odata.etag": "W/\"12520243\"",
+            "esa_nisttomitreid": "e6f9ad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "6a9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "7.2.1",
+            "mmControl.esa_controlname": "Equipment security Office and end-users",
+            "mmControl.esa_chapter": "7. Physical & Environmental Security",
+            "mmControl.esa_index": "07.2.1"
+        },
+        {
+            "@odata.etag": "W/\"12520243\"",
+            "esa_nisttomitreid": "e6f9ad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "6c9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "7.2.2",
+            "mmControl.esa_controlname": "Equipment  security IT Datacenters",
+            "mmControl.esa_chapter": "7. Physical & Environmental Security",
+            "mmControl.esa_index": "07.2.2"
+        },
+        {
+            "@odata.etag": "W/\"12520243\"",
+            "esa_nisttomitreid": "e6f9ad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "6e9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "7.2.3",
+            "mmControl.esa_controlname": "Equipment security Telco facilities",
+            "mmControl.esa_chapter": "7. Physical & Environmental Security",
+            "mmControl.esa_index": "07.2.3"
+        },
+        {
+            "@odata.etag": "W/\"12520425\"",
+            "esa_nisttomitreid": "52fbad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "489c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.2.1",
+            "mmControl.esa_controlname": "Identity management",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.2.1"
+        },
+        {
+            "@odata.etag": "W/\"12520425\"",
+            "esa_nisttomitreid": "52fbad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "4a9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.2.2",
+            "mmControl.esa_controlname": "Identity management - Telco",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.2.2"
+        },
+        {
+            "@odata.etag": "W/\"12520425\"",
+            "esa_nisttomitreid": "52fbad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "4c9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.3.1",
+            "mmControl.esa_controlname": "Access management",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.3.1"
+        },
+        {
+            "@odata.etag": "W/\"12520425\"",
+            "esa_nisttomitreid": "52fbad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "4e9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.3.2",
+            "mmControl.esa_controlname": "Access management - Telco",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.3.2"
+        },
+        {
+            "@odata.etag": "W/\"12520425\"",
+            "esa_nisttomitreid": "52fbad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "529c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.5.1",
+            "mmControl.esa_controlname": "System and application access control",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.5.1"
+        },
+        {
+            "@odata.etag": "W/\"12520425\"",
+            "esa_nisttomitreid": "52fbad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "549c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.5.2",
+            "mmControl.esa_controlname": "System and application access control - Telco",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.5.2"
+        },
+        {
+            "@odata.etag": "W/\"12520425\"",
+            "esa_nisttomitreid": "52fbad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "4c9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.3.1",
+            "mmControl.esa_controlname": "Access management",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.3.1"
+        },
+        {
+            "@odata.etag": "W/\"12520425\"",
+            "esa_nisttomitreid": "52fbad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "4e9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.3.2",
+            "mmControl.esa_controlname": "Access management - Telco",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.3.2"
+        },
+        {
+            "@odata.etag": "W/\"12520425\"",
+            "esa_nisttomitreid": "52fbad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "7c9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.4.1",
+            "mmControl.esa_controlname": "Logging and monitoring",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.4.1"
+        },
+        {
+            "@odata.etag": "W/\"12520425\"",
+            "esa_nisttomitreid": "52fbad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "7e9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.4.2",
+            "mmControl.esa_controlname": "Logging and monitoring - Telco",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.4.2"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "469c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.1",
+            "mmControl.esa_controlname": "Identity and access management framework",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.1"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "d49c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "14.3",
+            "mmControl.esa_controlname": "Protection of records ",
+            "mmControl.esa_chapter": "14. Compliance",
+            "mmControl.esa_index": "14.3"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "4c9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.3.1",
+            "mmControl.esa_controlname": "Access management",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.3.1"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "4e9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.3.2",
+            "mmControl.esa_controlname": "Access management - Telco",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.3.2"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "4c9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.3.1",
+            "mmControl.esa_controlname": "Access management",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.3.1"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "4e9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.3.2",
+            "mmControl.esa_controlname": "Access management - Telco",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.3.2"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "529c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.5.1",
+            "mmControl.esa_controlname": "System and application access control",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.5.1"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "549c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.5.2",
+            "mmControl.esa_controlname": "System and application access control - Telco",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.5.2"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "529c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.5.1",
+            "mmControl.esa_controlname": "System and application access control",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.5.1"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "549c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.5.2",
+            "mmControl.esa_controlname": "System and application access control - Telco",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.5.2"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "529c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.5.1",
+            "mmControl.esa_controlname": "System and application access control",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.5.1"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "549c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.5.2",
+            "mmControl.esa_controlname": "System and application access control - Telco",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.5.2"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "8c9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "9.2",
+            "mmControl.esa_controlname": "Network security controls",
+            "mmControl.esa_chapter": "9. Communications Security",
+            "mmControl.esa_index": "09.2"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "949c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "10.1",
+            "mmControl.esa_controlname": "Security requirements",
+            "mmControl.esa_chapter": "10. System Acquisition, Development & Maintenance",
+            "mmControl.esa_index": "10.1"
+        },
+        {
+            "@odata.etag": "W/\"12521063\"",
+            "esa_nisttomitreid": "4a00ae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "229c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "2.3",
+            "mmControl.esa_controlname": "Segregation of duties",
+            "mmControl.esa_chapter": "2. Organisation of Security",
+            "mmControl.esa_index": "02.3"
+        },
+        {
+            "@odata.etag": "W/\"12521299\"",
+            "esa_nisttomitreid": "2002ae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "469c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.1",
+            "mmControl.esa_controlname": "Identity and access management framework",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.1"
+        },
+        {
+            "@odata.etag": "W/\"12521299\"",
+            "esa_nisttomitreid": "2002ae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "4c9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.3.1",
+            "mmControl.esa_controlname": "Access management",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.3.1"
+        },
+        {
+            "@odata.etag": "W/\"12521299\"",
+            "esa_nisttomitreid": "2002ae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "4e9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.3.2",
+            "mmControl.esa_controlname": "Access management - Telco",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.3.2"
+        },
+        {
+            "@odata.etag": "W/\"12521299\"",
+            "esa_nisttomitreid": "2002ae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "529c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.5.1",
+            "mmControl.esa_controlname": "System and application access control",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.5.1"
+        },
+        {
+            "@odata.etag": "W/\"12521299\"",
+            "esa_nisttomitreid": "2002ae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "549c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "5.5.2",
+            "mmControl.esa_controlname": "System and application access control - Telco",
+            "mmControl.esa_chapter": "5. Access Control",
+            "mmControl.esa_index": "05.5.2"
+        },
+        {
+            "@odata.etag": "W/\"12521542\"",
+            "esa_nisttomitreid": "0404ae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "129c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "1.2",
+            "mmControl.esa_controlname": "Review of the Security Management System",
+            "mmControl.esa_chapter": "1. Security Policies",
+            "mmControl.esa_index": "01.2"
+        },
+        {
+            "@odata.etag": "W/\"12521542\"",
+            "esa_nisttomitreid": "0404ae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "129c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "1.2",
+            "mmControl.esa_controlname": "Review of the Security Management System",
+            "mmControl.esa_chapter": "1. Security Policies",
+            "mmControl.esa_index": "01.2"
+        },
+        {
+            "@odata.etag": "W/\"12521542\"",
+            "esa_nisttomitreid": "0404ae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "129c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "1.2",
+            "mmControl.esa_controlname": "Review of the Security Management System",
+            "mmControl.esa_chapter": "1. Security Policies",
+            "mmControl.esa_index": "01.2"
+        },
+        {
+            "@odata.etag": "W/\"12521542\"",
+            "esa_nisttomitreid": "0404ae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "129c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "1.2",
+            "mmControl.esa_controlname": "Review of the Security Management System",
+            "mmControl.esa_chapter": "1. Security Policies",
+            "mmControl.esa_index": "01.2"
+        },
+        {
+            "@odata.etag": "W/\"12521542\"",
+            "esa_nisttomitreid": "0404ae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "129c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "1.2",
+            "mmControl.esa_controlname": "Review of the Security Management System",
+            "mmControl.esa_chapter": "1. Security Policies",
+            "mmControl.esa_index": "01.2"
+        },
+        {
+            "@odata.etag": "W/\"12521542\"",
+            "esa_nisttomitreid": "0404ae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "129c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "1.2",
+            "mmControl.esa_controlname": "Review of the Security Management System",
+            "mmControl.esa_chapter": "1. Security Policies",
+            "mmControl.esa_index": "01.2"
+        },
+        {
+            "@odata.etag": "W/\"12521542\"",
+            "esa_nisttomitreid": "0404ae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "129c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "1.2",
+            "mmControl.esa_controlname": "Review of the Security Management System",
+            "mmControl.esa_chapter": "1. Security Policies",
+            "mmControl.esa_index": "01.2"
+        },
+        {
+            "@odata.etag": "W/\"12521912\"",
+            "esa_nisttomitreid": "e706ae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "709c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.1.1",
+            "mmControl.esa_controlname": "Operational procedures and responsibilities",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.1.1"
+        },
+        {
+            "@odata.etag": "W/\"12521912\"",
+            "esa_nisttomitreid": "e706ae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "729c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.1.2",
+            "mmControl.esa_controlname": "Operational procedures and responsibilities - Telco",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.1.2"
+        },
+        {
+            "@odata.etag": "W/\"12521912\"",
+            "esa_nisttomitreid": "e706ae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "709c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.1.1",
+            "mmControl.esa_controlname": "Operational procedures and responsibilities",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.1.1"
+        },
+        {
+            "@odata.etag": "W/\"12521912\"",
+            "esa_nisttomitreid": "e706ae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "729c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.1.2",
+            "mmControl.esa_controlname": "Operational procedures and responsibilities - Telco",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.1.2"
+        },
+        {
+            "@odata.etag": "W/\"12522402\"",
+            "esa_nisttomitreid": "b90aae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "709c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.1.1",
+            "mmControl.esa_controlname": "Operational procedures and responsibilities",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.1.1"
+        },
+        {
+            "@odata.etag": "W/\"12522402\"",
+            "esa_nisttomitreid": "b90aae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "729c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.1.2",
+            "mmControl.esa_controlname": "Operational procedures and responsibilities - Telco",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.1.2"
+        },
+        {
+            "@odata.etag": "W/\"12522733\"",
+            "esa_nisttomitreid": "4d0dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "c49c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "13.1",
+            "mmControl.esa_controlname": "Planning security continuity",
+            "mmControl.esa_chapter": "13. Business Continuity",
+            "mmControl.esa_index": "13.1"
+        },
+        {
+            "@odata.etag": "W/\"12522733\"",
+            "esa_nisttomitreid": "4d0dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "c69c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "13.2",
+            "mmControl.esa_controlname": "Implementing security continuity",
+            "mmControl.esa_chapter": "13. Business Continuity",
+            "mmControl.esa_index": "13.2"
+        },
+        {
+            "@odata.etag": "W/\"12522733\"",
+            "esa_nisttomitreid": "4d0dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "c89c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "13.3",
+            "mmControl.esa_controlname": "Verify, review and evaluate security continuity",
+            "mmControl.esa_chapter": "13. Business Continuity",
+            "mmControl.esa_index": "13.3"
+        },
+        {
+            "@odata.etag": "W/\"12522733\"",
+            "esa_nisttomitreid": "4d0dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "cc9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "13.5",
+            "mmControl.esa_controlname": "Third party continuity",
+            "mmControl.esa_chapter": "13. Business Continuity",
+            "mmControl.esa_index": "13.5"
+        },
+        {
+            "@odata.etag": "W/\"12522733\"",
+            "esa_nisttomitreid": "4d0dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "629c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "7.1.1",
+            "mmControl.esa_controlname": "Physical security IT Datacentres",
+            "mmControl.esa_chapter": "7. Physical & Environmental Security",
+            "mmControl.esa_index": "07.1.1"
+        },
+        {
+            "@odata.etag": "W/\"12522733\"",
+            "esa_nisttomitreid": "4d0dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "649c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "7.1.2",
+            "mmControl.esa_controlname": "Physical security Telco facilities",
+            "mmControl.esa_chapter": "7. Physical & Environmental Security",
+            "mmControl.esa_index": "07.1.2"
+        },
+        {
+            "@odata.etag": "W/\"12522733\"",
+            "esa_nisttomitreid": "4d0dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "669c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "7.1.3",
+            "mmControl.esa_controlname": "Physical security Office",
+            "mmControl.esa_chapter": "7. Physical & Environmental Security",
+            "mmControl.esa_index": "07.1.3"
+        },
+        {
+            "@odata.etag": "W/\"12522733\"",
+            "esa_nisttomitreid": "4d0dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "689c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "7.1.4",
+            "mmControl.esa_controlname": "Physical security Warehouse/Storage",
+            "mmControl.esa_chapter": "7. Physical & Environmental Security",
+            "mmControl.esa_index": "07.1.4"
+        },
+        {
+            "@odata.etag": "W/\"12522733\"",
+            "esa_nisttomitreid": "4d0dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "ca9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "13.4",
+            "mmControl.esa_controlname": "Availability of critical facilities",
+            "mmControl.esa_chapter": "13. Business Continuity",
+            "mmControl.esa_index": "13.4"
+        },
+        {
+            "@odata.etag": "W/\"12522749\"",
+            "esa_nisttomitreid": "6d0dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "c49c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "13.1",
+            "mmControl.esa_controlname": "Planning security continuity",
+            "mmControl.esa_chapter": "13. Business Continuity",
+            "mmControl.esa_index": "13.1"
+        },
+        {
+            "@odata.etag": "W/\"12522749\"",
+            "esa_nisttomitreid": "6d0dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "c69c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "13.2",
+            "mmControl.esa_controlname": "Implementing security continuity",
+            "mmControl.esa_chapter": "13. Business Continuity",
+            "mmControl.esa_index": "13.2"
+        },
+        {
+            "@odata.etag": "W/\"12522749\"",
+            "esa_nisttomitreid": "6d0dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "c89c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "13.3",
+            "mmControl.esa_controlname": "Verify, review and evaluate security continuity",
+            "mmControl.esa_chapter": "13. Business Continuity",
+            "mmControl.esa_index": "13.3"
+        },
+        {
+            "@odata.etag": "W/\"12522749\"",
+            "esa_nisttomitreid": "6d0dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "cc9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "13.5",
+            "mmControl.esa_controlname": "Third party continuity",
+            "mmControl.esa_chapter": "13. Business Continuity",
+            "mmControl.esa_index": "13.5"
+        },
+        {
+            "@odata.etag": "W/\"12522749\"",
+            "esa_nisttomitreid": "6d0dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "629c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "7.1.1",
+            "mmControl.esa_controlname": "Physical security IT Datacentres",
+            "mmControl.esa_chapter": "7. Physical & Environmental Security",
+            "mmControl.esa_index": "07.1.1"
+        },
+        {
+            "@odata.etag": "W/\"12522749\"",
+            "esa_nisttomitreid": "6d0dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "649c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "7.1.2",
+            "mmControl.esa_controlname": "Physical security Telco facilities",
+            "mmControl.esa_chapter": "7. Physical & Environmental Security",
+            "mmControl.esa_index": "07.1.2"
+        },
+        {
+            "@odata.etag": "W/\"12522749\"",
+            "esa_nisttomitreid": "6d0dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "669c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "7.1.3",
+            "mmControl.esa_controlname": "Physical security Office",
+            "mmControl.esa_chapter": "7. Physical & Environmental Security",
+            "mmControl.esa_index": "07.1.3"
+        },
+        {
+            "@odata.etag": "W/\"12522749\"",
+            "esa_nisttomitreid": "6d0dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "689c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "7.1.4",
+            "mmControl.esa_controlname": "Physical security Warehouse/Storage",
+            "mmControl.esa_chapter": "7. Physical & Environmental Security",
+            "mmControl.esa_index": "07.1.4"
+        },
+        {
+            "@odata.etag": "W/\"12522749\"",
+            "esa_nisttomitreid": "6d0dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "ca9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "13.4",
+            "mmControl.esa_controlname": "Availability of critical facilities",
+            "mmControl.esa_chapter": "13. Business Continuity",
+            "mmControl.esa_index": "13.4"
+        },
+        {
+            "@odata.etag": "W/\"12522771\"",
+            "esa_nisttomitreid": "980dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "c49c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "13.1",
+            "mmControl.esa_controlname": "Planning security continuity",
+            "mmControl.esa_chapter": "13. Business Continuity",
+            "mmControl.esa_index": "13.1"
+        },
+        {
+            "@odata.etag": "W/\"12522771\"",
+            "esa_nisttomitreid": "980dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "c69c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "13.2",
+            "mmControl.esa_controlname": "Implementing security continuity",
+            "mmControl.esa_chapter": "13. Business Continuity",
+            "mmControl.esa_index": "13.2"
+        },
+        {
+            "@odata.etag": "W/\"12522771\"",
+            "esa_nisttomitreid": "980dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "c89c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "13.3",
+            "mmControl.esa_controlname": "Verify, review and evaluate security continuity",
+            "mmControl.esa_chapter": "13. Business Continuity",
+            "mmControl.esa_index": "13.3"
+        },
+        {
+            "@odata.etag": "W/\"12522771\"",
+            "esa_nisttomitreid": "980dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "cc9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "13.5",
+            "mmControl.esa_controlname": "Third party continuity",
+            "mmControl.esa_chapter": "13. Business Continuity",
+            "mmControl.esa_index": "13.5"
+        },
+        {
+            "@odata.etag": "W/\"12522771\"",
+            "esa_nisttomitreid": "980dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "d49c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "14.3",
+            "mmControl.esa_controlname": "Protection of records ",
+            "mmControl.esa_chapter": "14. Compliance",
+            "mmControl.esa_index": "14.3"
+        },
+        {
+            "@odata.etag": "W/\"12522771\"",
+            "esa_nisttomitreid": "980dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "789c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.3.1",
+            "mmControl.esa_controlname": "Backup",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.3.1"
+        },
+        {
+            "@odata.etag": "W/\"12522771\"",
+            "esa_nisttomitreid": "980dae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "7a9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.3.2",
+            "mmControl.esa_controlname": "Backup - Telco",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.3.2"
+        },
+        {
+            "@odata.etag": "W/\"12524382\"",
+            "esa_nisttomitreid": "271aae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "749c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.2.1",
+            "mmControl.esa_controlname": "Protection from malware",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.2.1"
+        },
+        {
+            "@odata.etag": "W/\"12524382\"",
+            "esa_nisttomitreid": "271aae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "769c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.2.2",
+            "mmControl.esa_controlname": "Protection from malware - Telco",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.2.2"
+        },
+        {
+            "@odata.etag": "W/\"12524724\"",
+            "esa_nisttomitreid": "d51cae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "7c9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.4.1",
+            "mmControl.esa_controlname": "Logging and monitoring",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.4.1"
+        },
+        {
+            "@odata.etag": "W/\"12524724\"",
+            "esa_nisttomitreid": "d51cae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "7e9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.4.2",
+            "mmControl.esa_controlname": "Logging and monitoring - Telco",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.4.2"
+        },
+        {
+            "@odata.etag": "W/\"12524724\"",
+            "esa_nisttomitreid": "d51cae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "7c9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.4.1",
+            "mmControl.esa_controlname": "Logging and monitoring",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.4.1"
+        },
+        {
+            "@odata.etag": "W/\"12524724\"",
+            "esa_nisttomitreid": "d51cae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "7e9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.4.2",
+            "mmControl.esa_controlname": "Logging and monitoring - Telco",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.4.2"
+        },
+        {
+            "@odata.etag": "W/\"12524724\"",
+            "esa_nisttomitreid": "d51cae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "7c9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.4.1",
+            "mmControl.esa_controlname": "Logging and monitoring",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.4.1"
+        },
+        {
+            "@odata.etag": "W/\"12524724\"",
+            "esa_nisttomitreid": "d51cae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "7e9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.4.2",
+            "mmControl.esa_controlname": "Logging and monitoring - Telco",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.4.2"
+        },
+        {
+            "@odata.etag": "W/\"12524724\"",
+            "esa_nisttomitreid": "d51cae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "7c9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.4.1",
+            "mmControl.esa_controlname": "Logging and monitoring",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.4.1"
+        },
+        {
+            "@odata.etag": "W/\"12524724\"",
+            "esa_nisttomitreid": "d51cae4b-31e5-ee11-904d-0022489b4696",
+            "mmControl.esa_telenormaturitymodelid": "7e9c235f-f8e2-ee11-904d-0022489ba240",
+            "mmControl.esa_controlid": "8.4.2",
+            "mmControl.esa_controlname": "Logging and monitoring - Telco",
+            "mmControl.esa_chapter": "8. Operations Security",
+            "mmControl.esa_index": "08.4.2"
+        }
+]
+
+const isoControls = [
+    {
+            "@odata.etag": "W/\"12520189\"",
+            "esa_nisttomitreid": "7cf9ad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "ee1a6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A5.14",
+            "isoControl.esa_controlname": "Information transfer",
+            "isoControl.esa_domain": "5 Organizational controls"
+        },
+        {
+            "@odata.etag": "W/\"12520189\"",
+            "esa_nisttomitreid": "7cf9ad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "681b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.16",
+            "isoControl.esa_controlname": "Monitoring activities",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12520216\"",
+            "esa_nisttomitreid": "b0f9ad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "ee1a6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A5.14",
+            "isoControl.esa_controlname": "Information transfer",
+            "isoControl.esa_domain": "5 Organizational controls"
+        },
+        {
+            "@odata.etag": "W/\"12520216\"",
+            "esa_nisttomitreid": "b0f9ad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "701b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.20",
+            "isoControl.esa_controlname": "Networks security",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12520243\"",
+            "esa_nisttomitreid": "e6f9ad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "ee1a6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A5.14",
+            "isoControl.esa_controlname": "Information transfer",
+            "isoControl.esa_domain": "5 Organizational controls"
+        },
+        {
+            "@odata.etag": "W/\"12520243\"",
+            "esa_nisttomitreid": "e6f9ad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "3e1b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A7.9",
+            "isoControl.esa_controlname": "Security of assets off-premises",
+            "isoControl.esa_domain": "7 Physical Controls"
+        },
+        {
+            "@odata.etag": "W/\"12520425\"",
+            "esa_nisttomitreid": "52fbad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "f21a6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A5.16",
+            "isoControl.esa_controlname": "Identity management",
+            "isoControl.esa_domain": "5 Organizational controls"
+        },
+        {
+            "@odata.etag": "W/\"12520425\"",
+            "esa_nisttomitreid": "52fbad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "f61a6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A5.18",
+            "isoControl.esa_controlname": "Access rights",
+            "isoControl.esa_domain": "5 Organizational controls"
+        },
+        {
+            "@odata.etag": "W/\"12520425\"",
+            "esa_nisttomitreid": "52fbad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "4c1b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.2",
+            "isoControl.esa_controlname": "Privileged access rights",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12520425\"",
+            "esa_nisttomitreid": "52fbad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "681b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.16",
+            "isoControl.esa_controlname": "Monitoring activities",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "f01a6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A5.15",
+            "isoControl.esa_controlname": "Access control",
+            "isoControl.esa_domain": "5 Organizational controls"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "141b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A5.33",
+            "isoControl.esa_controlname": "Protection of records",
+            "isoControl.esa_domain": "5 Organizational controls"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "4c1b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.2",
+            "isoControl.esa_controlname": "Privileged access rights",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "4e1b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.3",
+            "isoControl.esa_controlname": "Information access restriction",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "501b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.4",
+            "isoControl.esa_controlname": "Access to source code",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "501b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.4",
+            "isoControl.esa_controlname": "Access to source code",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "6c1b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.18",
+            "isoControl.esa_controlname": "Use of privileged utility programs",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "701b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.20",
+            "isoControl.esa_controlname": "Networks security",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12520755\"",
+            "esa_nisttomitreid": "e3fdad4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "7c1b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.26",
+            "isoControl.esa_controlname": "Application security requirements",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12521063\"",
+            "esa_nisttomitreid": "4a00ae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "d81a6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A5.3",
+            "isoControl.esa_controlname": "Segregation of duties",
+            "isoControl.esa_domain": "5 Organizational controls"
+        },
+        {
+            "@odata.etag": "W/\"12521299\"",
+            "esa_nisttomitreid": "2002ae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "f01a6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A5.15",
+            "isoControl.esa_controlname": "Access control",
+            "isoControl.esa_domain": "5 Organizational controls"
+        },
+        {
+            "@odata.etag": "W/\"12521299\"",
+            "esa_nisttomitreid": "2002ae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "4c1b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.2",
+            "isoControl.esa_controlname": "Privileged access rights",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12521299\"",
+            "esa_nisttomitreid": "2002ae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "6c1b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.18",
+            "isoControl.esa_controlname": "Use of privileged utility programs",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12521542\"",
+            "esa_nisttomitreid": "0404ae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "c01a6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "9.1",
+            "isoControl.esa_controlname": "Monitoring, measurement, analysis and evaluation",
+            "isoControl.esa_domain": "9. Performance evaluation"
+        },
+        {
+            "@odata.etag": "W/\"12521542\"",
+            "esa_nisttomitreid": "0404ae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "c41a6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "9.2.1",
+            "isoControl.esa_controlname": "General",
+            "isoControl.esa_domain": "9. Performance evaluation"
+        },
+        {
+            "@odata.etag": "W/\"12521542\"",
+            "esa_nisttomitreid": "0404ae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "c61a6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "9.2.2",
+            "isoControl.esa_controlname": "Internal audit programme",
+            "isoControl.esa_domain": "9. Performance evaluation"
+        },
+        {
+            "@odata.etag": "W/\"12521542\"",
+            "esa_nisttomitreid": "0404ae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "cc1a6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "9.3.2",
+            "isoControl.esa_controlname": "Management review inputs",
+            "isoControl.esa_domain": "9. Performance evaluation"
+        },
+        {
+            "@odata.etag": "W/\"12521542\"",
+            "esa_nisttomitreid": "0404ae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "cc1a6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "9.3.2",
+            "isoControl.esa_controlname": "Management review inputs",
+            "isoControl.esa_domain": "9. Performance evaluation"
+        },
+        {
+            "@odata.etag": "W/\"12521542\"",
+            "esa_nisttomitreid": "0404ae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "cc1a6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "9.3.2",
+            "isoControl.esa_controlname": "Management review inputs",
+            "isoControl.esa_domain": "9. Performance evaluation"
+        },
+        {
+            "@odata.etag": "W/\"12521542\"",
+            "esa_nisttomitreid": "0404ae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "ce1a6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "9.3.3",
+            "isoControl.esa_controlname": "Management review results",
+            "isoControl.esa_domain": "9. Performance evaluation"
+        },
+        {
+            "@odata.etag": "W/\"12521912\"",
+            "esa_nisttomitreid": "e706ae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "5a1b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.9",
+            "isoControl.esa_controlname": "Configuration management",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12521912\"",
+            "esa_nisttomitreid": "e706ae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "5a1b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.9",
+            "isoControl.esa_controlname": "Configuration management",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12522402\"",
+            "esa_nisttomitreid": "b90aae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "5a1b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.9",
+            "isoControl.esa_controlname": "Configuration management",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12522733\"",
+            "esa_nisttomitreid": "4d0dae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "0c1b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A5.29",
+            "isoControl.esa_controlname": "Information security during disruption",
+            "isoControl.esa_domain": "5 Organizational controls"
+        },
+        {
+            "@odata.etag": "W/\"12522733\"",
+            "esa_nisttomitreid": "4d0dae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "361b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A7.5",
+            "isoControl.esa_controlname": "Protecting against physical and environmental threats",
+            "isoControl.esa_domain": "7 Physical Controls"
+        },
+        {
+            "@odata.etag": "W/\"12522733\"",
+            "esa_nisttomitreid": "4d0dae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "641b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.14",
+            "isoControl.esa_controlname": "Redundancy of information processing facilities",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12522749\"",
+            "esa_nisttomitreid": "6d0dae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "0c1b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A5.29",
+            "isoControl.esa_controlname": "Information security during disruption",
+            "isoControl.esa_domain": "5 Organizational controls"
+        },
+        {
+            "@odata.etag": "W/\"12522749\"",
+            "esa_nisttomitreid": "6d0dae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "361b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A7.5",
+            "isoControl.esa_controlname": "Protecting against physical and environmental threats",
+            "isoControl.esa_domain": "7 Physical Controls"
+        },
+        {
+            "@odata.etag": "W/\"12522749\"",
+            "esa_nisttomitreid": "6d0dae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "641b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.14",
+            "isoControl.esa_controlname": "Redundancy of information processing facilities",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12522771\"",
+            "esa_nisttomitreid": "980dae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "0c1b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A5.29",
+            "isoControl.esa_controlname": "Information security during disruption",
+            "isoControl.esa_domain": "5 Organizational controls"
+        },
+        {
+            "@odata.etag": "W/\"12522771\"",
+            "esa_nisttomitreid": "980dae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "141b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A5.33",
+            "isoControl.esa_controlname": "Protection of records",
+            "isoControl.esa_domain": "5 Organizational controls"
+        },
+        {
+            "@odata.etag": "W/\"12522771\"",
+            "esa_nisttomitreid": "980dae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "621b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.13",
+            "isoControl.esa_controlname": "Information backup",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12524382\"",
+            "esa_nisttomitreid": "271aae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "561b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.7",
+            "isoControl.esa_controlname": "Protection against malware",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12524724\"",
+            "esa_nisttomitreid": "d51cae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "681b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.16",
+            "isoControl.esa_controlname": "Monitoring activities",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12524724\"",
+            "esa_nisttomitreid": "d51cae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "681b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.16",
+            "isoControl.esa_controlname": "Monitoring activities",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12524724\"",
+            "esa_nisttomitreid": "d51cae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "681b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.16",
+            "isoControl.esa_controlname": "Monitoring activities",
+            "isoControl.esa_domain": "8 Technological controls"
+        },
+        {
+            "@odata.etag": "W/\"12524724\"",
+            "esa_nisttomitreid": "d51cae4b-31e5-ee11-904d-0022489b4696",
+            "isoControl.esa_iso270012022id": "681b6540-fae2-ee11-904d-0022489b4696",
+            "isoControl.esa_controlid": "A8.16",
+            "isoControl.esa_controlname": "Monitoring activities",
+            "isoControl.esa_domain": "8 Technological controls"
+        }
+]
 
 const nistControls = 
 		[

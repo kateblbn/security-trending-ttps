@@ -1,4 +1,4 @@
-import { BaselineTechnique, IsoControl, mapNestedKeys, MitreTactic, MitreTechnique, NistControl, NistControlApiModel, TrendingTechnique } from "../components/Data";
+import { BaselineTechnique, IsoControl, IsoControlApiModel, mapNestedKeys, MaturityModelControlApiModel, MitreTactic, MitreTechnique, NistControl, NistControlApiModel, TrendingTechnique } from "../components/Data";
 import { IRepository } from "./repository-interface";
 
 export class XrmRepository implements IRepository {
@@ -7,24 +7,63 @@ export class XrmRepository implements IRepository {
   constructor(xrm: Xrm.XrmStatic) {
     this.webApi = xrm.WebApi;
   }
-  async getIsoControls(mitreGuid: string): Promise<IsoControl[]> {
+
+  async getMaturityModelControls(mitreGuid: string): Promise<MaturityModelControlApiModel[]> {
 
     const fetchXml = `
       <fetch>
         <entity name='esa_nisttomitre'>
           <filter>
-            <condition attribute='esa_mitreid' operator='eq' value='a004ae4b-31e5-ee11-904d-0022489b4696' />
+            <condition attribute='esa_mitreid' operator='eq' value='${mitreGuid}' />
           </filter>
-          <link-entity name='esa_nist80053' to='esa_nist80053id' from='esa_nistcontrolid' >          
-            <link-entity name='esa_isotonist' from='esa_isotonistid' to='esa_nistcontrolid'>
-              <attribute name='esa_name' />
+          <link-entity name='esa_nist80053' from='esa_nist80053id' to='esa_nistcontrolid' intersect='true'>          
+            <link-entity name='esa_isotonist' from='esa_nistcontrolid' to='esa_nist80053id' intersect='true'>
+              <link-entity name='esa_iso270012022' from='esa_iso270012022id' to='esa_isocontrolid' intersect='true'>
+                <link-entity name='esa_mmtoiso' to='esa_iso270012022id' from='esa_isocontrolid' intersect='true'>
+                  <link-entity name='esa_telenormaturitymodel' from='esa_telenormaturitymodelid' to='esa_mmcontrolid' alias='mmControl' >
+                    <attribute name='esa_telenormaturitymodelid' />
+                    <attribute name='esa_controlid' />
+                    <attribute name='esa_controlname' />
+                    <attribute name='esa_chapter' />
+                    <attribute name='esa_index' />
+                  </link-entity>
+                </link-entity>
+              </link-entity>
             </link-entity>
           </link-entity>
           </entity>
       </fetch>
     `
     const res = await this.webApi.retrieveMultipleRecords(
-      "esa_nittomitre",
+      "esa_nisttomitre",
+      `?fetchXml=${encodeURIComponent(fetchXml)}`
+    )
+
+    return res.entities.map(x => mapNestedKeys(x))
+  }
+  async getIsoControls(mitreGuid: string): Promise<IsoControlApiModel[]> {
+
+    const fetchXml = `
+      <fetch>
+        <entity name='esa_nisttomitre'>
+          <filter>
+            <condition attribute='esa_mitreid' operator='eq' value='${mitreGuid}' />
+          </filter>
+          <link-entity name='esa_nist80053' from='esa_nist80053id' to='esa_nistcontrolid' intersect='true'>          
+            <link-entity name='esa_isotonist' from='esa_nistcontrolid' to='esa_nist80053id' intersect='true'>
+              <link-entity name='esa_iso270012022' from='esa_iso270012022id' to='esa_isocontrolid' alias='isoControl'>
+                <attribute name='esa_iso270012022id' />
+                <attribute name='esa_controlid' />
+                <attribute name='esa_controlname' />
+                <attribute name='esa_domain' />
+              </link-entity>
+            </link-entity>
+          </link-entity>
+          </entity>
+      </fetch>
+    `
+    const res = await this.webApi.retrieveMultipleRecords(
+      "esa_nisttomitre",
       `?fetchXml=${encodeURIComponent(fetchXml)}`
     )
 
@@ -48,7 +87,7 @@ export class XrmRepository implements IRepository {
       </fetch>
     `
     const res = await this.webApi.retrieveMultipleRecords(
-      "esa_nittomitre",
+      "esa_nisttomitre",
       `?fetchXml=${encodeURIComponent(fetchXml)}`
     )
 

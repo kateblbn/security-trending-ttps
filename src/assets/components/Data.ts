@@ -43,12 +43,29 @@ export type TrendingTechnique = {
   esa_target: string
 } & BaselineTechnique
 
+export type MaturityModelControl = {
+  "@odata.etag": string
+  esa_telenormaturitymodelid: string
+  esa_controlid: string
+  esa_controlname: string
+  esa_chapter:string
+  esa_index:string
+}
+
+export type MaturityModelControlApiModel = {
+  mmControl:MaturityModelControl
+}
+
 export type IsoControl = {
   "@odata.etag": string
   esa_iso270012022id: string
   esa_controlid: string
   esa_controlname: string
   esa_domain:string
+}
+
+export type IsoControlApiModel = {
+  isoControl:IsoControl
 }
 
 export type NistControl = {

@@ -1,4 +1,4 @@
-import { TrendingTechnique, MitreTactic, BaselineTechnique, MitreTechnique, NistControl, NistControlApiModel, IsoControl } from "../components/Data";
+import { TrendingTechnique, MitreTactic, BaselineTechnique, MitreTechnique, NistControl, NistControlApiModel, IsoControl, MaturityModelControlApiModel, IsoControlApiModel } from "../components/Data";
 
 export interface IRepository {
   getTactics(): Promise<MitreTactic[]>;
@@ -6,5 +6,6 @@ export interface IRepository {
   getTrendingTechniques(): Promise<TrendingTechnique[]>;
   getMitreTechnique(guid:string): Promise<MitreTechnique> 
   getNistControls(mitreGuid:string): Promise<NistControlApiModel[]>
-  getIsoControls(mitreGuid:string): Promise<IsoControl[]>
+  getIsoControls(mitreGuid:string): Promise<IsoControlApiModel[]>
+getMaturityModelControls(mitreGuid: string): Promise<MaturityModelControlApiModel[]> 
 }
