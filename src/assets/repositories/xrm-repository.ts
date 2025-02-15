@@ -161,6 +161,7 @@ export class XrmRepository implements IRepository {
           <attribute name="esa_name" />
           <attribute name="esa_tactics" />
           <attribute name="esa_issubtechnique" />
+          <attribute name="esa_deprecated" />
         </link-entity>
         <link-entity name="esa_threatactorgroup" from="esa_threatactorgroupid" to="esa_tagroup" alias="taGroup">
             <attribute name="esa_name" />
@@ -206,6 +207,7 @@ export class XrmRepository implements IRepository {
           <attribute name="esa_name" />
           <attribute name="esa_tactics" />
           <attribute name="esa_issubtechnique" />
+          <attribute name="esa_deprecated" />
         </link-entity>
         <link-entity name="esa_threatactorgroup" from="esa_threatactorgroupid" to="esa_tagroup" alias="taGroup">
             <attribute name="esa_name" />

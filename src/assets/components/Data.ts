@@ -31,6 +31,7 @@ export type BaselineTechnique = {
     esa_name: string;
     esa_tactics: string;
     esa_issubtechnique: boolean;
+    esa_deprecated: boolean;
   };
   taGroup: {
     esa_name: string;

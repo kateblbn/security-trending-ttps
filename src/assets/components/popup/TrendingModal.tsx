@@ -142,8 +142,9 @@ export default function TrendingModal({
       className="popup"
       title={
         firstOccurance.technique.esa_mitreid +
-        " " +
-        firstOccurance.technique.esa_name
+          " " +
+          firstOccurance.technique.esa_name +
+          firstOccurance.technique.esa_deprecated && "(deprecated)"
       }
       open={open}
       footer={null}
