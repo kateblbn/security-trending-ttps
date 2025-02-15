@@ -166,6 +166,9 @@ export class XrmRepository implements IRepository {
         <link-entity name="esa_threatactorgroup" from="esa_threatactorgroupid" to="esa_tagroup" alias="taGroup">
             <attribute name="esa_name" />
             <attribute name="esa_othernames" />
+            <filter>
+              <condition attribute='esa_status' operator='eq' value='1' />
+            </filter>
             <link-entity name="esa_threatactorcategory" from="esa_threatactorcategoryid" to="esa_threatactorcategory" alias="taGroup.category">
             <attribute name="esa_name" />
             </link-entity>
@@ -201,6 +204,9 @@ export class XrmRepository implements IRepository {
          <attribute name="esa_articlesummary" />
          <attribute name="esa_articlelink" />
          <attribute name="esa_target" />
+         <filter>
+              <condition attribute='esa_status' operator='eq' value='1' />
+         </filter>
         <link-entity name="esa_mitreenterprise" from="esa_mitreenterpriseid" to="esa_ttp" alias="technique">
           <attribute name="esa_mitreenterpriseid" />
           <attribute name="esa_mitreid" />
@@ -212,6 +218,9 @@ export class XrmRepository implements IRepository {
         <link-entity name="esa_threatactorgroup" from="esa_threatactorgroupid" to="esa_tagroup" alias="taGroup">
             <attribute name="esa_name" />
             <attribute name="esa_othernames" />
+            <filter>
+               <condition attribute='esa_status' operator='eq' value='1' />
+            </filter>
             <link-entity name="esa_threatactorcategory" from="esa_threatactorcategoryid" to="esa_threatactorcategory" alias="taGroup.category">
             <attribute name="esa_name" />
             </link-entity>
