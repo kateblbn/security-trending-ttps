@@ -1,12 +1,11 @@
 import {
   BaselineTechnique,
-  IsoControl,
   IsoControlApiModel,
   mapNestedKeys,
   MaturityModelControlApiModel,
+  MitreMainTechnique,
   MitreTactic,
   MitreTechnique,
-  NistControl,
   NistControlApiModel,
   TrendingTechnique,
 } from "../components/Data";
@@ -17,6 +16,17 @@ export class XrmRepository implements IRepository {
 
   constructor(xrm: Xrm.XrmStatic) {
     this.webApi = xrm.WebApi;
+  }
+  async getMainMitreTechniques(): Promise<MitreMainTechnique[]> {
+    const odataOptions =
+      "?$select=esa_mitreid, esa_name&$filter=esa_issubtechnique eq false";
+
+    const res = await this.webApi.retrieveMultipleRecords(
+      "esa_mitreenterprise",
+      odataOptions
+    );
+
+    return res.entities;
   }
 
   async getMaturityModelControls(
@@ -150,6 +160,7 @@ export class XrmRepository implements IRepository {
           <attribute name="esa_mitreid" />
           <attribute name="esa_name" />
           <attribute name="esa_tactics" />
+          <attribute name="esa_issubtechnique" />
         </link-entity>
         <link-entity name="esa_threatactorgroup" from="esa_threatactorgroupid" to="esa_tagroup" alias="taGroup">
             <attribute name="esa_name" />
@@ -194,6 +205,7 @@ export class XrmRepository implements IRepository {
           <attribute name="esa_mitreid" />
           <attribute name="esa_name" />
           <attribute name="esa_tactics" />
+          <attribute name="esa_issubtechnique" />
         </link-entity>
         <link-entity name="esa_threatactorgroup" from="esa_threatactorgroupid" to="esa_tagroup" alias="taGroup">
             <attribute name="esa_name" />

@@ -1,4 +1,4 @@
-import { Button, Form, Select, } from "antd";
+import { Button, Form, Select } from "antd";
 import "./FilterBar.css";
 
 type FilterBarProps = {
@@ -6,7 +6,6 @@ type FilterBarProps = {
   actorNames: ActorNames[];
   onCategoryChange: (value: string[]) => void;
   onActorMainNameChange: (string) => void;
-  setButton: (string) => void;
 };
 
 export type ActorNames = {
@@ -19,7 +18,6 @@ export default function FilterBar({
   actorNames,
   onCategoryChange,
   onActorMainNameChange,
-  setButton,
 }: FilterBarProps) {
   const onSearch = (value: string) => {
     console.log("search:", value);
@@ -30,10 +28,10 @@ export default function FilterBar({
     return { label: x, value: x };
   });
 
-  console.log(actorNames)
+  console.log(actorNames);
 
   const taActorAndOtherNames: ActorNames[] = actorNames.sort().map((x) => {
-    const otherNames = x.otherNames?.replace(/\s?\(.*?\)/g, " ") ?? ""
+    const otherNames = x.otherNames?.replace(/\s?\(.*?\)/g, " ") ?? "";
     return { mainName: x.mainName, otherNames: otherNames };
   });
 
