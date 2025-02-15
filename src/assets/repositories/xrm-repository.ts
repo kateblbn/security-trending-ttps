@@ -1,4 +1,15 @@
-import { BaselineTechnique, IsoControl, IsoControlApiModel, mapNestedKeys, MaturityModelControlApiModel, MitreTactic, MitreTechnique, NistControl, NistControlApiModel, TrendingTechnique } from "../components/Data";
+import {
+  BaselineTechnique,
+  IsoControl,
+  IsoControlApiModel,
+  mapNestedKeys,
+  MaturityModelControlApiModel,
+  MitreTactic,
+  MitreTechnique,
+  NistControl,
+  NistControlApiModel,
+  TrendingTechnique,
+} from "../components/Data";
 import { IRepository } from "./repository-interface";
 
 export class XrmRepository implements IRepository {
@@ -8,8 +19,9 @@ export class XrmRepository implements IRepository {
     this.webApi = xrm.WebApi;
   }
 
-  async getMaturityModelControls(mitreGuid: string): Promise<MaturityModelControlApiModel[]> {
-
+  async getMaturityModelControls(
+    mitreGuid: string
+  ): Promise<MaturityModelControlApiModel[]> {
     const fetchXml = `
       <fetch>
         <entity name='esa_nisttomitre'>
@@ -33,16 +45,15 @@ export class XrmRepository implements IRepository {
           </link-entity>
           </entity>
       </fetch>
-    `
+    `;
     const res = await this.webApi.retrieveMultipleRecords(
       "esa_nisttomitre",
       `?fetchXml=${encodeURIComponent(fetchXml)}`
-    )
+    );
 
-    return res.entities.map(x => mapNestedKeys(x))
+    return res.entities.map((x) => mapNestedKeys(x));
   }
   async getIsoControls(mitreGuid: string): Promise<IsoControlApiModel[]> {
-
     const fetchXml = `
       <fetch>
         <entity name='esa_nisttomitre'>
@@ -61,17 +72,16 @@ export class XrmRepository implements IRepository {
           </link-entity>
           </entity>
       </fetch>
-    `
+    `;
     const res = await this.webApi.retrieveMultipleRecords(
       "esa_nisttomitre",
       `?fetchXml=${encodeURIComponent(fetchXml)}`
-    )
+    );
 
-    return res.entities.map(x => mapNestedKeys(x))
+    return res.entities.map((x) => mapNestedKeys(x));
   }
 
   async getNistControls(mitreGuid: string): Promise<NistControlApiModel[]> {
-
     const fetchXml = `
       <fetch>
       <entity name='esa_nisttomitre'>
@@ -85,22 +95,26 @@ export class XrmRepository implements IRepository {
           </link-entity>
         </entity>
       </fetch>
-    `
+    `;
     const res = await this.webApi.retrieveMultipleRecords(
       "esa_nisttomitre",
       `?fetchXml=${encodeURIComponent(fetchXml)}`
-    )
+    );
 
-    return res.entities.map(x => mapNestedKeys(x))
+    return res.entities.map((x) => mapNestedKeys(x));
   }
 
   async getMitreTechnique(guid: string): Promise<MitreTechnique> {
-    const options = "?$select=esa_mitreid, esa_name, esa_description, esa_deprecated, esa_url, esa_datasources, esa_tactics, esa_platforms"
+    const options =
+      "?$select=esa_mitreid, esa_name, esa_description, esa_deprecated, esa_url, esa_datasources, esa_tactics, esa_platforms";
 
-    const res = await this.webApi.retrieveRecord("esa_mitreenterprise", guid, options)
+    const res = await this.webApi.retrieveRecord(
+      "esa_mitreenterprise",
+      guid,
+      options
+    );
 
-    return mapNestedKeys(res)
-
+    return mapNestedKeys(res);
   }
   async getTactics(): Promise<MitreTactic[]> {
     const fetchXml: string = `
@@ -197,7 +211,7 @@ export class XrmRepository implements IRepository {
         "esa_dynamicthreatactorttps",
         `?fetchXml=${encodeURIComponent(fetchXml)}`
       );
-    return res.entities.map(x => mapNestedKeys(x, ["esa_eventdate"]))
+    return res.entities.map((x) => mapNestedKeys(x, ["esa_eventdate"]));
   }
 }
 
