@@ -105,7 +105,7 @@ export default function TrendingModal({
     return acc;
   }, []);
 
-  uniqueIsoControls.sort(
+  uniqueIsoControls?.sort(
     (a, b) => getISOChapter(a.esa_controlid) - getISOChapter(b.esa_controlid)
   );
 
@@ -120,7 +120,7 @@ export default function TrendingModal({
     []
   );
 
-  uniqueMmControls.sort(
+  uniqueMmControls?.sort(
     (a, b) => getMMChapter(a.esa_controlid) - getMMChapter(b.esa_controlid)
   );
 
