@@ -19,6 +19,7 @@ import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import MonthRangeSlider, {
   MonthRange,
 } from "./assets/components/MonthRangeSlider";
+import BaselineModal from "./assets/components/popup/BaselineModal";
 
 function App() {
   const [tactics, setTactics] = useState<MitreTactic[]>();
@@ -148,6 +149,15 @@ function App() {
   let modal = null;
   if (selectedMitreId) {
     if (isBaselineView) {
+      modal = (
+        <BaselineModal
+          repository={repo}
+          occurences={filteredTechniques.filter(
+            (x) => x.technique.esa_mitreid === selectedMitreId
+          )}
+          onClose={() => setSelectedMitreId(null)}
+        />
+      );
     } else {
       modal = (
         <TrendingModal

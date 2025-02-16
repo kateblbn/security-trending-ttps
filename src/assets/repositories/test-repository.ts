@@ -3722,7 +3722,7 @@ const dataOfTechniquesTrending = [
     "technique.esa_name": "Valid Accounts",
     "technique.esa_issubtechnique": false,
     "taGroup.category.esa_name": "Nation-State (Others)",
-    "technique.esa_deprecated": false,
+    "technique.esa_deprecated": true,
   },
   {
     "@odata.etag": 'W/"12517625"',

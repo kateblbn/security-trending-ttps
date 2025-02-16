@@ -1,10 +1,10 @@
 import { Collapse, Modal, Table } from "antd";
 import {
+  BaselineTechnique,
   IsoControl,
   MaturityModelControl,
   MitreTechnique,
   NistControl,
-  TrendingTechnique,
 } from "../Data";
 import "./modal.css";
 import { useEffect, useState } from "react";
@@ -14,7 +14,6 @@ import {
   faChevronDown,
   faChevronUp,
   faInfoCircle,
-  faShield,
   faShieldAlt,
   faUserSecret,
 } from "@fortawesome/free-solid-svg-icons";
@@ -22,9 +21,9 @@ import Markdown from "marked-react";
 import { IRepository } from "../../repositories/repository-interface";
 import { getISOChapter, getMMChapter, getNistSubChapter } from "./helpers";
 
-type TrendingModalProps = {
+type BaselineModalProps = {
   repository: IRepository;
-  occurences: TrendingTechnique[];
+  occurences: BaselineTechnique[];
   onClose: () => void;
 };
 
@@ -32,7 +31,7 @@ export default function TrendingModal({
   repository,
   occurences,
   onClose,
-}: TrendingModalProps) {
+}: BaselineModalProps) {
   const [open, setOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [technique, setTechnique] = useState<MitreTechnique | undefined>();
@@ -85,9 +84,6 @@ export default function TrendingModal({
 
   if (!firstOccurance) return;
 
-  occurences.sort(
-    (a, b) => b.esa_eventdate.getTime() - a.esa_eventdate.getTime()
-  );
   nistControls?.sort((a, b) => {
     const aNistChapter = a.esa_controlid.substring(0, 2);
     const bNistChapter = b.esa_controlid.substring(0, 2);
@@ -172,67 +168,6 @@ export default function TrendingModal({
               </>
             ),
             children: <Markdown>{technique?.esa_description}</Markdown>,
-          },
-          {
-            key: "events",
-            label: (
-              <>
-                <FontAwesomeIcon icon={faCalendarAlt} /> Events{" "}
-                <span>({occurences.length})</span>
-              </>
-            ),
-            children: (
-              <table className="events">
-                <thead>
-                  <tr>
-                    <th>Actor</th>
-                    <th>Summary</th>
-                    <th>Event Date</th>
-                    <th>Source</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {occurences.map((x, index) => (
-                    <tr key={index}>
-                      <td>{x.taGroup.esa_name}</td>
-                      <td
-                        data-id={index}
-                        className={`collapsibleCell ${
-                          expandedSummaryId === index ? "expandedCell" : ""
-                        }`}
-                      >
-                        <div className={"collapsibleCellContent"}>
-                          <Markdown>{x.esa_articlesummary}</Markdown>
-                        </div>
-                        <button
-                          className="toggle"
-                          onClick={() => toggleSummaryExpand(index)}
-                        >
-                          <FontAwesomeIcon
-                            icon={
-                              expandedSummaryId === index
-                                ? faChevronUp
-                                : faChevronDown
-                            }
-                          />
-                        </button>
-                      </td>
-                      <td className="date">
-                        {x.esa_eventdate.toLocaleDateString("en-GB", {
-                          year: "numeric",
-                          month: "short",
-                        })}
-                      </td>
-                      <td>
-                        <a href={x.esa_articlelink} target="_blank">
-                          {x.esa_articletitle}
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ),
           },
           {
             key: "actors",
