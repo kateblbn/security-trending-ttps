@@ -1,0 +1,9 @@
+.slider-container{
+    margin: 0 3rem;
+    width: 100%;
+
+    .labels{
+        display: flex;
+        justify-content: space-between;
+    }
+}

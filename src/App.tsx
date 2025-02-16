@@ -16,6 +16,9 @@ import { ActorNames } from "./assets/components/FilterBar";
 import TrendingModal from "./assets/components/popup/TrendingModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import MonthRangeSlider, {
+  MonthRange,
+} from "./assets/components/MonthRangeSlider";
 
 function App() {
   const [tactics, setTactics] = useState<MitreTactic[]>();
@@ -28,7 +31,7 @@ function App() {
   const [selectedActors, setSelectedActors] = useState<string[]>([]);
   const [isBaselineView, setIsBaselineView] = useState(false);
   const [selectedMitreId, setSelectedMitreId] = useState<string | undefined>();
-  console.log(trendingTechniques);
+  const [monthRange, setMonthRange] = useState<MonthRange>();
 
   const repo = import.meta.env.DEV
     ? new TestRepository()
@@ -41,8 +44,9 @@ function App() {
     repo.getMainMitreTechniques().then((x) => setMainTechniques(x));
   }, []);
 
-  function onToggleChange(x: boolean) {
-    setIsBaselineView(x);
+  function onToggleChange(isBaseline: boolean) {
+    if (isBaseline) setMonthRange(undefined);
+    setIsBaselineView(isBaseline);
   }
 
   if (
@@ -53,9 +57,21 @@ function App() {
   ) {
     return "Loading..";
   }
-  let techniques = isBaselineView ? baselineTechniques : trendingTechniques;
+
+  const trendingTechniquesFilteredByMonthRange = monthRange
+    ? trendingTechniques.filter(
+        (x) =>
+          x.esa_eventdate >= monthRange.minDate &&
+          x.esa_eventdate <= monthRange.maxDate
+      )
+    : trendingTechniques;
+
+  let techniques = isBaselineView
+    ? baselineTechniques
+    : trendingTechniquesFilteredByMonthRange;
 
   let filteredTechniques = techniques;
+
   // filter by category
   if (selectedCategories.length !== 0) {
     filteredTechniques = filteredTechniques.filter((x) =>
@@ -176,6 +192,12 @@ function App() {
           onCategoryChange={setTaCategoryValue}
           onActorMainNameChange={setSelectedActors}
         />
+        {!isBaselineView && (
+          <MonthRangeSlider
+            data={trendingTechniques.map((x) => x.esa_eventdate)}
+            onChange={setMonthRange}
+          />
+        )}
       </div>
       <TechniquesMatrix
         tactics={tactics}

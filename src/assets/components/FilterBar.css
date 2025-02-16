@@ -12,7 +12,6 @@
 .ant-form {
   display: flex;
   flex-direction: row !important;
-  width: 900px;
 }
 .ant-form-item {
   width: 575px;
@@ -25,8 +24,6 @@
 max-height: 150px;
 
  }
-.ant-switch {
-}
 .clear-icon {
   width: 15px;
   height: 15px;
