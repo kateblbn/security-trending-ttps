@@ -1,6 +1,11 @@
 #root {
   /* position: relative; */
   /* margin: 50px auto auto auto; */
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .filters-flex {
@@ -9,7 +14,7 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
-  height: 100px;
+  height: 10rem;
   background-color: rgb(223, 223, 223);
 }
 
@@ -18,4 +23,11 @@
   justify-content: end;
   align-items: center;
   gap: 0.5rem;
+}
+
+
+@media (min-width: 3000px) {
+  #root{
+    width: 3000px;
+  }
 }

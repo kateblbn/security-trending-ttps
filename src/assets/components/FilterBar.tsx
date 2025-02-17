@@ -68,6 +68,7 @@ export default function FilterBar({
                 onChange={onCategoryChange}
                 onSearch={onSearch}
                 options={taCategoryValues}
+                maxTagCount={"responsive"}
               />
             </div>
             <div className="dropdown">
@@ -75,6 +76,7 @@ export default function FilterBar({
                 mode="tags"
                 allowClear
                 virtual={false}
+                maxTagCount={"responsive"}
                 placeholder="Threat Actor Name"
                 onChange={onActorMainNameChange}
                 onSearch={onSearch}
