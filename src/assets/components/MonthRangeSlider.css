@@ -1,9 +1,14 @@
 .slider-container{
     margin: 0 3rem;
     width: 100%;
+    max-width: 80rem;
 
     .labels{
         display: flex;
         justify-content: space-between;
+
+        h6{
+            margin: 0;
+        }
     }
 }

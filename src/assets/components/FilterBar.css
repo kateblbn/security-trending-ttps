@@ -10,7 +10,7 @@
   overflow-y: auto;
 }
 .ant-form-item {
-  width: 575px;
+  width: 40rem;
 
 }
 
@@ -23,7 +23,7 @@
 }
 
 .other-name {
-  font-size: 10px;
+  font-size: 0.7rem;
   color: grey;
   width: 100%;
   white-space: pre-line;

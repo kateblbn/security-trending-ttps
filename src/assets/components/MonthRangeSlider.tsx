@@ -63,18 +63,18 @@ export default function MonthRangeSlider({
     <ConfigProvider theme={sliderTheme}>
       <div className="slider-container">
         <div className="labels">
-          <div>
+          <h6>
             {currentMinDate.toLocaleDateString("en-GB", {
               year: "2-digit",
               month: "short",
             })}
-          </div>
-          <div>
+          </h6>
+          <h6>
             {currentMaxDate.toLocaleDateString("en-GB", {
               year: "2-digit",
               month: "short",
             })}
-          </div>
+          </h6>
         </div>
         <Slider
           range

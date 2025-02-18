@@ -79,16 +79,3 @@
   width: 90%;
   border: 1px solid #2D28CD;
 }
-
-@media (max-width: 1200px) {
-  .mapping-list {
-    height: 65px;
-    /* width: 65px; */
-  }
-}
-
-@media (min-width: 1200px) {
-  .header-techniques-wrapper {
-    flex-grow: 1;
-  }
-}
