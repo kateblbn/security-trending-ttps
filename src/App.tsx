@@ -30,7 +30,7 @@ function App() {
   const [mainTechniques, setMainTechniques] = useState<MitreMainTechnique[]>();
   const [selectedCategories, setTaCategoryValue] = useState<string[]>([]); //value from NS = tacticKeys. fe command-and-control
   const [selectedActors, setSelectedActors] = useState<string[]>([]);
-  const [isBaselineView, setIsBaselineView] = useState(false);
+  const [isTrendingView, setIsTrendingView] = useState(true);
   const [selectedMitreId, setSelectedMitreId] = useState<string | undefined>();
   const [monthRange, setMonthRange] = useState<MonthRange>();
 
@@ -45,9 +45,9 @@ function App() {
     repo.getMainMitreTechniques().then((x) => setMainTechniques(x));
   }, []);
 
-  function onToggleChange(isBaseline: boolean) {
-    if (isBaseline) setMonthRange(undefined);
-    setIsBaselineView(isBaseline);
+  function onToggleChange(isTrending: boolean) {
+    if (!isTrending) setMonthRange(undefined);
+    setIsTrendingView(isTrending);
   }
 
   if (
@@ -67,9 +67,9 @@ function App() {
       )
     : trendingTechniques;
 
-  let techniques = isBaselineView
-    ? baselineTechniques
-    : trendingTechniquesFilteredByMonthRange;
+  let techniques = isTrendingView
+    ? trendingTechniquesFilteredByMonthRange
+    : baselineTechniques;
 
   let filteredTechniques = techniques;
 
@@ -148,11 +148,11 @@ function App() {
 
   let modal = null;
   if (selectedMitreId) {
-    if (isBaselineView) {
+    if (isTrendingView) {
       modal = (
-        <BaselineModal
+        <TrendingModal
           repository={repo}
-          occurences={filteredTechniques.filter(
+          occurences={(filteredTechniques as TrendingTechnique[]).filter(
             (x) => x.technique.esa_mitreid === selectedMitreId
           )}
           onClose={() => setSelectedMitreId(null)}
@@ -160,9 +160,9 @@ function App() {
       );
     } else {
       modal = (
-        <TrendingModal
+        <BaselineModal
           repository={repo}
-          occurences={(filteredTechniques as TrendingTechnique[]).filter(
+          occurences={filteredTechniques.filter(
             (x) => x.technique.esa_mitreid === selectedMitreId
           )}
           onClose={() => setSelectedMitreId(null)}
@@ -176,21 +176,20 @@ function App() {
       theme={{
         components: {
           Switch: {
-            // colorPrimary:"#00C8FF",
+            handleBg: "#00C8FF ",
           },
         },
       }}
     >
-      <Header title={isBaselineView ? "Baseline TTPs" : "Trending TTPs"}>
+      <Header title={isTrendingView ? "Trending TTPs" : "Baseline TTPs"}>
         <div className="switch-group">
-          <Tooltip title={trendingTooltip}>
-            {" "}
+          <Tooltip title={baselineTooltip}>
             <FontAwesomeIcon icon={faCircleInfo} />
           </Tooltip>
-          <h4>Trending</h4>
-          <Switch onChange={onToggleChange} />
           <h4>Baseline</h4>
-          <Tooltip title={baselineTooltip}>
+          <Switch onChange={onToggleChange} value={isTrendingView} />
+          <h4>Trending</h4>
+          <Tooltip title={trendingTooltip}>
             <FontAwesomeIcon icon={faCircleInfo} />
           </Tooltip>
         </div>
@@ -202,7 +201,7 @@ function App() {
           onCategoryChange={setTaCategoryValue}
           onActorMainNameChange={setSelectedActors}
         />
-        {!isBaselineView && (
+        {isTrendingView && (
           <MonthRangeSlider
             data={trendingTechniques.map((x) => x.esa_eventdate)}
             onChange={setMonthRange}

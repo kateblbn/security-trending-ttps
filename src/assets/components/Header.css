@@ -3,9 +3,8 @@
       width: 100%;
       display: flex;
       justify-content: space-between;
-      color: #fff;
       height: 100px;
-      background-color: #00108A;
+      background-color: #000F3C ;
       box-sizing: border-box;
       padding: 2% 5%;
       /* clip-path: polygon(30% 0%, 70% 0%, 100% 0, 100% 50%, 95% 100%, 5% 100%, 0 50%, 0 0); */
