@@ -5,21 +5,19 @@ import {
   MitreMainTechnique,
   MitreTactic,
   TrendingTechnique,
-} from "./assets/components/Data";
-import { XrmRepository } from "./assets/repositories/xrm-repository";
-import { TechniquesMatrix } from "./assets/components/TechniquesMatrix";
-import { TestRepository } from "./assets/repositories/test-repository";
+} from "./components/Data";
+import { XrmRepository } from "./repositories/xrm-repository";
+import { TechniquesMatrix } from "./components/TechniquesMatrix";
+import { TestRepository } from "./repositories/test-repository";
 import { Button, ConfigProvider, Flex, Switch, Tooltip } from "antd";
-import FilterBar from "./assets/components/FilterBar";
-import Header from "./assets/components/Header";
-import { ActorNames } from "./assets/components/FilterBar";
-import TrendingModal from "./assets/components/popup/TrendingModal";
+import FilterBar from "./components/FilterBar";
+import Header from "./components/Header";
+import { ActorNames } from "./components/FilterBar";
+import TrendingModal from "./components/popup/TrendingModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
-import MonthRangeSlider, {
-  MonthRange,
-} from "./assets/components/MonthRangeSlider";
-import BaselineModal from "./assets/components/popup/BaselineModal";
+import MonthRangeSlider, { MonthRange } from "./components/MonthRangeSlider";
+import BaselineModal from "./components/popup/BaselineModal";
 
 function App() {
   const [tactics, setTactics] = useState<MitreTactic[]>();
