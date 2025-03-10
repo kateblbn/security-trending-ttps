@@ -14,8 +14,8 @@ import FilterBar from "./assets/components/FilterBar";
 import Header from "./assets/components/Header";
 import { ActorNames } from "./assets/components/FilterBar";
 import TrendingModal from "./assets/components/popup/TrendingModal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import MonthRangeSlider, {
   MonthRange,
 } from "./assets/components/MonthRangeSlider";
@@ -127,6 +127,9 @@ function App() {
       const existingActor = acc.find(
         (item) => item.mainName === current.taGroup.esa_name
       );
+console.log(selectedCategories);
+console.log(current.taGroup);
+
 
       // if we already added this actor, we don't want to add it again
       if (existingActor) return acc;
@@ -184,13 +187,13 @@ function App() {
       <Header title={isTrendingView ? "Trending TTPs" : "Baseline TTPs"}>
         <div className="switch-group">
           <Tooltip title={baselineTooltip}>
-            <FontAwesomeIcon icon={faCircleInfo} />
+            {/* <FontAwesomeIcon icon={faCircleInfo} /> */}
           </Tooltip>
           <h4>Baseline</h4>
           <Switch onChange={onToggleChange} value={isTrendingView} />
           <h4>Trending</h4>
           <Tooltip title={trendingTooltip}>
-            <FontAwesomeIcon icon={faCircleInfo} />
+            {/* <FontAwesomeIcon icon={faCircleInfo} /> */}
           </Tooltip>
         </div>
       </Header>

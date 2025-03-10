@@ -8,16 +8,16 @@ import {
 } from "../Data";
 import "./modal.css";
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCalendarAlt,
-  faChevronDown,
-  faChevronUp,
-  faInfoCircle,
-  faShieldAlt,
-  faUserSecret,
-} from "@fortawesome/free-solid-svg-icons";
-import Markdown from "marked-react";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import {
+//   faCalendarAlt,
+//   faChevronDown,
+//   faChevronUp,
+//   faInfoCircle,
+//   faShieldAlt,
+//   faUserSecret,
+// } from "@fortawesome/free-solid-svg-icons";
+// import Markdown from "marked-react";
 import { IRepository } from "../../repositories/repository-interface";
 import { getISOChapter, getMMChapter, getNistSubChapter } from "./helpers";
 
@@ -164,16 +164,16 @@ export default function TrendingModal({
             key: "description",
             label: (
               <>
-                <FontAwesomeIcon icon={faInfoCircle} /> Description
+                {/* <FontAwesomeIcon icon={faInfoCircle} /> Description */}
               </>
             ),
-            children: <Markdown>{technique?.esa_description}</Markdown>,
+            // children: <Markdown>{technique?.esa_description}</Markdown>,
           },
           {
             key: "actors",
             label: (
               <>
-                <FontAwesomeIcon icon={faUserSecret} /> Threat Actors{" "}
+                {/* <FontAwesomeIcon icon={faUserSecret} /> Threat Actors{" "} */}
                 <span>({uniqueActors.length})</span>
               </>
             ),
@@ -207,7 +207,7 @@ export default function TrendingModal({
             key: "controls",
             label: (
               <>
-                <FontAwesomeIcon icon={faShieldAlt} /> Controls
+                {/* <FontAwesomeIcon icon={faShieldAlt} /> Controls */}
               </>
             ),
             children: (

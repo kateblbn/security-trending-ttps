@@ -24,7 +24,7 @@ export function getISOChapter(isoControlId:string) : number{
     if (isoControlId == null || isoControlId.length == 0) return 0
     const chapterStartIndex = isoControlId[0] === 'A' ? 1 : 0
     const dotIndex = isoControlId.indexOf(".")
-    const chapter = Number.parseInt(isoControlId.substring(chapterStartIndex, dotIndex));
+    const chapter = Number.parseInt(isoControlId.substring(chapterStartIndex, dotIndex));    
     if (Number.isNaN(chapter)) return 0
     const subChap = Number.parseInt(isoControlId.substring(dotIndex+1, isoControlId.indexOf(" ")))
     if (Number.isNaN(subChap)) return chapter

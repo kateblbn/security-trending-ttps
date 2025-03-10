@@ -8,17 +8,17 @@ import {
 } from "../Data";
 import "./modal.css";
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCalendarAlt,
-  faChevronDown,
-  faChevronUp,
-  faInfoCircle,
-  faShield,
-  faShieldAlt,
-  faUserSecret,
-} from "@fortawesome/free-solid-svg-icons";
-import Markdown from "marked-react";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import {
+//   faCalendarAlt,
+//   faChevronDown,
+//   faChevronUp,
+//   faInfoCircle,
+//   faShield,
+//   faShieldAlt,
+//   faUserSecret,
+// } from "@fortawesome/free-solid-svg-icons";
+// import Markdown from "marked-react";
 import { IRepository } from "../../repositories/repository-interface";
 import { getISOChapter, getMMChapter, getNistSubChapter } from "./helpers";
 
@@ -42,6 +42,7 @@ export default function TrendingModal({
     MaturityModelControl[] | undefined
   >();
   const [expandedSummaryId, setExpandedSummaryId] = useState<number>(null);
+  console.log(occurences);
 
   useEffect(() => {
     if (occurences.length === 0) setOpen(false);
@@ -66,7 +67,7 @@ export default function TrendingModal({
       ]);
       setTechnique(techniqueResponse);
       setNistControls(nistControlsResponse.map((x) => x.nistControl));
-      setIsoControls(isoControlsResponse.map((x) => x.isoControl));
+      setIsoControls(isoControlsResponse.map((x) => x .isoControl));
       setMmControls(mmControlsResponse.map((x) => x.mmControl));
       setIsLoading(false);
     }
@@ -161,6 +162,7 @@ export default function TrendingModal({
       onCancel={handleClose}
       loading={isLoading}
     >
+
       <Collapse
         size="large"
         items={[
