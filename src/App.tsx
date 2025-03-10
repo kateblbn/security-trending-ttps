@@ -9,7 +9,7 @@ import {
 import { XrmRepository } from "./repositories/xrm-repository";
 import { TechniquesMatrix } from "./components/TechniquesMatrix";
 import { TestRepository } from "./repositories/test-repository";
-import { Button, ConfigProvider, Flex, Switch, Tooltip } from "antd";
+import { Button, ConfigProvider, Flex, Spin, Switch, Tooltip } from "antd";
 import FilterBar from "./components/FilterBar";
 import Header from "./components/Header";
 import { ActorNames } from "./components/FilterBar";
@@ -54,7 +54,7 @@ function App() {
     !baselineTechniques ||
     !mainTechniques
   ) {
-    return "Loading..";
+    return <Spin fullscreen />;
   }
 
   const trendingTechniquesFilteredByMonthRange = monthRange

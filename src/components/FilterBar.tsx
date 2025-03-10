@@ -25,7 +25,7 @@ export default function FilterBar({
 
   const taCategoryValues = categoryValues.sort().map((x) => {
     // console.log(x);
-    return { label: x, value: x };
+    return { label: <div className="main-name">{x}</div>, value: x };
   });
 
   console.log(actorNames);
