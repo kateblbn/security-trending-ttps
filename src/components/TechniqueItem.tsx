@@ -23,11 +23,9 @@ export const TechniqueItem = ({ id, name, count, onClick }: TechniqueItemProps) 
   return (
     <Tooltip title={
       <div className="tooltip-fs ">
-        <div className="subtechniques-id">{id}</div>
         <div className="subtechniques-name">{name}</div>
-        <span className={colors}>{count}</span>
       </div>
-    } color={color}>
+    } mouseEnterDelay={0.5} > 
 
       <div className="tecnique-wrapper" onClick={e => onClick(id)}>
         <div className="subtechniques-id">{id}</div>

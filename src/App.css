@@ -26,11 +26,12 @@
   align-items: center;
   gap: 0.5rem;
   color: white  ;
-  background-color: #00C8FF ;
   padding: 0.2rem 1rem;
   border-radius: 1rem;
 }
-
+.ant-switch  {
+  background-color: white !important;
+}
 
 @media (min-width: 3000px) {
   #root{

@@ -5,23 +5,6 @@ import {
   MitreMainTechnique,
   MitreTactic,
   TrendingTechnique,
-<<<<<<< HEAD
-} from "./assets/components/Data";
-import { XrmRepository } from "./assets/repositories/xrm-repository";
-import { TechniquesMatrix } from "./assets/components/TechniquesMatrix";
-import { TestRepository } from "./assets/repositories/test-repository";
-import { Button, ConfigProvider, Flex, Switch, Tooltip } from "antd";
-import FilterBar from "./assets/components/FilterBar";
-import Header from "./assets/components/Header";
-import { ActorNames } from "./assets/components/FilterBar";
-import TrendingModal from "./assets/components/popup/TrendingModal";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
-import MonthRangeSlider, {
-  MonthRange,
-} from "./assets/components/MonthRangeSlider";
-import BaselineModal from "./assets/components/popup/BaselineModal";
-=======
 } from "./components/Data";
 import { XrmRepository } from "./repositories/xrm-repository";
 import { TechniquesMatrix } from "./components/TechniquesMatrix";
@@ -35,7 +18,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import MonthRangeSlider, { MonthRange } from "./components/MonthRangeSlider";
 import BaselineModal from "./components/popup/BaselineModal";
->>>>>>> cfcb5ee57bd789c882ae360df980a710186c23b0
 
 function App() {
   const [tactics, setTactics] = useState<MitreTactic[]>();
@@ -203,13 +185,13 @@ console.log(current.taGroup);
       <Header title={isTrendingView ? "Trending TTPs" : "Baseline TTPs"}>
         <div className="switch-group">
           <Tooltip title={baselineTooltip}>
-            {/* <FontAwesomeIcon icon={faCircleInfo} /> */}
+            <FontAwesomeIcon icon={faCircleInfo} />
           </Tooltip>
           <h4>Baseline</h4>
           <Switch onChange={onToggleChange} value={isTrendingView} />
           <h4>Trending</h4>
           <Tooltip title={trendingTooltip}>
-            {/* <FontAwesomeIcon icon={faCircleInfo} /> */}
+            <FontAwesomeIcon icon={faCircleInfo} />
           </Tooltip>
         </div>
       </Header>
