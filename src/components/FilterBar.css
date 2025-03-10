@@ -8,6 +8,7 @@
 .dropdown {
   width: 50%;
   overflow-y: auto;
+  min-height: 2rem;
 }
 .ant-form-item {
   width: 40rem;
@@ -16,10 +17,17 @@
 
 .ant-select-selection-placeholder {
   color: black !important;
+
 }
+
+
 .clear-icon {
   width: 15px;
   height: 15px;
+}
+
+.main-name{
+  font-size: 1rem;
 }
 
 .other-name {

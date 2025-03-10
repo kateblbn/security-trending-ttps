@@ -5,6 +5,7 @@ import {
   MitreMainTechnique,
   MitreTactic,
   TrendingTechnique,
+<<<<<<< HEAD
 } from "./assets/components/Data";
 import { XrmRepository } from "./assets/repositories/xrm-repository";
 import { TechniquesMatrix } from "./assets/components/TechniquesMatrix";
@@ -20,6 +21,21 @@ import MonthRangeSlider, {
   MonthRange,
 } from "./assets/components/MonthRangeSlider";
 import BaselineModal from "./assets/components/popup/BaselineModal";
+=======
+} from "./components/Data";
+import { XrmRepository } from "./repositories/xrm-repository";
+import { TechniquesMatrix } from "./components/TechniquesMatrix";
+import { TestRepository } from "./repositories/test-repository";
+import { Button, ConfigProvider, Flex, Spin, Switch, Tooltip } from "antd";
+import FilterBar from "./components/FilterBar";
+import Header from "./components/Header";
+import { ActorNames } from "./components/FilterBar";
+import TrendingModal from "./components/popup/TrendingModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import MonthRangeSlider, { MonthRange } from "./components/MonthRangeSlider";
+import BaselineModal from "./components/popup/BaselineModal";
+>>>>>>> cfcb5ee57bd789c882ae360df980a710186c23b0
 
 function App() {
   const [tactics, setTactics] = useState<MitreTactic[]>();
@@ -56,7 +72,7 @@ function App() {
     !baselineTechniques ||
     !mainTechniques
   ) {
-    return "Loading..";
+    return <Spin fullscreen />;
   }
 
   const trendingTechniquesFilteredByMonthRange = monthRange
