@@ -32,7 +32,7 @@ export default function MonthRangeSlider({
   )
     .map((key) => {
       const [year, month] = key.split("-").map(Number);
-      return new Date(year, month, 1);
+      return new Date(year, month);
     })
     .sort((a, b) => a.getTime() - b.getTime());
 
@@ -49,12 +49,13 @@ export default function MonthRangeSlider({
   const currentMinDate = monthDates[currentMinIndex];
   const currentMaxDate = new Date(
     monthDates[currentMaxIndex].getFullYear(),
-    monthDates[currentMaxIndex].getMonth(),
+    monthDates[currentMaxIndex].getMonth() + 1,
     0
   );
 
   function handleChange([min, max]: number[]) {
     const maxDate = new Date(monthDates[max]);
+    maxDate.setMonth(maxDate.getMonth() + 1); // sets to last day of month
     maxDate.setDate(0); // sets to last day of month
     onChange({ minDate: monthDates[min], maxDate: maxDate });
   }
@@ -66,13 +67,13 @@ export default function MonthRangeSlider({
         <div className="labels">
           <h6>
             {currentMinDate.toLocaleDateString("en-GB", {
-              year: "2-digit",
+              year: "numeric",
               month: "short",
             })}
           </h6>
           <h6>
             {currentMaxDate.toLocaleDateString("en-GB", {
-              year: "2-digit",
+              year: "numeric",
               month: "short",
             })}
           </h6>
