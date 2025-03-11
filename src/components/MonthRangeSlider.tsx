@@ -62,6 +62,7 @@ export default function MonthRangeSlider({
   return (
     <ConfigProvider theme={sliderTheme}>
       <div className="slider-container">
+        <div className="subtechniques-name period">Period</div>
         <div className="labels">
           <h6>
             {currentMinDate.toLocaleDateString("en-GB", {

@@ -4,11 +4,10 @@
       display: flex;
       justify-content: space-between;
       height: 100px;
-      background-color: #00108a ;
+      background-color:  #00108a; 
+
       box-sizing: border-box;
       padding: 2% 5%;
-      /* clip-path: polygon(30% 0%, 70% 0%, 100% 0, 100% 50%, 95% 100%, 5% 100%, 0 50%, 0 0); */
-
 
       #telenorLogo {
         width: 4rem;

@@ -11,4 +11,9 @@
             margin: 0;
         }
     }
+    .period {
+        font-weight: bold;
+        font-size:  1vw;
+        color: #213547;
+    }
 }

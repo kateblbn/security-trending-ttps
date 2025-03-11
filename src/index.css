@@ -8,6 +8,7 @@ body {
   padding: 0;
 }
 :root {
+  /* font-family: 'TelenorEvolutionUI-Normal'; */
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   /* font-size: 1vw; */
   /* line-height: 1.5; */
@@ -46,8 +47,6 @@ h6{
   font-size: 1.1rem;
   color: #535353;
 }
-
-
 
 @media (min-width: 2300px) {
   :root {

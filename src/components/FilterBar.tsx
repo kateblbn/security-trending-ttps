@@ -31,8 +31,8 @@ export default function FilterBar({
   console.log(actorNames);
 
   const taActorAndOtherNames: ActorNames[] = actorNames.sort().map((x) => {
-    const otherNames = x.otherNames?.replace(/\s?\(.*?\)/g, " ") ?? "";
-    return { mainName: x.mainName, otherNames: otherNames };
+    // const otherNames = ;
+    return { mainName: x.mainName, otherNames: x.otherNames?.replace(/\s?\(.*?\)/g, " ") ?? "" };
   });
 
   const actorOptions = taActorAndOtherNames.map((actor) => {

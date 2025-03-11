@@ -21,19 +21,22 @@ export const TechniqueItem = ({ id, name, count, onClick }: TechniqueItemProps) 
 
   const color = '#efdac7';
   return (
-    <Tooltip title={
+    <>
+      <div className="tecnique-wrapper" onClick={e => onClick(id)}>
+      <div className="subtechniques-id">{id}</div>
+      <Tooltip title={
       <div className="tooltip-fs ">
         <div className="subtechniques-name">{name}</div>
       </div>
     } mouseEnterDelay={0.5} > 
 
-      <div className="tecnique-wrapper" onClick={e => onClick(id)}>
-        <div className="subtechniques-id">{id}</div>
-        <div className="subtechniques-name">{name}</div>
-        <span className={colors}>{count}</span>
-      </div>
+    
+      <div className="subtechniques-name">{name}</div>
     </Tooltip>
-    // </Tooltip>
+
+      <span className={colors}>{count}</span>
+    </div>
+    </>
   );
 };
 
