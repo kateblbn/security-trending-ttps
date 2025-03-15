@@ -1,12 +1,14 @@
 {
   "name": "responsive-dashboard",
-  "proxy": "https://gsesa-dev.crm4.dynamics.com/WebResources/esa_/trending-ttps",
+  "homepage": "https://kateblbn.github.io/security-trending-ttps/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --port 5173 --host",
     "build": "tsc -b && vite build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -28,6 +30,7 @@
     "eslint": "^9.15.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.14",
+    "gh-pages": "^6.3.0",
     "globals": "^15.12.0",
     "gulp": "^5.0.0",
     "gulp-inject": "^5.0.5",
