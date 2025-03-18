@@ -23,8 +23,8 @@ import {
   getUniqueIsoControls,
   getUniqueMmControls,
 } from "./utils";
-import TrendingModalEventComponent from "./TrendingModalEventComponent";
-import TrendingModalControls from "./TrendingModalControls";
+import ModalEventComponent from "./ModalEventComponent";
+import ModalControls from "./ModalControls";
 
 type TrendingModalProps = {
   repository: IRepository;
@@ -106,6 +106,7 @@ export default function TrendingModal({
     firstOccurance.technique.esa_name;
 
   if (firstOccurance.technique.esa_deprecated) title += " (deprecated)";
+  console.log(technique);
 
   return (
     <Modal
@@ -145,7 +146,7 @@ export default function TrendingModal({
               </>
             ),
             children: (
-              <TrendingModalEventComponent
+              <ModalEventComponent
                 expandedSummaryId={expandedSummaryId}
                 occurences={occurences}
                 toggleSummaryExpand={toggleSummaryExpand}
@@ -194,7 +195,7 @@ export default function TrendingModal({
               </>
             ),
             children: (
-              <TrendingModalControls
+              <ModalControls
                 nist={nist}
                 uniqueIsoControls={uniqueIsoControls}
                 uniqueMmControls={uniqueMmControls}

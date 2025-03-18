@@ -2,17 +2,17 @@ import { Table } from "antd";
 import React from "react";
 import { IsoControl, MaturityModelControl, NistControl } from "../Data";
 
-type TrendingModalControls = {
+type ModalControlsProps = {
   nist: NistControl[];
   uniqueIsoControls: IsoControl[];
   uniqueMmControls: MaturityModelControl[];
 };
 
-export default function TrendingModalControls({
+export default function ModalControls({
   nist,
   uniqueIsoControls,
   uniqueMmControls,
-}) {
+}: ModalControlsProps) {
   return (
     <div className="controls">
       <Table

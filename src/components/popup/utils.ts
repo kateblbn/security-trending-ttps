@@ -1,4 +1,4 @@
-import { IsoControl, MaturityModelControl, NistControl, TrendingTechnique } from "../Data";
+import { BaselineTechnique, IsoControl, MaturityModelControl, NistControl, TrendingTechnique } from "../Data";
 import { getISOChapter, getMMChapter, getNistSubChapter } from "./helpers";
 
 export function getNistControls(nistControls: NistControl[]) {
@@ -56,4 +56,18 @@ export function getUniqueActorsAndOtherNames(occurences: TrendingTechnique[]) {
         return acc;
     }, []);
 }
+//Baseline
+export function getUniqueActorsAndOtherNamesByBaseline(occurences: BaselineTechnique[]) {
+    return occurences.reduce<
+        { mainName: string; otherNames: string; category: string; }[]
+    >((acc, current) => {
+        if (!acc.some((x) => x.mainName === current.taGroup.esa_name))
+            acc.push({
+                mainName: current.taGroup.esa_name,
+                otherNames: current.taGroup.esa_othernames,
+                category: current.taGroup.category.esa_name,
+            });
 
+        return acc;
+    }, []);
+}

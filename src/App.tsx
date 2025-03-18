@@ -66,6 +66,7 @@ function App() {
       )
     : trendingTechniques;
 
+    // let techniques = baselineTechniques
   let techniques = isTrendingView
     ? trendingTechniquesFilteredByMonthRange
     : baselineTechniques;
