@@ -9,13 +9,10 @@ import {
 import { XrmRepository } from "./repositories/xrm-repository";
 import { TechniquesMatrix } from "./components/TechniquesMatrix";
 import { TestRepository } from "./repositories/test-repository";
-import { Button, ConfigProvider, Flex, Spin, Switch, Tooltip } from "antd";
+import { ConfigProvider, Flex, Spin, Switch, Tooltip } from "antd";
 import FilterBar from "./components/FilterBar";
 import Header from "./components/Header";
-import { ActorNames } from "./components/FilterBar";
 import TrendingModal from "./components/popup/TrendingModal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import MonthRangeSlider, { MonthRange } from "./components/MonthRangeSlider";
 import BaselineModal from "./components/popup/BaselineModal";
 import {

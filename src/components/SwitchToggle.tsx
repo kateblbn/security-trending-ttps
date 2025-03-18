@@ -4,8 +4,8 @@ import { Switch, Tooltip } from "antd";
 import React from "react";
 import { MonthRange } from "./MonthRangeSlider";
 type SwitchToggleProps = {
-    setMonthRange: React.Dispatch<React.SetStateAction<MonthRange | undefined>>; //// !!!!!!!!!!!!!!!!!!!!!
-    setIsTrendingView: (value: boolean) => void; /////!!!!!!!!!!!!!!!!
+    setMonthRange: React.Dispatch<React.SetStateAction<MonthRange | undefined>>; 
+    setIsTrendingView: (value: boolean) => void;
     isTrendingView: boolean;
 }
 

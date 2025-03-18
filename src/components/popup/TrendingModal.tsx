@@ -11,16 +11,20 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarAlt,
-  faChevronDown,
-  faChevronUp,
   faInfoCircle,
-  faShield,
   faShieldAlt,
   faUserSecret,
 } from "@fortawesome/free-solid-svg-icons";
 import Markdown from "marked-react";
 import { IRepository } from "../../repositories/repository-interface";
-import { getISOChapter, getMMChapter, getNistSubChapter } from "./helpers";
+import {
+  getNistControls,
+  getUniqueActorsAndOtherNames,
+  getUniqueIsoControls,
+  getUniqueMmControls,
+} from "./utils";
+import TrendingModalEventComponent from "./TrendingModalEventComponent";
+import TrendingModalControls from "./TrendingModalControls";
 
 type TrendingModalProps = {
   repository: IRepository;
@@ -42,7 +46,6 @@ export default function TrendingModal({
     MaturityModelControl[] | undefined
   >();
   const [expandedSummaryId, setExpandedSummaryId] = useState<number>(null);
-  console.log(occurences);
 
   useEffect(() => {
     if (occurences.length === 0) setOpen(false);
@@ -89,54 +92,13 @@ export default function TrendingModal({
   occurences.sort(
     (a, b) => b.esa_eventdate.getTime() - a.esa_eventdate.getTime()
   );
-  nistControls?.sort((a, b) => {
-    const aNistChapter = a.esa_controlid.substring(0, 2);
-    const bNistChapter = b.esa_controlid.substring(0, 2);
-    if (aNistChapter.localeCompare(bNistChapter) === 0)
-      return (
-        getNistSubChapter(a.esa_controlid) - getNistSubChapter(b.esa_controlid)
-      );
-    else return aNistChapter.localeCompare(bNistChapter);
-  });
+  let nist = getNistControls(nistControls);
 
-  /// reduce to unique list and sort
-  const uniqueIsoControls = isoControls?.reduce<IsoControl[]>((acc, cur) => {
-    if (!acc.some((x) => x.esa_controlid === cur.esa_controlid)) acc.push(cur);
+  const uniqueIsoControls = getUniqueIsoControls(isoControls);
 
-    return acc;
-  }, []);
+  const uniqueMmControls = getUniqueMmControls(mmControls);
 
-  uniqueIsoControls?.sort(
-    (a, b) => getISOChapter(a.esa_controlid) - getISOChapter(b.esa_controlid)
-  );
-
-  /// reduce to unique list and sort
-  const uniqueMmControls = mmControls?.reduce<MaturityModelControl[]>(
-    (acc, cur) => {
-      if (!acc.some((x) => x.esa_controlid === cur.esa_controlid))
-        acc.push(cur);
-
-      return acc;
-    },
-    []
-  );
-
-  uniqueMmControls?.sort(
-    (a, b) => getMMChapter(a.esa_controlid) - getMMChapter(b.esa_controlid)
-  );
-
-  const uniqueActors = occurences.reduce<
-    { mainName: string; otherNames: string; category: string }[]
-  >((acc, current) => {
-    if (!acc.some((x) => x.mainName === current.taGroup.esa_name))
-      acc.push({
-        mainName: current.taGroup.esa_name,
-        otherNames: current.taGroup.esa_othernames,
-        category: current.taGroup.category.esa_name,
-      });
-
-    return acc;
-  }, []);
+  const uniqueActors = getUniqueActorsAndOtherNames(occurences);
 
   let title =
     firstOccurance.technique.esa_mitreid +
@@ -162,7 +124,6 @@ export default function TrendingModal({
       onCancel={handleClose}
       loading={isLoading}
     >
-
       <Collapse
         size="large"
         items={[
@@ -184,56 +145,11 @@ export default function TrendingModal({
               </>
             ),
             children: (
-              <table className="events">
-                <thead>
-                  <tr>
-                    <th>Actor</th>
-                    <th>Summary</th>
-                    <th>Event Date</th>
-                    <th>Source</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {occurences.map((x, index) => (
-                    <tr key={index}>
-                      <td>{x.taGroup.esa_name}</td>
-                      <td
-                        data-id={index}
-                        className={`collapsibleCell ${
-                          expandedSummaryId === index ? "expandedCell" : ""
-                        }`}
-                      >
-                        <div className={"collapsibleCellContent"}>
-                          <Markdown>{x.esa_articlesummary}</Markdown>
-                        </div>
-                        <button
-                          className="toggle"
-                          onClick={() => toggleSummaryExpand(index)}
-                        >
-                          <FontAwesomeIcon
-                            icon={
-                              expandedSummaryId === index
-                                ? faChevronUp
-                                : faChevronDown
-                            }
-                          />
-                        </button>
-                      </td>
-                      <td className="date">
-                        {x.esa_eventdate.toLocaleDateString("en-GB", {
-                          year: "numeric",
-                          month: "short",
-                        })}
-                      </td>
-                      <td>
-                        <a href={x.esa_articlelink} target="_blank">
-                          {x.esa_articletitle}
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <TrendingModalEventComponent
+                expandedSummaryId={expandedSummaryId}
+                occurences={occurences}
+                toggleSummaryExpand={toggleSummaryExpand}
+              />
             ),
           },
           {
@@ -278,65 +194,11 @@ export default function TrendingModal({
               </>
             ),
             children: (
-              <div className="controls">
-                <Table
-                  title={() => <h3>NIST 800-53</h3>}
-                  columns={[
-                    {
-                      title: "Control ID",
-                      key: "controlId",
-                      dataIndex: "esa_controlid",
-                    },
-                    {
-                      title: "Control name",
-                      key: "controlName",
-                      dataIndex: "esa_controlname",
-                    },
-                  ]}
-                  dataSource={nistControls?.map((x) => ({
-                    ...x,
-                    key: x.esa_controlid,
-                  }))}
-                />
-                <Table
-                  title={() => <h3>ISO 27001:2022</h3>}
-                  columns={[
-                    {
-                      title: "Control ID",
-                      key: "controlId",
-                      dataIndex: "esa_controlid",
-                    },
-                    {
-                      title: "Control name",
-                      key: "controlName",
-                      dataIndex: "esa_controlname",
-                    },
-                  ]}
-                  dataSource={uniqueIsoControls?.map((x) => ({
-                    ...x,
-                    key: x.esa_controlid,
-                  }))}
-                />
-                <Table
-                  title={() => <h3>Telenor Maturity Model</h3>}
-                  columns={[
-                    {
-                      title: "Control ID",
-                      key: "controlId",
-                      dataIndex: "esa_controlid",
-                    },
-                    {
-                      title: "Control name",
-                      key: "controlName",
-                      dataIndex: "esa_controlname",
-                    },
-                  ]}
-                  dataSource={uniqueMmControls?.map((x) => ({
-                    ...x,
-                    key: x.esa_controlid,
-                  }))}
-                />
-              </div>
+              <TrendingModalControls
+                nist={nist}
+                uniqueIsoControls={uniqueIsoControls}
+                uniqueMmControls={uniqueMmControls}
+              />
             ),
           },
         ]}

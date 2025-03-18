@@ -48,53 +48,56 @@ export function getParentTechniquesToSubtechniques(
   return filteredTechniques;
 }
 
-  /// 3. group filtered techniques by tactic
+/// 3. group filtered techniques by tactic
+export function getTacticsReducedWithTechniques(
+  filteredTechniques: BaselineTechnique[]
+) {
+  return filteredTechniques.reduce(
+    (acc: Map<string, BaselineTechnique[]>, currentTechnique) => {
+      const tactics = currentTechnique.technique.esa_tactics.split(", ");
 
-export function getTacticsReducedWithTechniques(filteredTechniques: BaselineTechnique[]) {
-    return filteredTechniques.reduce(
-        (acc: Map<string, BaselineTechnique[]>, currentTechnique) => {
-            const tactics = currentTechnique.technique.esa_tactics.split(", ");
+      for (let tactic of tactics) {
+        if (acc.has(tactic)) acc.get(tactic).push(currentTechnique);
+        else acc.set(tactic, [currentTechnique]);
+      }
+      return acc;
+    },
+    new Map<string, BaselineTechnique[]>()
+  );
+}
 
-            for (let tactic of tactics) {
-                if (acc.has(tactic)) acc.get(tactic).push(currentTechnique);
-                else acc.set(tactic, [currentTechnique]);
-            }
-            return acc;
-        },
-        new Map<string, BaselineTechnique[]>()
+export function getUniqueCategoriesByExistingActor(
+  techniques: BaselineTechnique[]
+) {
+  return techniques.reduce((acc: string[], current) => {
+    if (!acc.includes(current.taGroup.category.esa_name))
+      acc.push(current.taGroup.category.esa_name);
+    return acc;
+  }, []);
+}
+
+export function getUniqueActorMainNames(
+  techniques: BaselineTechnique[],
+  selectedCategories: string[]
+) {
+  return techniques.reduce<ActorNames[]>((acc, current) => {
+    const existingActor = acc.find(
+      (item) => item.mainName === current.taGroup.esa_name
     );
+
+    // if we already added this actor, we don't want to add it again
+    if (existingActor) return acc;
+
+    if (
+      selectedCategories.length === 0 ||
+      selectedCategories.includes(current.taGroup.category.esa_name)
+    ) {
+      acc.push({
+        mainName: current.taGroup.esa_name,
+        otherNames: current.taGroup.esa_othernames,
+      });
+    }
+
+    return acc;
+  }, []);
 }
-
- export  function getUniqueCategoriesByExistingActor(techniques: BaselineTechnique[]) {
-    return techniques.reduce((acc: string[], current) => {
-        if (!acc.includes(current.taGroup.category.esa_name))
-            acc.push(current.taGroup.category.esa_name);
-        return acc;
-    }, []);
-}
-
-
-export function getUniqueActorMainNames(techniques: BaselineTechnique[], selectedCategories: string[]) {
-    return techniques.reduce<ActorNames[]>(
-        (acc, current) => {
-            const existingActor = acc.find(
-                (item) => item.mainName === current.taGroup.esa_name
-            );
-
-            // if we already added this actor, we don't want to add it again
-            if (existingActor) return acc;
-
-            if (selectedCategories.length === 0 ||
-                selectedCategories.includes(current.taGroup.category.esa_name)) {
-                acc.push({
-                    mainName: current.taGroup.esa_name,
-                    otherNames: current.taGroup.esa_othernames,
-                });
-            }
-
-            return acc;
-        },
-        []
-    );
-}
-

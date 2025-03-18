@@ -164,16 +164,13 @@ export default function TrendingModal({
             key: "description",
             label: (
               <>
-                {/* <FontAwesomeIcon icon={faInfoCircle} /> Description */}
               </>
             ),
-            // children: <Markdown>{technique?.esa_description}</Markdown>,
           },
           {
             key: "actors",
             label: (
               <>
-                {/* <FontAwesomeIcon icon={faUserSecret} /> Threat Actors{" "} */}
                 <span>({uniqueActors.length})</span>
               </>
             ),

@@ -1,135 +1,132 @@
 .popup {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
- }
-
- .popup table{
-    display: table;
- }
- 
- .popup .column {
-    width: calc(33.33% - 2em);
-    float: left;
-    padding: 0 1em;
-    margin-bottom: 20px;
- }
-
- .popup .column table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
- }
- 
- .popup tr:nth-child(odd) {
-    background-color: #e8ebf3;
- }
- 
- .popup tr:nth-child(even) {
-    background-color: #f7f9fc;
- }
- 
- .popup .column td {
-    padding: 0.5em;
-    color: #444;
-    border-bottom: 1px solid #ddd;
- }
- 
- .popup .column .description {
-    overflow-wrap: break-word;
- }
- 
- .popup .events {
-    display: table;
-    border-collapse: collapse;
-    margin-top: 20px;
-    font-size: 14px;
-    color: #333;
-
-
-    .collapsibleCell {
-        .collapsibleCellContent {
-          height: 50px; /* Initial height for collapsed view */
-          overflow-y: hidden;
-          transition: height 0.3s ease;
-        }
-    
-        &.expandedCell .collapsibleCellContent {
-          height: auto; /* Expand the content */
-          opacity: 1;
-        }
-    
-        button.toggle {
-            background-color: transparent; /* No background */
-            border: none; /* No border */
-            color: #007bff; /* Blue color for the icon */
-            font-size: 1.2em; /* Slightly larger icon for better visibility */
-            cursor: pointer;
-            padding: 0; /* No padding for a seamless look */
-            margin-top: 10px; /* Space above the button */
-            display: inline-flex; /* Align icon center */
-            align-items: center;
-            transition: transform 0.3s ease; /* Smooth transition for rotating */
-        }
-      }
- }
- 
- .popup .events th,
- .popup .events td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
- }
-
- td.date {
-   white-space: nowrap;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
- .popup .events td ul{
-    list-style-type: circle; /* Ensure the bullets are shown */
-    padding-left: 20px;    /* Restore default padding for the bullets */
-    margin: 0 0 10px 0;    /* Optional: add margin for spacing between items */
- }
-
- .popup .events td li {
-    margin-bottom: 8px;    /* Add spacing between list items */
+.popup table {
+  display: table;
 }
- 
- .popup .events th {
-    background-color: #f5f7fa;
-    color: #555;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
- }
- 
- .popup .events tr:nth-child(even) {
-    background-color: #f9fafc;
- }
- 
- .popup .events tr:hover {
-    background-color: #f1f3f5;
- }
- 
- .popup .events td a {
-    color: #007bff;
-    text-decoration: none;
-    transition: color 0.2s ease;
- 
-    &:hover {
-        color: #0047bb;
-        text-decoration: underline;
+
+.popup .column {
+  width: calc(33.33% - 2em);
+  float: left;
+  padding: 0 1em;
+  margin-bottom: 20px;
+}
+
+.popup .column table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.popup tr:nth-child(odd) {
+  background-color: #e8ebf3;
+}
+
+.popup tr:nth-child(even) {
+  background-color: #f7f9fc;
+}
+
+.popup .column td {
+  padding: 0.5em;
+  color: #444;
+  border-bottom: 1px solid #ddd;
+}
+
+.popup .column .description {
+  overflow-wrap: break-word;
+}
+
+.popup .events {
+  display: table;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #333;
+
+  .collapsibleCell {
+    .collapsibleCellContent {
+      height: 50px;
+      overflow-y: hidden;
+      transition: height 0.3s ease;
     }
- }
- 
- .popup .events th:first-child,
- .popup .events td:first-child {
-    border-left: 3px solid #007bff;
-    padding-left: 18px;
- }
- 
- .popup .events th:last-child,
- .popup .events td:last-child {
-    border-right: 3px solid #007bff;
-    padding-right: 18px;
- }
+
+    &.expandedCell .collapsibleCellContent {
+      height: auto;
+      opacity: 1;
+    }
+
+    button.toggle {
+      background-color: transparent;
+      border: none;
+      color: #007bff;
+      font-size: 1.2em;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      transition: transform 0.3s ease;
+    }
+  }
+}
+
+.popup .events th,
+.popup .events td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+td.date {
+  white-space: nowrap;
+}
+
+.popup .events td ul {
+  list-style-type: circle;
+  padding-left: 20px;
+  margin: 0 0 10px 0;
+}
+
+.popup .events td li {
+  margin-bottom: 8px;
+}
+
+.popup .events th {
+  background-color: #f5f7fa;
+  color: #555;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.popup .events tr:nth-child(even) {
+  background-color: #f9fafc;
+}
+
+.popup .events tr:hover {
+  background-color: #f1f3f5;
+}
+
+.popup .events td a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #0047bb;
+    text-decoration: underline;
+  }
+}
+.popup .events th:first-child,
+.popup .events td:first-child {
+  border-left: 3px solid #007bff;
+  padding-left: 18px;
+}
+.popup .events th:last-child,
+.popup .events td:last-child {
+  border-right: 3px solid #007bff;
+  padding-right: 18px;
+}
