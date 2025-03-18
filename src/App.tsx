@@ -18,6 +18,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import MonthRangeSlider, { MonthRange } from "./components/MonthRangeSlider";
 import BaselineModal from "./components/popup/BaselineModal";
+import {
+  getFilteredTechniquesByActors,
+  getFilteredTechniquesByCategories,
+  getParentTechniquesToSubtechniques,
+  getTacticsReducedWithTechniques,
+  getUniqueActorMainNames,
+  getUniqueCategoriesByExistingActor,
+} from "./utils";
+import SwitchToggle from "./components/SwitchToggle";
 
 function App() {
   const [tactics, setTactics] = useState<MitreTactic[]>();
@@ -26,7 +35,7 @@ function App() {
   const [baselineTechniques, setBaselineTechniques] =
     useState<BaselineTechnique[]>();
   const [mainTechniques, setMainTechniques] = useState<MitreMainTechnique[]>();
-  const [selectedCategories, setTaCategoryValue] = useState<string[]>([]); //value from NS = tacticKeys. fe command-and-control
+  const [selectedCategories, setTaCategoryValue] = useState<string[]>([]);
   const [selectedActors, setSelectedActors] = useState<string[]>([]);
   const [isTrendingView, setIsTrendingView] = useState(true);
   const [selectedMitreId, setSelectedMitreId] = useState<string | undefined>();
@@ -42,11 +51,6 @@ function App() {
     repo.getBaselineTechniques().then((x) => setBaselineTechniques(x));
     repo.getMainMitreTechniques().then((x) => setMainTechniques(x));
   }, []);
-
-  function onToggleChange(isTrending: boolean) {
-    if (!isTrending) setMonthRange(undefined);
-    setIsTrendingView(isTrending);
-  }
 
   if (
     !tactics ||
@@ -71,81 +75,31 @@ function App() {
 
   let filteredTechniques = techniques;
 
-  // filter by category
-  if (selectedCategories.length !== 0) {
-    filteredTechniques = filteredTechniques.filter((x) =>
-      selectedCategories.includes(x.taGroup.category.esa_name)
-    );
-  }
-
-  // filter by actor name
-  if (selectedActors.length !== 0) {
-    filteredTechniques = filteredTechniques.filter((x) =>
-      selectedActors.some((actor) => actor === x.taGroup.esa_name)
-    );
-  }
-
-  // Add parent technique name to subtechniques
-  filteredTechniques = filteredTechniques.map((tech) => {
-    if (tech.technique.esa_issubtechnique) {
-      const parentId = tech.technique.esa_mitreid.substring(
-        0,
-        tech.technique.esa_mitreid.indexOf(".")
-      );
-      const parent = mainTechniques.find((x) => x.esa_mitreid === parentId);
-      const newName = `${parent.esa_name}: ${tech.technique.esa_name}`;
-      const techniqueWithNewName = { ...tech.technique, esa_name: newName };
-      return { ...tech, technique: techniqueWithNewName };
-    }
-    return tech;
-  });
-
-  /// 3. group filtered techniques by tactic
-  const tacticsWithTechniques = filteredTechniques.reduce(
-    (acc: Map<string, BaselineTechnique[]>, currentTechnique) => {
-      const tactics = currentTechnique.technique.esa_tactics.split(", ");
-
-      for (let tactic of tactics) {
-        if (acc.has(tactic)) acc.get(tactic).push(currentTechnique);
-        else acc.set(tactic, [currentTechnique]);
-      }
-      return acc;
-    },
-    new Map<string, BaselineTechnique[]>()
+  filteredTechniques = getFilteredTechniquesByActors(
+    selectedActors,
+    filteredTechniques
   );
 
-  const uniqueCategories = techniques.reduce((acc: string[], current) => {
-    if (!acc.includes(current.taGroup.category.esa_name))
-      acc.push(current.taGroup.category.esa_name);
-    return acc;
-  }, []);
-
-  const uniqueActorMainNames = techniques.reduce<ActorNames[]>(
-    (acc, current) => {
-      const existingActor = acc.find(
-        (item) => item.mainName === current.taGroup.esa_name
-      );
-console.log(selectedCategories);
-console.log(current.taGroup);
-
-
-      // if we already added this actor, we don't want to add it again
-      if (existingActor) return acc;
-
-      if (
-        selectedCategories.length === 0 ||
-        selectedCategories.includes(current.taGroup.category.esa_name)
-      ) {
-        acc.push({
-          mainName: current.taGroup.esa_name,
-          otherNames: current.taGroup.esa_othernames,
-        });
-      }
-
-      return acc;
-    },
-    []
+  filteredTechniques = getFilteredTechniquesByCategories(
+    selectedCategories,
+    filteredTechniques
   );
+
+  filteredTechniques = getParentTechniquesToSubtechniques(
+    filteredTechniques,
+    mainTechniques
+  );
+
+  const tacticsWithTechniques =
+    getTacticsReducedWithTechniques(filteredTechniques);
+
+  const uniqueCategories = getUniqueCategoriesByExistingActor(techniques);
+
+  const uniqueActorMainNames = getUniqueActorMainNames(
+    techniques,
+    selectedCategories
+  );
+  console.log(uniqueActorMainNames);
 
   let modal = null;
   if (selectedMitreId) {
@@ -183,17 +137,11 @@ console.log(current.taGroup);
       }}
     >
       <Header title={isTrendingView ? "Trending TTPs" : "Baseline TTPs"}>
-        <div className="switch-group">
-          <Tooltip title={baselineTooltip}>
-            <FontAwesomeIcon icon={faCircleInfo} />
-          </Tooltip>
-          <h4>Baseline</h4>
-          <Switch onChange={onToggleChange} value={isTrendingView} />
-          <h4>Trending</h4>
-          <Tooltip title={trendingTooltip}>
-            <FontAwesomeIcon icon={faCircleInfo} />
-          </Tooltip>
-        </div>
+        <SwitchToggle
+          isTrendingView={isTrendingView}
+          setIsTrendingView={setIsTrendingView}
+          setMonthRange={setMonthRange}
+        />
       </Header>
       <div className="filters-flex">
         <FilterBar
@@ -221,7 +169,3 @@ console.log(current.taGroup);
 }
 
 export default App;
-
-const trendingTooltip = "Based on known events";
-const baselineTooltip =
-  "Unique combinations of threat actors and their techniques";
