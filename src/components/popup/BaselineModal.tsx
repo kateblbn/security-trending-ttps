@@ -9,25 +9,19 @@ import {
 import "./modal.css";
 import { useEffect, useState } from "react";
 import { IRepository } from "../../repositories/repository-interface";
-import { getISOChapter, getMMChapter, getNistSubChapter } from "./helpers";
 import {
   getNistControls,
-  getUniqueActorsAndOtherNames,
   getUniqueActorsAndOtherNamesByBaseline,
   getUniqueIsoControls,
   getUniqueMmControls,
 } from "./utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCalendarAlt,
   faInfoCircle,
   faShieldAlt,
   faUserSecret,
 } from "@fortawesome/free-solid-svg-icons";
 import Markdown from "marked-react";
-import ModalControls from "./ModalControls";
-import ModalEventComponent from "./ModalEventComponent";
-import { TrendingTechnique } from "../Data";
 
 type BaselineModalProps = {
   repository: IRepository;
